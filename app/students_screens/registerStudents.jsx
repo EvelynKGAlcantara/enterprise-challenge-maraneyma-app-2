@@ -1,14 +1,18 @@
-import { Header } from "../components/Header/index";
-import { Button } from "../components/Button/index";
-import { PhotoInput } from "../components/Inputs/PhotoInput";
-import { SelectInput } from "../components/Inputs/SelectInput";
-import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
+import { Header } from "../../components/Header/index";
+import { Button } from "../../components/Button/index";
+import { PhotoInput } from "../../components/Inputs/PhotoInput";
+import { SelectInput } from "../../components/Inputs/SelectInput";
+import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { RadioButton } from "../components/Radio/Radio";
+import { RadioButton } from "../../components/Radio/Radio";
 
 export default function RegisterStudents() {
+  const handleSucess = () => {
+    router.push("./registerStudentsSucesScreen");
+  };
+
   const genero = [
     { label: "Feminino", value: "1" },
     { label: "Masculino", value: "2" },
@@ -34,9 +38,7 @@ export default function RegisterStudents() {
   const [birthYear, setBirthYear] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [schoolYear, setSchoolYear] = useState("");
-  const handleSave = () => {
-    router.push("/registrationSuccessScreen");
-  };
+
   return (
     <View style={styles.container}>
       <AntDesign
@@ -46,74 +48,77 @@ export default function RegisterStudents() {
         onPress={router.back}
         style={styles.backButton}
       />
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Cadastrar Aluno</Text>
-      </View>
-
-      <View style={styles.form}>
-        <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>
-            Nome do aluno <Text style={styles.inputDetail}>(obrigatório)</Text>
-          </Text>
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-            placeholder="Nome completo"
-          />
-        </View>
-        <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>
-            Gênero<Text style={styles.inputDetail}> (obrigatório)</Text>
-          </Text>
-          <RadioButton
-            options={genero}
-            selected={selectedOption}
-            onSelect={setSelectedOption}
-          />
+      <ScrollView>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Cadastrar Aluno</Text>
         </View>
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>
-            Ano Escolar<Text style={styles.inputDetail}> (obrigatório)</Text>
-          </Text>
-          <SelectInput
-            value={schoolYear}
-            options={ano}
-            onChange={setSchoolYear}
-          />
-        </View>
+        <View style={styles.form}>
+          <View style={styles.inputGroup}>
+            <Text style={styles.inputLabel}>
+              Nome do aluno{" "}
+              <Text style={styles.inputDetail}>(obrigatório)</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+              placeholder="Nome completo"
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <Text style={styles.inputLabel}>
+              Gênero<Text style={styles.inputDetail}> (obrigatório)</Text>
+            </Text>
+            <RadioButton
+              options={genero}
+              selected={selectedOption}
+              onSelect={setSelectedOption}
+            />
+          </View>
 
-        <View style={styles.inputGroup}>
-          <PhotoInput />
+          <View style={styles.inputGroup}>
+            <Text style={styles.inputLabel}>
+              Ano Escolar<Text style={styles.inputDetail}> (obrigatório)</Text>
+            </Text>
+            <SelectInput
+              value={schoolYear}
+              options={ano}
+              onChange={setSchoolYear}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <PhotoInput />
+          </View>
+          <View style={styles.inputGroup}>
+            <Text style={styles.inputLabel}>
+              Sala / Turno <Text style={styles.inputDetail}>(opcional)</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+              placeholder="Ex.: Sala B"
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <Text style={styles.inputLabel}>
+              E-mail do participante{" "}
+              <Text style={styles.inputDetail}>(opcional)</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+              placeholder="E-mail"
+            />
+          </View>
+          <View style={styles.buttons}>
+            <Button text={"Salvar"} onPress={handleSucess} />
+          </View>
         </View>
-        <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>
-            Sala / Turno <Text style={styles.inputDetail}>(opcional)</Text>
-          </Text>
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-            placeholder="Ex.: Sala B"
-          />
-        </View>
-        <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>
-            E-mail do participante{" "}
-            <Text style={styles.inputDetail}>(opcional)</Text>
-          </Text>
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-            placeholder="E-mail"
-          />
-        </View>
-        <View style={styles.buttons}>
-          <Button text={"Salvar"} />
-        </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -124,17 +129,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fbfbfbff",
     paddingHorizontal: 24,
     paddingTop: 60,
-    paddingBottom: 40,
   },
   header: {
-    marginBottom: 32,
+    marginBottom: 16,
     fontFamily: "SofiaSans_400Regular",
   },
   headerTitle: {
     marginTop: 45,
     fontSize: 32,
     color: "#515151",
-    marginBottom: 4,
+
     fontFamily: "SofiaSans_800ExtraBold",
   },
   headerSubtitle: {
@@ -143,55 +147,9 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     fontFamily: "SofiaSans_400Regular",
   },
-  googleButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginBottom: 24,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  googleIcon: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: "#4285F4",
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 12,
-  },
-  googleIconText: {
-    color: "#FFFFFF",
-    fontWeight: "bold",
-    fontSize: 14,
-  },
-  googleButtonText: {
-    fontSize: 16,
-    color: "#000000",
-  },
-  divider: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 24,
-  },
-  dividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: "#CCCCCC",
-  },
-  dividerText: {
-    marginHorizontal: 16,
-    fontSize: 14,
-    color: "#666666",
-  },
+
   form: {
-    marginBottom: 32,
+    marginBottom: 24,
   },
   formTitle: {
     fontSize: 16,

@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 export default function Students() {
   const router = useRouter();
   const handleRegister = () => {
-    router.push("../../registerStudents");
+    router.push("../../students_screens/registerStudents");
   };
   return (
     <View style={styles.safeArea}>

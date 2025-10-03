@@ -14,6 +14,13 @@ export default function EditStudents() {
   const handleSucess = () => {
     router.push("./editStudentsSucesScreen");
   };
+  const handleDelete = () => {
+    setModalVisible(true);
+  };
+
+  const confirmDelete = () => {
+    router.push("./deletStudentSucesScreen");
+  };
 
   const genero = [
     { label: "Feminino", value: "1" },
@@ -42,14 +49,6 @@ export default function EditStudents() {
   const [schoolYear, setSchoolYear] = useState("2º colegial / Sala A");
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleDelete = () => {
-    setModalVisible(true);
-  };
-
-  const confirmDelete = () => {
-    console.log("Aluno excluído!");
-    setModalVisible(false);
-  };
   return (
     <View style={styles.container}>
       <AntDesign

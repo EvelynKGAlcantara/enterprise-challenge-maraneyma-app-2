@@ -78,6 +78,9 @@ export default function StudentsList() {
   const handleEdit = () => {
     router.push("./editStudents");
   };
+  const handleRegister = () => {
+    router.push("./registerStudents");
+  };
 
   return (
     <View style={styles.safeArea}>
@@ -99,7 +102,7 @@ export default function StudentsList() {
         </View>
       </ScrollView>
       <View style={styles.spaceFixed}>
-        <Button text={"Cadastrar Alunos"} onPress={handleEdit} />
+        <Button text={"Cadastrar Alunos"} onPress={handleRegister} />
       </View>
     </View>
   );
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
   },
   spaceFixed: {
     paddingTop: 20,
-    paddingBottom: 20,
+    paddingBottom: 100,
     paddingHorizontal: 16,
     borderTopWidth: 1,
     borderColor: "#D3D3D3",

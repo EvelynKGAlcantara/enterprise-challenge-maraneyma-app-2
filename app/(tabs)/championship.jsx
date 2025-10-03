@@ -1,15 +1,37 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { Header } from "../../components/Header";
+import { Button } from "../../components/Button";
+import { useRouter } from "expo-router";
 
 export default function Championship() {
+  const router = useRouter();
+  const handleRegister = () => {
+    router.push(".");
+  };
   return (
-    <View style={styles.container}>
-      <View style={styles.container}>
-        <Image
-          source={require("../../assets/images/construcao.png")}
-          style={styles.image}
-        />
-        <Text style={styles.mainText}>Em construção</Text>
-        <Text style={styles.subText}>Campeonato</Text>
+    <View style={styles.safeArea}>
+      <Header title={"Campeonatos"} />
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.space}>
+            <Image
+              source={require("../../assets/images/championship.png")}
+              style={styles.image}
+              resizeMode="contain"
+            />
+            <Text style={styles.subText}>Cadastre e gerencie campeonatos</Text>
+          </View>
+          <View style={styles.space}>
+            <Text style={styles.textBold}>Importante:</Text>
+            <Text style={styles.subText}>
+              Apenas crie um campeonato após ter cadastrado todos os alunos que
+              vão participar
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+      <View style={styles.spaceFixed}>
+        <Button text={"Cadastrar campeonato"} onPress={handleRegister} />
       </View>
     </View>
   );
@@ -20,93 +42,41 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
-  header: {
-    backgroundColor: "#F7F9F8",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  headerTop: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 32,
-    paddingBottom: 8,
-  },
-  logoContainer: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    alignSelf: "center",
-    gap: 8,
-  },
-  logo: {
-    width: "90%",
-    height: 48,
-    resizeMode: "contain",
-    padding: 60,
-    paddingBottom: 40,
-  },
-  appTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#000000",
-  },
-  statusBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#f9f9f9ff",
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-    borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
-  },
-  statusLabel: {
-    fontSize: 13,
-    color: "#000000",
-    fontFamily: "SofiaSans_400Regular",
 
+  container: {
+    justifyContent: "flex-start",
+    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: 16,
+    gap: 16,
+  },
+
+  subText: {
+    fontSize: 18,
+    textAlign: "center",
+    color: "#BFBFBF",
+  },
+  textBold: {
+    fontSize: 18,
+    textAlign: "center",
+    color: "#000000",
     fontWeight: "800",
   },
-  statusIndicator: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-  },
-  greenDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#4CAF50",
-  },
-  statusText: {
-    fontSize: 13,
-    color: "#333",
-
-    fontFamily: "SofiaSans_400Regular",
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    backgroundColor: "#ffffff",
-  },
-  mainText: {
-    fontSize: 24,
-    textAlign: "center",
-    color: "#666",
-    fontWeight: "500",
-    marginTop: 20,
-  },
-  subText: {
-    fontSize: 16,
-    textAlign: "center",
-    color: "#999",
-    marginTop: 8,
-  },
   image: {
-    height: "25%",
+    width: 200,
+    marginTop: 20,
     resizeMode: "contain",
+    alignSelf: "center",
+  },
+  space: {
+    marginTop: 20,
+    paddingHorizontal: 16,
+  },
+  spaceFixed: {
+    paddingTop: 20,
+    paddingBottom: 100,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    borderColor: "#D3D3D3",
   },
 });

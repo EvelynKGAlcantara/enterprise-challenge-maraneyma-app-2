@@ -8,14 +8,13 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { RadioButton } from "../../components/Radio/Radio";
 import { SecondaryButton } from "../../components/Button/SecondaryButton";
+import { DeleteModal } from "../../components/Modals/DeleteModal";
 
 export default function EditStudents() {
   const handleSucess = () => {
     router.push("./editStudentsSucesScreen");
   };
-  const handleDelete = () => {
-    router.push("./registerStudentsSucesScreen");
-  };
+
   const genero = [
     { label: "Feminino", value: "1" },
     { label: "Masculino", value: "2" },
@@ -41,7 +40,16 @@ export default function EditStudents() {
   const [email, setEmail] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [schoolYear, setSchoolYear] = useState("2º colegial / Sala A");
+  const [modalVisible, setModalVisible] = useState(false);
 
+  const handleDelete = () => {
+    setModalVisible(true);
+  };
+
+  const confirmDelete = () => {
+    console.log("Aluno excluído!");
+    setModalVisible(false);
+  };
   return (
     <View style={styles.container}>
       <AntDesign
@@ -123,6 +131,15 @@ export default function EditStudents() {
             <Button text={"Salvar"} onPress={handleSucess} />
           </View>
         </View>
+        <DeleteModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          onConfirm={confirmDelete}
+          description={"Tem certeza que deseja excluir o aluno?"}
+          textSecondatyButton={"Sim, excluir"}
+          textButton={"Não, desistir"}
+          title={"Excluir"}
+        />
       </ScrollView>
     </View>
   );

@@ -38,10 +38,11 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   divider: {
-    borderLeftWidth: 2,
+    borderLeftWidth: 1,
     borderColor: "#D9D9D9",
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
+    width: 45,
   },
 });

@@ -9,7 +9,14 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export const SelectInput = ({ label, options, value, onChange }) => {
+export const SelectInput = ({
+  label,
+  options,
+  value,
+  onChange,
+  width,
+  height,
+}) => {
   const [visible, setVisible] = useState(false);
 
   const selectedLabel =
@@ -20,11 +27,15 @@ export const SelectInput = ({ label, options, value, onChange }) => {
       {label && <Text style={styles.label}>{label}</Text>}
 
       <TouchableOpacity
-        style={styles.inputBox}
+        style={[
+          styles.inputBox,
+          width ? { width } : {},
+          height ? { height, paddingVertical: 0 } : {},
+        ]}
         onPress={() => setVisible(true)}
       >
         <Text style={value ? styles.valueText : styles.placeholder}>
-          {selectedLabel ? selectedLabel : "Selecione uma opção"}
+          {selectedLabel ? selectedLabel : "Selecione                      "}
         </Text>
         <Ionicons name="chevron-down" size={20} color="#777" />
       </TouchableOpacity>
@@ -71,7 +82,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-
     backgroundColor: "#FFFFFF",
     borderRadius: 4,
     paddingHorizontal: 16,

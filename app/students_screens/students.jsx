@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 
 import { ParticipantCard } from "../../components/Cards/ParticipantCard";
 import { SearchInput } from "../../components/Inputs/SeachInput";
+import { Filter } from "../../components/Filters/Filter";
 
 import {
   View,
@@ -12,9 +13,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Pressable,
+  ScrollView,
 } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
+import { InputsFilter } from "../../components/Filters/InputsFilter";
 
 const mockParticipants = [
   {
@@ -38,6 +42,34 @@ const mockParticipants = [
     classInfo: "2º colegial / Sala C",
     image: require("../../assets/images/register-student.png"),
   },
+  {
+    id: 4,
+    name: "Pedro Souza",
+    gender: "Masculino",
+    classInfo: "2º colegial / Sala C",
+    image: require("../../assets/images/register-student.png"),
+  },
+  {
+    id: 5,
+    name: "Pedro Souza",
+    gender: "Masculino",
+    classInfo: "2º colegial / Sala C",
+    image: require("../../assets/images/register-student.png"),
+  },
+  {
+    id: 6,
+    name: "Pedro Souza",
+    gender: "Masculino",
+    classInfo: "2º colegial / Sala C",
+    image: require("../../assets/images/register-student.png"),
+  },
+  {
+    id: 7,
+    name: "Pedro Souza",
+    gender: "Masculino",
+    classInfo: "2º colegial / Sala C",
+    image: require("../../assets/images/register-student.png"),
+  },
 ];
 
 export default function StudentsList() {
@@ -50,44 +82,23 @@ export default function StudentsList() {
   return (
     <View style={styles.safeArea}>
       <Header title={"Alunos"} />
-
-      <View style={styles.filterRow}>
-        <Text style={styles.filterLabel}>Exibindo:</Text>
-        <TouchableOpacity style={styles.filterButtonActive}>
-          <Text style={styles.filterTextActive}>Todos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterButton}>
-          <Text style={styles.filterText}>Feminino (13)</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterButton}>
-          <Text style={styles.filterText}>Masculino (5)</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.searchBox}>
-        <TextInput
-          placeholder="Filtrar por ano escolar"
-          style={styles.selectInput}
-        />
-        <View style={styles.searchInputContainer}>
-          <SearchInput />
+      <Filter femItem={20} masItem={10} />
+      <ScrollView>
+        <View style={styles.space}>
+          <InputsFilter />
+          {mockParticipants.map((partipant) => (
+            <ParticipantCard
+              key={partipant.id}
+              name={partipant.name}
+              gender={partipant.gender}
+              classInfo={partipant.classInfo}
+              imageURL={Image.resolveAssetSource(partipant.image).uri}
+              onEdit={handleEdit}
+            />
+          ))}
         </View>
-      </View>
-
-      <View style={styles.space}>
-        {mockParticipants.map((partipant) => (
-          <ParticipantCard
-            key={partipant.id}
-            name={partipant.name}
-            gender={partipant.gender}
-            classInfo={partipant.classInfo}
-            imageURL={Image.resolveAssetSource(partipant.image).uri}
-            onEdit={handleEdit}
-          />
-        ))}
-      </View>
-
-      <View style={styles.space}>
+      </ScrollView>
+      <View style={styles.spaceFixed}>
         <Button text={"Cadastrar Alunos"} onPress={handleEdit} />
       </View>
     </View>
@@ -107,39 +118,6 @@ const styles = StyleSheet.create({
     gap: 290,
   },
 
-  filterRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    marginTop: 10,
-    gap: 8,
-  },
-  filterLabel: {
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  filterButton: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: "#EB2F96",
-  },
-  filterButtonActive: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    borderRadius: 6,
-    backgroundColor: "#EB2F96",
-  },
-  filterText: {
-    color: "#EB2F96",
-    fontSize: 12,
-  },
-  filterTextActive: {
-    color: "#fff",
-    fontSize: 12,
-  },
-
   searchBox: {
     marginTop: 12,
     paddingHorizontal: 16,
@@ -157,5 +135,12 @@ const styles = StyleSheet.create({
   space: {
     marginTop: 20,
     paddingHorizontal: 16,
+  },
+  spaceFixed: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    borderColor: "#D3D3D3",
   },
 });

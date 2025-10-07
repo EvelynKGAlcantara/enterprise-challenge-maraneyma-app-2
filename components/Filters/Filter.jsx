@@ -1,6 +1,11 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
-export const Filter = ({ femItem, masItem }) => {
+export const Filter = ({
+  FirstItem,
+  SecondItem,
+  firtItemNumer,
+  SecondItemNumber,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.filterRow}>
@@ -9,10 +14,14 @@ export const Filter = ({ femItem, masItem }) => {
           <Text style={styles.filterTextActive}>Todos</Text>
         </Pressable>
         <Pressable style={styles.button}>
-          <Text style={styles.buttonText}>Feminino ({femItem})</Text>
+          <Text style={styles.buttonText}>
+            {FirstItem} {firtItemNumer}
+          </Text>
         </Pressable>
         <Pressable style={styles.button}>
-          <Text style={styles.buttonText}>Masculino ({masItem})</Text>
+          <Text style={styles.buttonText}>
+            {SecondItem} {SecondItemNumber}
+          </Text>
         </Pressable>
       </View>
     </View>

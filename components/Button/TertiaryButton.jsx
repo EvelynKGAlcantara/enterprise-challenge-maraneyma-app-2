@@ -1,6 +1,6 @@
 import { StyleSheet, Text, Pressable, View } from "react-native";
 
-export const Button = ({ text, onPress }) => {
+export const TertiaryButton = ({ text, onPress }) => {
   return (
     <View style={styles.buttons}>
       <Pressable style={styles.primaryButton} onPress={onPress}>
@@ -12,19 +12,21 @@ export const Button = ({ text, onPress }) => {
 
 const styles = StyleSheet.create({
   primaryButton: {
-    backgroundColor: "#EB2F96",
     paddingVertical: 12,
     borderRadius: 4,
     alignItems: "center",
     width: "100%",
+    borderWidth: 1,
+    borderColor: "#D9D9D9",
   },
 
   primaryText: {
-    color: "#fff",
+    color: "#000000",
     fontSize: 16,
   },
 
   buttons: {
     marginTop: 10,
+    width: "100%",
   },
 });

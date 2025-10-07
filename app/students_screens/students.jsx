@@ -3,21 +3,11 @@ import { Button } from "../../components/Button/index";
 import { useRouter } from "expo-router";
 
 import { ParticipantCard } from "../../components/Cards/ParticipantCard";
-import { SearchInput } from "../../components/Inputs/SeachInput";
+
 import { Filter } from "../../components/Filters/Filter";
 
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Pressable,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, Image, ScrollView } from "react-native";
 
-import { Ionicons } from "@expo/vector-icons";
 import { InputsFilter } from "../../components/Filters/InputsFilter";
 
 const mockParticipants = [
@@ -85,7 +75,12 @@ export default function StudentsList() {
   return (
     <View style={styles.safeArea}>
       <Header title={"Alunos"} />
-      <Filter femItem={20} masItem={10} />
+      <Filter
+        FirstItem={"Feminino"}
+        SecondItem={"Masculino"}
+        SecondItemNumber={"(5)"}
+        firtItemNumer={"(5)"}
+      />
       <ScrollView>
         <View style={styles.space}>
           <InputsFilter />

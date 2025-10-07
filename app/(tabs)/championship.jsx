@@ -2,12 +2,24 @@ import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
 import { useRouter } from "expo-router";
+import { ConfirmModal } from "../../components/Modals/ConfirmModal";
+import { useState } from "react";
 
 export default function Championship() {
   const router = useRouter();
   const handleRegister = () => {
-    router.push(".");
+    setModalVisible(true);
   };
+
+  const handleConfirm = () => {
+    router.push("../championship/createChampionship/championshipTypeScreen");
+  };
+
+  const handleRegisterStudents = () => {
+    router.push("../students_screens/registerStudents");
+  };
+
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.safeArea}>
       <Header title={"Campeonatos"} />
@@ -33,6 +45,18 @@ export default function Championship() {
       <View style={styles.spaceFixed}>
         <Button text={"Cadastrar campeonato"} onPress={handleRegister} />
       </View>
+      <ConfirmModal
+        visible={modalVisible}
+        onConfirm={handleConfirm}
+        onClose={() => setModalVisible(false)}
+        description={"Já cadastrou"}
+        descriptionBold={" todos os alunos que vão participar "}
+        descriptionContinue={"deste campeonato?"}
+        textSecondatyButton={"Já cadastrei"}
+        textButton={"Falta cadastrar"}
+        title={"IMPORTANTE"}
+        navigate={handleRegisterStudents}
+      />
     </View>
   );
 }

@@ -1,12 +1,15 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function SportCard({ title, description, onPress }) {
+export const SportCardHome = ({ title, description, onPress }) => {
   return (
     <View style={styles.card}>
       <View style={{ paddingRight: 24 }}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
+
+        <Text style={styles.description} numberOfLines={3} ellipsizeMode="tail">
+          {description}
+        </Text>
       </View>
 
       <Pressable onPress={onPress} style={styles.arrow} hitSlop={10}>
@@ -18,11 +21,12 @@ export default function SportCard({ title, description, onPress }) {
       </Pressable>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   card: {
     width: "100%",
+    height: 180,
     backgroundColor: "#f9f9f9ff",
     paddingHorizontal: 24,
     paddingVertical: 24,
@@ -30,10 +34,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     position: "relative",
     fontFamily: "SofiaSans_400Regular",
+    overflow: "hidden",
   },
   title: {
     fontSize: 18,
-
     marginBottom: 6,
     fontFamily: "SofiaSans_800ExtraBold",
   },

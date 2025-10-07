@@ -1,24 +1,25 @@
-import React from "react";
-import { Modal, View, Text, Pressable, StyleSheet } from "react-native";
-import { SecondaryButton } from "../Button/SecondaryButton";
+import { Modal, View, Text, StyleSheet, Pressable } from "react-native";
 import { Button } from "../Button/index";
 import { Ionicons } from "@expo/vector-icons";
 
-export const DeleteModal = ({
+export const ConfirmModal = ({
   visible,
+  navigate,
   onClose,
   onConfirm,
   textButton,
   textSecondatyButton,
   title,
   description,
+  descriptionBold,
+  descriptionContinue,
 }) => {
   return (
     <Modal
       transparent
       visible={visible}
       animationType="fade"
-      onRequestClose={onClose}
+      onRequestClose={navigate}
     >
       <View style={styles.overlay}>
         <View style={styles.modalContent}>
@@ -28,11 +29,16 @@ export const DeleteModal = ({
               <Ionicons name="close" size={24} color="#000" />
             </Pressable>
           </View>
-          <Text style={styles.message}>{description}</Text>
+
+          <Text style={styles.message}>
+            {description}
+            <Text style={styles.messageBold}>{descriptionBold}</Text>
+            {descriptionContinue}
+          </Text>
 
           <View style={styles.buttons}>
-            <SecondaryButton text={textSecondatyButton} onPress={onConfirm} />
-            <Button text={textButton} onPress={onClose} />
+            <Button text={textSecondatyButton} onPress={onConfirm} />
+            <Button text={textButton} onPress={navigate} />
           </View>
         </View>
       </View>
@@ -61,35 +67,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#F0F0F0",
   },
-
   title: {
     fontSize: 18,
     fontWeight: "bold",
   },
   message: {
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 20,
-  },
-  confirmButton: {
-    borderWidth: 1,
-    borderColor: "#FF4D4F",
-    padding: 12,
-    borderRadius: 6,
-    marginBottom: 12,
-  },
-  confirmText: {
-    color: "#FF4D4F",
     textAlign: "center",
-    fontWeight: "bold",
   },
-  cancelButton: {
-    backgroundColor: "#FF007A",
-    padding: 12,
-    borderRadius: 6,
-  },
-  cancelText: {
-    color: "#fff",
-    textAlign: "center",
-    fontWeight: "bold",
+  messageBold: {
+    fontWeight: "800",
+    color: "#FF007A",
   },
 });

@@ -3,11 +3,11 @@ import { useRouter } from "expo-router";
 import LottieView from "lottie-react-native";
 import { Button } from "../../components/Button/index";
 
-export default function EditStudentsSuccessScreen() {
+export default function MyProfileEditSuccess() {
   const router = useRouter();
 
   const handleAdvance = () => {
-    router.push("../(tabs)/students");
+    router.replace("../(tabs)/homeScreen");
   };
 
   return (
@@ -22,7 +22,7 @@ export default function EditStudentsSuccessScreen() {
           />
         </View>
 
-        <Text style={styles.successTitle}>Dados foram salvos</Text>
+        <Text style={styles.successTitle}>Seus dados foram salvos</Text>
       </View>
 
       <View style={styles.buttons}>

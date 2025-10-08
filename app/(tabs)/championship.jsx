@@ -29,7 +29,6 @@ export default function Championship() {
             <Image
               source={require("../../assets/images/championship.png")}
               style={styles.image}
-              resizeMode="contain"
             />
             <Text style={styles.subText}>Cadastre e gerencie campeonatos</Text>
           </View>
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
   },
   spaceFixed: {
     paddingTop: 20,
-    paddingBottom: 100,
+    paddingBottom: 110,
     paddingHorizontal: 16,
     borderTopWidth: 1,
     borderColor: "#D3D3D3",

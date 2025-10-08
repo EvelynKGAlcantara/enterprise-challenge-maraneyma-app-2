@@ -7,7 +7,7 @@ export default function DeleteStudentsSuccessScreen() {
   const router = useRouter();
 
   const handleAdvance = () => {
-    router.replace("./students");
+    router.push("../(tabs)/students");
   };
 
   return (

@@ -23,7 +23,7 @@ export default function ChampionshipSuccess() {
         </View>
 
         <Text style={styles.successTitle}>
-          Campeonato criado {"\n"} Agora só falta montar as equipes
+          Campeonato criado {"\n"} Agora só falta montar as equipes =)
         </Text>
       </View>
 
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   successTitle: {
-    fontSize: 20,
+    fontSize: 24,
     color: "#626262",
     textAlign: "center",
     fontFamily: "SofiaSans_800ExtraBold",

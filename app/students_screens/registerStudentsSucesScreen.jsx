@@ -7,7 +7,7 @@ export default function RegisterStudentsSuccessScreen() {
   const router = useRouter();
 
   const handleAdvance = () => {
-    router.replace("./students");
+    router.push("../(tabs)/students");
   };
 
   return (

@@ -12,6 +12,8 @@ export const DeleteModal = ({
   textSecondatyButton,
   title,
   description,
+  titleBold,
+  titleBoldText,
 }) => {
   return (
     <Modal
@@ -28,6 +30,10 @@ export const DeleteModal = ({
               <Ionicons name="close" size={24} color="#000" />
             </Pressable>
           </View>
+
+          {titleBold ? (
+            <Text style={styles.titleBoldText}>{titleBoldText}</Text>
+          ) : null}
           <Text style={styles.message}>{description}</Text>
 
           <View style={styles.buttons}>
@@ -66,9 +72,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  titleBoldText: {
+    marginBottom: 12,
+    fontSize: 18,
+    fontFamily: "SofiaSans_800ExtraBold",
+  },
   message: {
     fontSize: 16,
     marginBottom: 20,
+    fontFamily: "SofiaSans_400Regular",
   },
   confirmButton: {
     borderWidth: 1,

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { CardSelect } from "../../../components/Cards/ChampionshipCard";
@@ -10,7 +10,7 @@ export default function ChampionshipTypeScreen() {
     <View style={styles.container}>
       <AntDesign
         name="arrow-left"
-        size={28}
+        size={40}
         color="#EB2F96"
         onPress={router.back}
         style={styles.backButton}
@@ -18,17 +18,19 @@ export default function ChampionshipTypeScreen() {
 
       <Text style={styles.title}>Qual tipo de campeonato você quer criar?</Text>
 
-      <CardSelect
-        title="Competição individual"
-        subtitle="Alunos competindo uns contra os outros"
-        onPress={() => router.push("./championshipIndividual")}
-      />
+      <View style={styles.cards}>
+        <CardSelect
+          title="Competição individual"
+          subtitle="Alunos competindo uns contra os outros"
+          onPress={() => router.push("./championshipIndividual")}
+        />
 
-      <CardSelect
-        title="Times contra times"
-        subtitle="Mínimo de 2 contra 2"
-        onPress={() => router.push("./championshipTeam")}
-      />
+        <CardSelect
+          title="Times contra times"
+          subtitle="Mínimo de 2 contra 2"
+          onPress={() => router.push("./championshipTeam")}
+        />
+      </View>
     </View>
   );
 }
@@ -36,17 +38,26 @@ export default function ChampionshipTypeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fbfbfb",
-    padding: 24,
-    paddingTop: 60,
+    backgroundColor: "#fbfbfbff",
+    paddingTop: "30%",
+    paddingBottom: 40,
   },
   title: {
-    fontSize: 20,
+    fontSize: 26,
     fontFamily: "SofiaSans_800ExtraBold",
     color: "#515151",
     marginBottom: 20,
+    paddingHorizontal: 24,
   },
   backButton: {
-    marginBottom: 16,
+    width: "100%",
+    position: "absolute",
+    top: 50,
+    left: 16,
+    zIndex: 100,
+    backgroundColor: "#fbfbfb",
+  },
+  cards: {
+    width: "100%",
   },
 });

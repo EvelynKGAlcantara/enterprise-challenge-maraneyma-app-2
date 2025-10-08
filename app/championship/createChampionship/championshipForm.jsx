@@ -1,6 +1,14 @@
 import { Button } from "../../../components/Button/index";
 import { SelectInput } from "../../../components/Inputs/SelectInput";
-import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -39,63 +47,77 @@ export default function ChampionshipForm() {
   };
 
   return (
-    <View style={styles.container}>
-      <AntDesign
-        name="arrow-left"
-        size={40}
-        color="#EB2F96"
-        onPress={router.back}
-        style={styles.backButton}
-      />
-      <ScrollView>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Dados do campeonato</Text>
-          <Text style={styles.badge}>Campeonato de futebol</Text>
-        </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <View style={styles.container}>
+        <AntDesign
+          name="arrow-left"
+          size={40}
+          color="#EB2F96"
+          onPress={router.back}
+          style={styles.backButton}
+        />
 
-        <View style={styles.form}>
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Nome do campeonato{" "}
-              <Text style={styles.inputDetail}>(obrigatório)</Text>
-            </Text>
-            <TextInput
-              style={styles.input}
-              value={championshipName}
-              onChangeText={setChampionshipName}
-              placeholder="Ex.: Jogos estudantis"
-            />
-          </View>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.innerContainer}>
+            <View style={styles.header}>
+              <Text style={styles.headerTitle}>Dados do campeonato</Text>
+              <Text style={styles.badge}>Campeonato de futebol</Text>
+            </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Ano escolar <Text style={styles.inputDetail}>(obrigatório)</Text>
-            </Text>
-            <SelectInput
-              value={schoolYear}
-              options={schoolYears}
-              onChange={setSchoolYear}
-            />
-          </View>
+            <View style={styles.content}>
+              <View style={styles.form}>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.inputLabel}>
+                    Nome do campeonato{" "}
+                    <Text style={styles.inputDetail}>(obrigatório)</Text>
+                  </Text>
+                  <TextInput
+                    style={styles.input}
+                    value={championshipName}
+                    onChangeText={setChampionshipName}
+                    placeholder="Ex.: Jogos estudantis"
+                  />
+                </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Gênero dos participantes{" "}
-              <Text style={styles.inputDetail}>(obrigatório)</Text>
-            </Text>
-            <RadioButton
-              options={genderOptions}
-              selected={gender}
-              onSelect={setGender}
-            />
-          </View>
+                <View style={styles.inputGroup}>
+                  <Text style={styles.inputLabel}>
+                    Ano escolar{" "}
+                    <Text style={styles.inputDetail}>(obrigatório)</Text>
+                  </Text>
+                  <SelectInput
+                    value={schoolYear}
+                    options={schoolYears}
+                    onChange={setSchoolYear}
+                  />
+                </View>
 
-          <View style={styles.buttons}>
-            <Button text={"Avançar"} onPress={handleNext} />
+                <View style={styles.inputGroup}>
+                  <Text style={styles.inputLabel}>
+                    Gênero dos participantes{" "}
+                    <Text style={styles.inputDetail}>(obrigatório)</Text>
+                  </Text>
+                  <RadioButton
+                    options={genderOptions}
+                    selected={gender}
+                    onSelect={setGender}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.buttons}>
+                <Button text={"Avançar"} onPress={handleNext} />
+              </View>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -106,14 +128,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 60,
   },
+  innerContainer: {
+    flex: 1,
+  },
   header: {
-    marginTop: 62,
+    marginTop: 52,
     marginBottom: 16,
   },
   headerTitle: {
-    fontSize: 28,
-    color: "#515151",
+    fontSize: 26,
     fontFamily: "SofiaSans_800ExtraBold",
+    color: "#515151",
     marginBottom: 8,
   },
   badge: {
@@ -121,13 +146,13 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 12,
     borderRadius: 4,
-    fontSize: 14,
-    fontFamily: "SofiaSans_600SemiBold",
+    fontSize: 12,
+    fontFamily: "SofiaSans_800ExtraBold",
     color: "#515151",
     alignSelf: "flex-start",
   },
   form: {
-    marginBottom: 24,
+    flex: 1,
   },
   inputGroup: {
     marginBottom: 20,
@@ -154,10 +179,15 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 50,
     left: 16,
-    zIndex: 10,
+    zIndex: 100,
     backgroundColor: "#fbfbfb",
   },
   buttons: {
     marginTop: 20,
+    paddingBottom: 40,
+  },
+  content: {
+    flex: 1,
+    justifyContent: "space-between",
   },
 });

@@ -7,15 +7,22 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { RadioButton } from "../../components/Radio/Radio";
+import { useStudents } from "../context/Context";
 
 export default function RegisterStudents() {
-  const handleSucess = () => {
-    router.push("./registerStudentsSucesScreen");
-  };
+  const router = useRouter();
+  const { addStudent } = useStudents();
+
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState(null);
+  const [schoolYear, setSchoolYear] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [classroom, setClassroom] = useState("");
+  const [email, setEmail] = useState("");
 
   const genero = [
-    { label: "Feminino", value: "1" },
-    { label: "Masculino", value: "2" },
+    { label: "Feminino", value: "Feminino" },
+    { label: "Masculino", value: "Masculino" },
   ];
 
   const ano = [
@@ -32,12 +39,26 @@ export default function RegisterStudents() {
     { label: "Segundo Colegial (Ensino Médio)", value: "11" },
     { label: "Terceiro Colegial (Ensino Médio)", value: "12" },
   ];
-  const router = useRouter();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthYear, setBirthYear] = useState("");
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [schoolYear, setSchoolYear] = useState("");
+
+  const handleSave = () => {
+    if (!name || !gender || !schoolYear) {
+      alert("Por favor, preencha os campos obrigatórios.");
+      return;
+    }
+
+    const newStudent = {
+      id: Date.now().toString(),
+      name,
+      gender,
+      schoolYear,
+      image: require("../../assets/images/profile-circle.png"),
+      classroom: classroom || "Não definida",
+      email: email || "",
+    };
+
+    addStudent(newStudent);
+    router.push("./registerStudentsSucesScreen");
+  };
 
   return (
     <View style={styles.container}>
@@ -66,18 +87,19 @@ export default function RegisterStudents() {
               placeholder="Nome completo"
             />
           </View>
+
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>
               Gênero<Text style={styles.inputDetail}> (obrigatório)</Text>
             </Text>
             <RadioButton
               options={genero}
-              selected={selectedOption}
-              onSelect={setSelectedOption}
+              selected={gender}
+              onSelect={setGender}
             />
           </View>
 
-          <View style={styles.inputGroup}>
+          <View>
             <Text style={styles.inputLabel}>
               Ano Escolar<Text style={styles.inputDetail}> (obrigatório)</Text>
             </Text>
@@ -89,19 +111,24 @@ export default function RegisterStudents() {
           </View>
 
           <View style={styles.inputGroup}>
-            <PhotoInput />
+            <Text style={styles.inputLabel}>
+              Foto <Text style={styles.inputDetail}>(opcional)</Text>
+            </Text>
+            <PhotoInput onChangePhoto={setPhoto} />
           </View>
+
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>
               Sala / Turno <Text style={styles.inputDetail}>(opcional)</Text>
             </Text>
             <TextInput
               style={styles.input}
-              value={name}
-              onChangeText={setName}
+              value={classroom}
+              onChangeText={setClassroom}
               placeholder="Ex.: Sala B"
             />
           </View>
+
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>
               E-mail do participante{" "}
@@ -109,13 +136,14 @@ export default function RegisterStudents() {
             </Text>
             <TextInput
               style={styles.input}
-              value={name}
-              onChangeText={setName}
+              value={email}
+              onChangeText={setEmail}
               placeholder="E-mail"
             />
           </View>
+
           <View style={styles.buttons}>
-            <Button text={"Salvar"} onPress={handleSucess} />
+            <Button text={"Salvar"} onPress={handleSave} />
           </View>
         </View>
       </ScrollView>
@@ -138,23 +166,7 @@ const styles = StyleSheet.create({
     marginTop: 45,
     fontSize: 32,
     color: "#515151",
-
     fontFamily: "SofiaSans_800ExtraBold",
-  },
-  headerSubtitle: {
-    fontSize: 18,
-    color: "#7B7B7B",
-    lineHeight: 22,
-    fontFamily: "SofiaSans_400Regular",
-  },
-
-  form: {
-    marginBottom: 24,
-  },
-  formTitle: {
-    fontSize: 16,
-    color: "#000000",
-    marginBottom: 20,
   },
   inputGroup: {
     marginBottom: 20,
@@ -176,49 +188,9 @@ const styles = StyleSheet.create({
   inputDetail: {
     color: "#cbcbcbff",
   },
-  inputYear: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 4,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    width: 150,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
-  },
-  inputHelper: {
-    fontSize: 12,
-    color: "#666666",
-    marginTop: 4,
-  },
-  createButton: {
-    backgroundColor: "#EB2F96",
-    borderRadius: 8,
-    paddingVertical: 16,
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  createButtonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  continueButton: {
-    backgroundColor: "#EB2F96",
-    borderRadius: 8,
-    paddingVertical: 16,
-    alignItems: "center",
-  },
-  continueButtonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  loginLink: {
-    textAlign: "center",
-    fontSize: 14,
-    color: "#666666",
-    textDecorationLine: "underline",
+  buttons: {
+    gap: 10,
+    marginBottom: 120,
   },
   backButton: {
     width: "100%",
@@ -227,64 +199,5 @@ const styles = StyleSheet.create({
     left: 16,
     zIndex: 10,
     backgroundColor: "#fbfbfb",
-  },
-
-  successContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  checkmarkContainer: {
-    marginBottom: 32,
-  },
-  checkmark: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: "#52C41A",
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#52C41A",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 6,
-  },
-  checkmarkText: {
-    fontSize: 32,
-    color: "#FFFFFF",
-    fontWeight: "bold",
-  },
-  successTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#000000",
-    textAlign: "center",
-  },
-  advanceButton: {
-    backgroundColor: "#EB2F96",
-    borderRadius: 8,
-    paddingVertical: 16,
-    alignItems: "center",
-  },
-  advanceButtonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-
-  buttons: {
-    gap: 10,
-  },
-  primaryButton: {
-    backgroundColor: "#EB2F96",
-    paddingVertical: 12,
-    borderRadius: 4,
-    alignItems: "center",
-  },
-  primaryText: {
-    color: "#fff",
-
-    fontSize: 16,
   },
 });

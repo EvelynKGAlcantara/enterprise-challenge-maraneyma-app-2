@@ -35,7 +35,7 @@ export const SelectInput = ({
         onPress={() => setVisible(true)}
       >
         <Text style={value ? styles.valueText : styles.placeholder}>
-          {selectedLabel ? selectedLabel : "Selecione                      "}
+          {selectedLabel ? selectedLabel : "Selecione uma opção"}
         </Text>
         <Ionicons name="chevron-down" size={20} color="#777" />
       </TouchableOpacity>

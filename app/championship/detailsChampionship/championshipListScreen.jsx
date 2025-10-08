@@ -102,7 +102,7 @@ export default function ChampionshipListScreen() {
         </View>
       </ScrollView>
 
-      <View style={styles.footer}>
+      <View style={styles.spaceFixed}>
         <Button
           text={"Cadastrar campeonato"}
           onPress={handleCreateChampionship}
@@ -182,5 +182,12 @@ const styles = StyleSheet.create({
     padding: 16,
     borderTopWidth: 1,
     borderColor: "#eee",
+  },
+  spaceFixed: {
+    paddingTop: 20,
+    paddingBottom: 110,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    borderColor: "#D3D3D3",
   },
 });

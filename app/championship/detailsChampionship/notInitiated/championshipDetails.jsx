@@ -115,13 +115,16 @@ export default function ChampionshipDetails() {
         {tab === "championship" && (
           <View style={styles.section}>
             <Image
-              // source={require("../../../../assets/images/soccer.png")}
+              source={require("../../../../assets/images/futebol.png")}
               style={styles.image}
             />
-            <Text style={styles.infoText}>
+            <View style={styles.infoText}>
               <Text style={styles.bold}>Importante: </Text>
-              Monte as equipes para ativar o campeonato
-            </Text>
+
+              <Text style={styles.text}>
+                Monte as equipes para ativar o campeonato
+              </Text>
+            </View>
             <Button text="Montar equipes" onPress={() => {}} />
           </View>
         )}
@@ -236,17 +239,22 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   image: {
-    width: 150,
+    width: 250,
     height: 150,
     resizeMode: "contain",
   },
   infoText: {
     textAlign: "center",
-    fontSize: 15,
-    color: "#666",
+    alignItems: "center",
     marginHorizontal: 16,
   },
+  text: {
+    fontSize: 18,
+    color: "#BFBFBF",
+    alignSelf: "center",
+  },
   bold: {
+    fontSize: 18,
     fontWeight: "700",
   },
 });

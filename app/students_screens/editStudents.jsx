@@ -1,13 +1,15 @@
 import { Header } from "../../components/Header/index";
 import { Button } from "../../components/Button/index";
+import { SecondaryButton } from "../../components/Button/SecondaryButton";
 import { PhotoInput } from "../../components/Inputs/PhotoInput";
 import { SelectInput } from "../../components/Inputs/SelectInput";
 import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { RadioButton } from "../../components/Radio/Radio";
-import { SecondaryButton } from "../../components/Button/SecondaryButton";
+import { useStudents } from "../../app/context/Context";
+
 import { DeleteModal } from "../../components/Modals/DeleteModal";
 
 export default function EditStudents() {
@@ -42,12 +44,25 @@ export default function EditStudents() {
     { label: "Terceiro Colegial (Ensino Médio)", value: "12" },
   ];
   const router = useRouter();
-  const [name, setName] = useState("João Silva");
-  const [gender, setGender] = useState(1);
+  const { students } = useStudents();
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
+  const [schoolYear, setSchoolYear] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [schoolYear, setSchoolYear] = useState("2º colegial / Sala A");
+
   const [modalVisible, setModalVisible] = useState(false);
+  const [photo, setPhoto] = useState("");
+
+  useEffect(() => {
+    if (students && students.length > 0) {
+      const aluno = students[0];
+      setName(aluno.name);
+      setGender(aluno.gender);
+      setEmail(aluno.email);
+      setSchoolYear(aluno.schoolYear);
+    }
+  }, [students]);
 
   return (
     <View style={styles.container}>
@@ -88,7 +103,7 @@ export default function EditStudents() {
             />
           </View>
 
-          <View style={styles.inputGroup}>
+          <View>
             <Text style={styles.inputLabel}>
               Ano Escolar<Text style={styles.inputDetail}> (obrigatório)</Text>
             </Text>
@@ -100,7 +115,10 @@ export default function EditStudents() {
           </View>
 
           <View style={styles.inputGroup}>
-            <PhotoInput />
+            <Text style={styles.inputLabel}>
+              Foto <Text style={styles.inputDetail}>(opcional)</Text>
+            </Text>
+            <PhotoInput onChangePhoto={setPhoto} />
           </View>
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>

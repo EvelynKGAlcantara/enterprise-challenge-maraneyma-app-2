@@ -19,7 +19,7 @@ export default function ChampionshipTeams() {
     <View style={styles.container}>
       <AntDesign
         name="arrow-left"
-        size={28}
+        size={40}
         color="#EB2F96"
         onPress={router.back}
         style={styles.backButton}
@@ -42,21 +42,29 @@ export default function ChampionshipTeams() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fbfbfb",
-    padding: 24,
-    paddingTop: 60,
+    backgroundColor: "#fbfbfbff",
+    paddingTop: "30%",
+    paddingBottom: 40,
   },
   title: {
-    fontSize: 20,
+    fontSize: 26,
     fontFamily: "SofiaSans_800ExtraBold",
     color: "#515151",
+    marginBottom: 8,
+    paddingHorizontal: 24,
   },
   subtitle: {
     fontSize: 14,
     color: "#7B7B7B",
     marginBottom: 20,
+    paddingHorizontal: 24,
   },
   backButton: {
-    marginBottom: 16,
+    width: "100%",
+    position: "absolute",
+    top: 50,
+    left: 16,
+    zIndex: 100,
+    backgroundColor: "#fbfbfb",
   },
 });

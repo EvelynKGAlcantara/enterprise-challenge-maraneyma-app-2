@@ -23,12 +23,14 @@ export const InputsFilter = () => {
     <View style={styles.container}>
       <View style={styles.selectArea}>
         <Text style={styles.text}> Filtrar por ano escolar</Text>
-        <SelectInput
-          value={schoolYear}
-          onChange={setSchoolYear}
-          options={ano}
-          height={32}
-        />
+        <View style={styles.input}>
+          <SelectInput
+            value={schoolYear}
+            onChange={setSchoolYear}
+            options={ano}
+            height={32}
+          />
+        </View>
       </View>
 
       <View style={styles.searchInputContainer}>
@@ -45,12 +47,13 @@ const styles = StyleSheet.create({
   },
   searchInputContainer: {},
   selectArea: {
-    gap: 10,
-    textAlign: "center",
+    justifyContent: "space-between",
     flexDirection: "row",
   },
   text: {
     fontSize: 14,
     alignSelf: "center",
+    paddingBottom: 12,
   },
+  input: {},
 });

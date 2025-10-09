@@ -1,79 +1,115 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-import { Header } from "../../../../components/Header/index";
+import { View, Text, TextInput, StyleSheet, ScrollView } from "react-native";
 import { Button } from "../../../../components/Button/index";
-import { useRouter } from "expo-router";
+import { PhotoInput } from "../../../../components/Inputs/PhotoInput";
+import { HeaderBack } from "../../../../components/Header/HeaderBack";
 import { useState } from "react";
+import { useRouter } from "expo-router";
 
 export default function CreateTeamScreen() {
-  const router = useRouter();
   const [teamName, setTeamName] = useState("");
-  const [teamSymbol, setTeamSymbol] = useState(null);
+  const [photo, setPhoto] = useState("");
+  const router = useRouter();
 
   const handleNext = () => {
-    if (teamName.trim() !== "") {
-      router.push("../teams/selectMembersScreen");
-    }
+    router.push("./selectMembers(2)");
   };
 
   return (
-    <View style={styles.safeArea}>
-      <Header title={"Montagem de Equipes"} back />
-      <View style={styles.container}>
-        <Text style={styles.title}>Crie um nome pra equipe</Text>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <HeaderBack title="Montagem de Equipes" />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Ex.: Time Sala 1"
-          value={teamName}
-          onChangeText={setTeamName}
-        />
+        <View style={styles.content}>
+          <Text style={styles.title}>Crie um nome pra equipe</Text>
 
-        <View style={styles.imageUpload}>
-          <Image
-            // source={require("../../assets/images/register-student.png")}
-            style={styles.image}
-          />
-          <TouchableOpacity style={styles.uploadBtn}>
-            <Text style={styles.uploadText}>Subir imagem</Text>
-          </TouchableOpacity>
+          <View style={styles.subtitleBlock}>
+            <Text style={styles.subtitleSmall}>
+              Campeonato de futebol / Feminino
+            </Text>
+            <Text style={styles.subtitleSmall}>
+              ANO ESCOLAR:{" "}
+              <Text style={styles.subtitleBold}>
+                Segundo Colegial | Ensino Médio
+              </Text>
+            </Text>
+          </View>
+
+          <View style={styles.form}>
+            <Text style={styles.label}>
+              Crie um nome da equipe{" "}
+              <Text style={styles.optional}>(obrigatório)</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Ex.: Time Sala 1"
+              value={teamName}
+              onChangeText={setTeamName}
+            />
+
+            <Text style={styles.label}>
+              Símbolo do time <Text style={styles.optional}>(opcional)</Text>
+            </Text>
+            <PhotoInput onChangePhoto={setPhoto} />
+          </View>
         </View>
-      </View>
 
-      <View style={styles.footer}>
-        <Button text="Avançar" onPress={handleNext} />
-      </View>
+        <View style={styles.footer}>
+          <Button text="Avançar" onPress={handleNext} />
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: "#fff" },
-  container: { padding: 20, flex: 1 },
-  title: { fontSize: 20, fontWeight: "700", marginBottom: 20 },
+  container: {
+    flex: 1,
+    backgroundColor: "#fbfbfbff",
+    paddingHorizontal: 24,
+  },
+  content: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 24,
+    color: "#515151",
+    fontFamily: "SofiaSans_800ExtraBold",
+    marginTop: 12,
+  },
+  subtitleBlock: {
+    marginTop: 8,
+    marginBottom: 24,
+  },
+  subtitleSmall: {
+    fontSize: 12,
+    color: "#7B7B7B",
+    fontFamily: "SofiaSans_400Regular",
+  },
+  subtitleBold: {
+    fontFamily: "SofiaSans_600SemiBold",
+  },
+  form: {
+    gap: 16,
+  },
+  label: {
+    fontSize: 14,
+    color: "#000",
+    fontFamily: "SofiaSans_400Regular",
+  },
+  optional: {
+    color: "#bcbcbc",
+  },
   input: {
-    borderWidth: 1,
-    borderColor: "#D3D3D3",
-    borderRadius: 8,
-    padding: 12,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 6,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     fontSize: 16,
-    marginBottom: 20,
-  },
-  imageUpload: { alignItems: "center", marginTop: 10 },
-  image: { width: 80, height: 80, borderRadius: 40, marginBottom: 10 },
-  uploadBtn: {
     borderWidth: 1,
-    borderColor: "#FF1493",
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    borderColor: "#E0E0E0",
   },
-  uploadText: { color: "#FF1493", fontWeight: "600" },
-  footer: { padding: 16 },
+  footer: {
+    marginTop: "auto",
+    marginBottom: 32,
+  },
 });

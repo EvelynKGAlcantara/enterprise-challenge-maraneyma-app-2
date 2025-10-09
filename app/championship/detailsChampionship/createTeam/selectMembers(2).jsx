@@ -1,97 +1,168 @@
-import { View, Text, StyleSheet, TextInput, FlatList } from "react-native";
-import { Header } from "../../../../components/Header/index";
-import { Button } from "../../../../components/Button/index";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import { Button } from "../../../../components/Button";
+import { HeaderBack } from "../../../../components/Header/HeaderBack";
+import { Filter } from "../../../../components/Filters/Filter";
+import { SearchInput } from "../../../../components/Inputs/SeachInput";
+import { ParticipantCardSelectable } from "../../../../components/Cards/ParticipantCardSelectable";
 import { useRouter } from "expo-router";
-import { useState } from "react";
-
-const mockParticipants = [
-  { id: "1", name: "Ana Souza", year: "2º ano", room: "Sala A" },
-  { id: "2", name: "Carlos Lima", year: "2º ano", room: "Sala B" },
-  { id: "3", name: "João Silva", year: "1º ano", room: "Sala C" },
-];
 
 export default function SelectMembersScreen() {
+  const [selectedCount, setSelectedCount] = useState(0);
   const router = useRouter();
-  const [selected, setSelected] = useState([]);
 
-  const toggleSelect = (id) => {
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]
-    );
+  const handleNext = () => {
+    router.push("./createTeamSucess(3)");
   };
 
-  const handleSave = () => {
-    router.push("../teams/teamCreatedScreen");
+  const handleSelectChange = (isSelected) => {
+    setSelectedCount((prev) => (isSelected ? prev + 1 : prev - 1));
   };
+
+  const participants = [
+    {
+      id: "1",
+      name: "Nome do participante",
+      gender: "Masculino / Feminino",
+      classInfo: "Segundo colegial / Sala B",
+      image: require("../../../../assets/images/profile-circle.png"),
+    },
+    {
+      id: "2",
+      name: "Nome do participante",
+      gender: "Masculino / Feminino",
+      classInfo: "Segundo colegial / Sala B",
+      image: require("../../../../assets/images/profile-circle.png"),
+    },
+    {
+      id: "3",
+      name: "Nome do participante",
+      gender: "Masculino / Feminino",
+      classInfo: "Segundo colegial / Sala B",
+      image: require("../../../../assets/images/profile-circle.png"),
+    },
+    {
+      id: "4",
+      name: "Nome do participante",
+      gender: "Masculino / Feminino",
+      classInfo: "Segundo colegial / Sala B",
+      image: require("../../../../assets/images/profile-circle.png"),
+    },
+    {
+      id: "5",
+      name: "Nome do participante",
+      gender: "Masculino / Feminino",
+      classInfo: "Segundo colegial / Sala B",
+      image: require("../../../../assets/images/profile-circle.png"),
+    },
+  ];
 
   return (
-    <View style={styles.safeArea}>
-      <Header title={"Montagem de Equipes"} back />
-      <View style={styles.container}>
-        <Text style={styles.subtitle}>Selecione os membros da equipe</Text>
-        <TextInput style={styles.input} placeholder="Filtre os resultados" />
+    <View style={styles.container}>
+      <HeaderBack title="Montagem de Equipes" />
 
-        <FlatList
-          data={mockParticipants}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View
-              style={[
-                styles.card,
-                selected.includes(item.id) && styles.selectedCard,
-              ]}
-            >
-              <View>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.details}>
-                  {item.year} / {item.room}
-                </Text>
-              </View>
-              <Button
-                text={selected.includes(item.id) ? "Remover" : "Selecionar"}
-                onPress={() => toggleSelect(item.id)}
-                small
-                outline={!selected.includes(item.id)}
-              />
-            </View>
-          )}
-        />
-      </View>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <View style={styles.headerText}>
+          <Text style={styles.subtitle}>Selecione os membros da equipe</Text>
+          <View style={styles.tag}>
+            <Text style={styles.tagText}>Time Sala 1 / 1 ano</Text>
+          </View>
+        </View>
+        <View style={styles.filterSection}>
+          <Text style={styles.filterLabel}>Exibindo:</Text>
+          <Filter
+            FirstItem={"Todos"}
+            SecondItem={"Disponíveis"}
+            ThirdItem={"Selecionados"}
+            firtItemNumer={"(13"}
+            SecondItemNumber={"11"}
+          />
+        </View>
+        <SearchInput placeholder="Filtre os resultados" />
+        <View style={styles.list}>
+          {participants.map((p) => (
+            <ParticipantCardSelectable
+              key={p.id}
+              name={p.name}
+              gender={p.gender}
+              classInfo={p.classInfo}
+              imageURL={p.image}
+              onSelectChange={handleSelectChange}
+            />
+          ))}
+        </View>
+        <View style={{ height: 100 }} />
+      </ScrollView>
 
       <View style={styles.footer}>
-        <Text style={styles.selectedText}>
-          {selected.length} alunos selecionados
+        <Text style={styles.footerText}>
+          {selectedCount} aluno{selectedCount !== 1 ? "s" : ""} selecionado
+          {selectedCount !== 1 ? "s" : ""}
         </Text>
-        <Button text="Salvar equipe" onPress={handleSave} />
+        <Button text="Salvar equipe" onPress={handleNext} />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: "#fff" },
-  container: { flex: 1, padding: 16 },
-  subtitle: { fontSize: 18, fontWeight: "700", marginBottom: 16 },
-  input: {
-    borderWidth: 1,
-    borderColor: "#D3D3D3",
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 20,
+  container: {
+    flex: 1,
+    backgroundColor: "#FBFBFB",
+    paddingHorizontal: 20,
   },
-  card: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#D3D3D3",
-    borderRadius: 8,
-    padding: 12,
+  scroll: {
+    paddingBottom: 120,
+  },
+  headerText: {
+    marginTop: 8,
+    marginBottom: 12,
+  },
+  subtitle: {
+    fontSize: 15,
+    fontWeight: "500",
+    color: "#1A1A1A",
+    marginBottom: 6,
+  },
+  tag: {
+    backgroundColor: "#FFF8DC",
+    alignSelf: "flex-start",
+    borderRadius: 6,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  tagText: {
+    color: "#B59400",
+    fontSize: 12,
+    fontWeight: "600",
+  },
+  filterSection: {
     marginBottom: 10,
   },
-  selectedCard: { borderColor: "#00C851", backgroundColor: "#E6F9ED" },
-  name: { fontSize: 16, fontWeight: "600" },
-  details: { fontSize: 14, color: "#666" },
-  footer: { padding: 16 },
-  selectedText: { textAlign: "center", marginBottom: 8, color: "#666" },
+  filterLabel: {
+    fontSize: 13,
+    color: "#7B7B7B",
+    marginBottom: 4,
+  },
+  list: {
+    marginTop: 8,
+  },
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: "#EEE",
+    alignItems: "center",
+  },
+  footerText: {
+    fontSize: 13,
+    color: "#555",
+    marginBottom: 6,
+    fontWeight: "500",
+  },
 });

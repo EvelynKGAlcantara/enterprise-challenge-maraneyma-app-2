@@ -1,8 +1,13 @@
 import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
 import { useState } from "react";
+import { MatchCard } from "../../../../components/Cards/GameCard";
+import { TeamCardInProgress } from "../../../../components/Cards/TeamCardInProgress";
+import { Filter } from "../../../../components/Filters/Filter";
 
 import { useRouter } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { ParticipantCardPoints } from "../../../../components/Cards/ParticipantCardPoints";
+import { TeamCardRanking } from "../../../../components/Cards/TeamCardRanking";
 
 const mockChampionships = [
   {
@@ -24,6 +29,17 @@ const mockMatches = {
       team1: "Equipe 1",
       team2: "Equipe 2",
       score1: 3,
+      score2: 5,
+      status: "finished",
+      date: "02/10/2025",
+      hour: "15:00",
+      winner: "Equipe 2",
+    },
+    {
+      id: 2,
+      team1: "Equipe 1",
+      team2: "Equipe 2",
+      score1: 8,
       score2: 2,
       status: "finished",
       date: "02/10/2025",
@@ -33,7 +49,15 @@ const mockMatches = {
   ],
   faseB: [
     {
-      id: 2,
+      id: 3,
+      team1: "Equipe 1",
+      team2: "Equipe 2",
+      score1: 0,
+      score2: 0,
+      status: "waiting",
+    },
+    {
+      id: 4,
       team1: "Equipe 1",
       team2: "Equipe 2",
       score1: 0,
@@ -43,7 +67,15 @@ const mockMatches = {
   ],
   final: [
     {
-      id: 3,
+      id: 5,
+      team1: "Equipe 1",
+      team2: "Equipe 2",
+      score1: 0,
+      score2: 0,
+      status: "waiting",
+    },
+    {
+      id: 6,
       team1: "Equipe 1",
       team2: "Equipe 2",
       score1: 0,
@@ -52,54 +84,106 @@ const mockMatches = {
     },
   ],
 };
+const mockTeams = [
+  {
+    id: "1",
+    name: "Time Sala 1",
+    description: "Primeiro Colegial (Ensino Médio)",
+    grade: "8º",
+  },
+  {
+    id: "2",
+    name: "Time Sala 2",
+    description: "Segundo Colegial (Ensino Médio)",
+    grade: "7º",
+  },
+  {
+    id: "3",
+    name: "Time Sala 3",
+    description: "Terceiro Colegial (Ensino Médio)",
+    grade: "6º",
+  },
+];
 
-// Componente para card de partida
-const MatchCard = ({ match }) => {
-  const isFinished = match.status === "finished";
-  const isWaiting = match.status === "waiting";
-
-  return (
-    <View
-      style={[
-        styles.matchCard,
-        isFinished && { borderColor: "#FFEB3B" },
-        isWaiting && { borderColor: "#E0E0E0" },
-      ]}
-    >
-      <Text style={styles.matchTitle}>Jogo {match.id}</Text>
-
-      <View style={styles.teamsRow}>
-        <Text style={styles.team}>{match.team1}</Text>
-        <Text style={styles.vs}>X</Text>
-        <Text style={styles.team}>{match.team2}</Text>
-      </View>
-
-      <View style={styles.scoreRow}>
-        <Text style={styles.score}>{match.score1}</Text>
-        <Text style={styles.score}>{match.score2}</Text>
-      </View>
-
-      {isFinished && (
-        <>
-          <Text style={styles.winner}>Vencedor: {match.winner}</Text>
-          <Text style={styles.date}>
-            Finalizado em {match.date} às {match.hour}
-          </Text>
-          <Pressable style={styles.detailsButton}>
-            <Text style={styles.detailsText}>Detalhes</Text>
-          </Pressable>
-        </>
-      )}
-
-      {isWaiting && <Text style={styles.waitingText}>Aguardando início</Text>}
-    </View>
-  );
-};
+export const mockParticipants = [
+  {
+    id: 1,
+    name: "Maria Silva",
+    avatar: null,
+    initialPoints: 5,
+    gender: "Feminino",
+    schoolYear: "Segundo colegial / Sala B",
+  },
+  {
+    id: 2,
+    name: "João Santos",
+    avatar: null,
+    initialPoints: 8,
+    gender: "Masculino",
+    schoolYear: "Terceiro colegial / Sala A",
+  },
+  {
+    id: 3,
+    name: "Ana Costa",
+    avatar: null,
+    initialPoints: 12,
+    gender: "Feminino",
+    schoolYear: "Primeiro colegial / Sala C",
+  },
+  {
+    id: 4,
+    name: "Pedro Oliveira",
+    avatar: null,
+    initialPoints: 3,
+    gender: "Masculino",
+    schoolYear: "Segundo colegial / Sala A",
+  },
+  {
+    id: 5,
+    name: "Carla Mendes",
+    avatar: null,
+    initialPoints: 15,
+    gender: "Feminino",
+    schoolYear: "Terceiro colegial / Sala B",
+  },
+  {
+    id: 6,
+    name: "Lucas Ferreira",
+    avatar: null,
+    initialPoints: 7,
+    gender: "Masculino",
+    schoolYear: "Primeiro colegial / Sala A",
+  },
+  {
+    id: 7,
+    name: "Juliana Rocha",
+    avatar: null,
+    initialPoints: 10,
+    gender: "Feminino",
+    schoolYear: "Segundo colegial / Sala C",
+  },
+  {
+    id: 8,
+    name: "Rafael Alves",
+    avatar: null,
+    initialPoints: 6,
+    gender: "Masculino",
+    schoolYear: "Terceiro colegial / Sala C",
+  },
+];
 
 export default function ChampionshipDetails() {
   const [tab, setTab] = useState("championship");
   const router = useRouter();
-
+  const handleTeamDetail = () => {
+    router.push("./teamDetails");
+  };
+  const handleGameDetail = () => {
+    router.push("./championshioDetails/gameDetails");
+  };
+  const handleStartGame = () => {
+    router.push("./championshioDetails/gameDetails");
+  };
   return (
     <View style={styles.safeArea}>
       <AntDesign
@@ -126,28 +210,9 @@ export default function ChampionshipDetails() {
             <View style={styles.badge}>
               <Text style={styles.badgeText}>EM ANDAMENTO</Text>
             </View>
-
-            <Text style={styles.progressText}>
-              Serão {championship.totalGames} jogos no total (
-              {championship.finishedGames} já ocorreram)
-            </Text>
-            <View style={styles.progressBar}>
-              <View
-                style={[
-                  styles.progressFill,
-                  {
-                    width: `${
-                      (championship.finishedGames / championship.totalGames) *
-                      100
-                    }%`,
-                  },
-                ]}
-              />
-            </View>
           </View>
         ))}
 
-        {/* Tabs */}
         <View style={styles.tabs}>
           <Pressable
             style={[styles.tab, tab === "championship" && styles.activeTab]}
@@ -181,26 +246,156 @@ export default function ChampionshipDetails() {
           </Pressable>
         </View>
 
-        {/* Conteúdo Campeonato */}
         {tab === "championship" && (
           <>
+            {mockChampionships.map((championship) => (
+              <View key={championship.id}>
+                <Text style={styles.progressText}>
+                  Serão {championship.totalGames} jogos no total (
+                  {championship.finishedGames} já ocorreram)
+                </Text>
+                <View style={styles.progressBar}>
+                  <View
+                    style={[
+                      styles.progressFill,
+                      {
+                        width: `${
+                          (championship.finishedGames /
+                            championship.totalGames) *
+                          100
+                        }%`,
+                      },
+                    ]}
+                  />
+                </View>
+              </View>
+            ))}
+
+            <View style={styles.filter}>
+              <Filter
+                FirstItem={"Jogos futuros"}
+                SecondItem={"Jogos Passados"}
+              />
+            </View>
+
             {/* Fase A */}
             <Text style={styles.phaseTitle}>Fase A</Text>
             {mockMatches.faseA.map((match) => (
-              <MatchCard key={match.id} match={match} />
+              <MatchCard
+                key={match.id}
+                score1={match.score1}
+                score2={match.score2}
+                team1={match.team1}
+                team2={match.team2}
+                status={match.status}
+                id={match.id}
+                date={match.date}
+                hour={match.hour}
+                winner={match.winner}
+                handleDetails={handleGameDetail}
+                handleStart={handleStartGame}
+              />
             ))}
 
             {/* Fase B */}
             <Text style={styles.phaseTitle}>Fase B</Text>
             {mockMatches.faseB.map((match) => (
-              <MatchCard key={match.id} match={match} />
+              <MatchCard
+                key={match.id}
+                score1={match.score1}
+                score2={match.score2}
+                team1={match.team1}
+                team2={match.team2}
+                status={match.status}
+                id={match.id}
+                date={match.date}
+                hour={match.hour}
+                winner={match.winner}
+              />
             ))}
 
-            {/* Final */}
             <Text style={styles.phaseTitle}>Final</Text>
             {mockMatches.final.map((match) => (
-              <MatchCard key={match.id} match={match} />
+              <MatchCard
+                key={match.id}
+                score1={match.score1}
+                score2={match.score2}
+                team1={match.team1}
+                team2={match.team2}
+                status={match.status}
+                id={match.id}
+                date={match.date}
+                hour={match.hour}
+                winner={match.winner}
+              />
             ))}
+          </>
+        )}
+        {tab === "team" && (
+          <>
+            {mockTeams.map((team) => (
+              <View key={team.id}>
+                <TeamCardInProgress
+                  onPressDetails={handleTeamDetail}
+                  name={team.name}
+                  description={team.description}
+                />
+              </View>
+            ))}
+          </>
+        )}
+
+        {tab === "ranking" && (
+          <>
+            {mockChampionships.map((championship) => (
+              <View key={championship.id}>
+                <Text style={styles.progressText}>
+                  Serão {championship.totalGames} jogos no total (
+                  {championship.finishedGames} já ocorreram)
+                </Text>
+                <View style={styles.progressBar}>
+                  <View
+                    style={[
+                      styles.progressFill,
+                      {
+                        width: `${
+                          (championship.finishedGames /
+                            championship.totalGames) *
+                          100
+                        }%`,
+                      },
+                    ]}
+                  />
+                </View>
+              </View>
+            ))}
+
+            <Text style={styles.phaseTitle}>Resultado Parcial</Text>
+            <View>
+              {mockTeams.map((team) => (
+                <TeamCardRanking
+                  key={team.id}
+                  className={team.name}
+                  subtitle={team.description}
+                  grade={team.grade}
+                />
+              ))}
+            </View>
+            <Text style={styles.phaseTitle}>Pontuação por jogadores</Text>
+            <View>
+              {mockParticipants.map((participant) => (
+                <ParticipantCardPoints
+                  avatar={participant.avatar}
+                  editable={false}
+                  initialPoints={participant.initialPoints}
+                  name={participant.name}
+                  key={participant.id}
+                  description={true}
+                  gender={participant.gender}
+                  schoolYear={participant.schoolYear}
+                />
+              ))}
+            </View>
           </>
         )}
       </ScrollView>
@@ -234,16 +429,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF176",
   },
   badgeText: { fontSize: 12, fontWeight: "700", color: "#000" },
-  progressText: { fontSize: 12, marginBottom: 8 },
+  progressText: { fontSize: 14, marginBottom: 8, color: "#7B7B7B" },
   progressBar: {
     width: "100%",
-    height: 8,
+    height: 16,
     backgroundColor: "#E0E0E0",
-    borderRadius: 4,
+    borderRadius: 100,
     marginBottom: 20,
   },
-  progressFill: { height: "100%", backgroundColor: "#EB2F96", borderRadius: 4 },
-  tabs: { flexDirection: "row", justifyContent: "center", marginVertical: 16 },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#EB2F96",
+    borderRadius: 100,
+  },
+
+  tabs: {
+    flexDirection: "row",
+    justifyContent: "center",
+    borderStyle: "solid",
+    borderColor: "#F0F0F0",
+    gap: 5,
+    marginBottom: 16,
+  },
   tab: {
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -251,13 +458,19 @@ const styles = StyleSheet.create({
     borderColor: "#F0F0F0",
     backgroundColor: "#f8f8f8",
   },
-  tabText: { fontSize: 14, color: "#00000085" },
+  tabText: {
+    fontSize: 14,
+    color: "#00000085",
+  },
   activeTab: {
     borderBottomWidth: 1,
     borderBottomColor: "#EB2F96",
     backgroundColor: "#ffffff",
   },
-  activeText: { color: "#EB2F96", fontWeight: "500" },
+  activeText: {
+    color: "#EB2F96",
+    fontWeight: "500",
+  },
   phaseTitle: {
     fontSize: 18,
     fontWeight: "700",
@@ -313,4 +526,7 @@ const styles = StyleSheet.create({
     borderColor: "#EB2F96",
   },
   detailsText: { fontSize: 12, color: "#EB2F96" },
+  filter: {
+    marginHorizontal: -16,
+  },
 });

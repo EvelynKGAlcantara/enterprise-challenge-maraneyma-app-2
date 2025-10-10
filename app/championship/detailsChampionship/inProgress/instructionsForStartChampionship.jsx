@@ -16,7 +16,7 @@ const mockChampionships = [
   },
 ];
 
-export default function ChampionshipDetails() {
+export default function ChampionshipDetailsForStart() {
   const router = useRouter();
 
   const handleConfirmStarChampionship = () => {

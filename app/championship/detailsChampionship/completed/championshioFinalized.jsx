@@ -8,7 +8,7 @@ import { useRouter } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { ParticipantCardPoints } from "../../../../components/Cards/ParticipantCardPoints";
 import { TeamCardRanking } from "../../../../components/Cards/TeamCardRanking";
-import { ConfirmModal } from "../../../../components/Modals/ConfirmModal";
+import { TeamCardWin } from "../../../../components/Cards/TeamCardWin";
 
 const mockChampionships = [
   {
@@ -55,7 +55,10 @@ const mockMatches = {
       team2: "Equipe 2",
       score1: 0,
       score2: 0,
-      status: "waiting",
+      status: "finished",
+      date: "02/10/2025",
+      hour: "15:00",
+      winner: "Equipe 1",
     },
     {
       id: 4,
@@ -63,7 +66,10 @@ const mockMatches = {
       team2: "Equipe 2",
       score1: 0,
       score2: 0,
-      status: "waiting",
+      status: "finished",
+      date: "02/10/2025",
+      hour: "15:00",
+      winner: "Equipe 1",
     },
   ],
   final: [
@@ -73,7 +79,10 @@ const mockMatches = {
       team2: "Equipe 2",
       score1: 0,
       score2: 0,
-      status: "waiting",
+      status: "finished",
+      date: "02/10/2025",
+      hour: "15:00",
+      winner: "Equipe 1",
     },
     {
       id: 6,
@@ -81,7 +90,10 @@ const mockMatches = {
       team2: "Equipe 2",
       score1: 0,
       score2: 0,
-      status: "waiting",
+      status: "finished",
+      date: "02/10/2025",
+      hour: "15:00",
+      winner: "Equipe 1",
     },
   ],
 };
@@ -90,13 +102,13 @@ const mockTeams = [
     id: "1",
     name: "Time Sala 1",
     description: "Primeiro Colegial (Ensino Médio)",
-    grade: "8º",
+    grade: "4º",
   },
   {
     id: "2",
     name: "Time Sala 2",
     description: "Segundo Colegial (Ensino Médio)",
-    grade: "7º",
+    grade: "5º",
   },
   {
     id: "3",
@@ -173,15 +185,15 @@ const mockParticipants = [
   },
 ];
 
-export default function ChampionshipDetailsProgress() {
+export default function ChampionshipFinalized() {
   const [tab, setTab] = useState("championship");
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const handleTeamDetail = () => {
-    router.push("./teamDetails");
+    router.push("../inProgress/teamDetails");
   };
   const handleGameDetail = () => {
-    router.push("./championshipDetails/gameDetails");
+    router.push("./gameDetails/gameDetailsCompleted");
   };
   const handleStartGame = () => {
     setModalVisible(true);
@@ -348,30 +360,24 @@ export default function ChampionshipDetailsProgress() {
 
         {tab === "ranking" && (
           <>
-            {mockChampionships.map((championship) => (
-              <View key={championship.id}>
-                <Text style={styles.progressText}>
-                  Serão {championship.totalGames} jogos no total (
-                  {championship.finishedGames} já ocorreram)
-                </Text>
-                <View style={styles.progressBar}>
-                  <View
-                    style={[
-                      styles.progressFill,
-                      {
-                        width: `${
-                          (championship.finishedGames /
-                            championship.totalGames) *
-                          100
-                        }%`,
-                      },
-                    ]}
-                  />
-                </View>
-              </View>
-            ))}
-
             <Text style={styles.phaseTitle}>Resultado Parcial</Text>
+            <View>
+              <TeamCardWin
+                variant="first"
+                className={"Time Sala 5"}
+                subtitle={"Primeiro Colegial (Ensino Médio)"}
+              />
+              <TeamCardWin
+                variant="second"
+                className={"Time Sala 4"}
+                subtitle={"Primeiro Colegial (Ensino Médio)"}
+              />
+              <TeamCardWin
+                variant="third"
+                className={"Time Sala 2"}
+                subtitle={"Primeiro Colegial (Ensino Médio)"}
+              />
+            </View>
             <View>
               {mockTeams.map((team) => (
                 <TeamCardRanking
@@ -383,6 +389,9 @@ export default function ChampionshipDetailsProgress() {
               ))}
             </View>
             <Text style={styles.phaseTitle}>Pontuação por jogadores</Text>
+            <View style={styles.tag}>
+              <Text style={styles.textTag}>ARTILHEIRO(A) DO CAMPEONATO</Text>
+            </View>
             <View>
               {mockParticipants.map((participant) => (
                 <ParticipantCardPoints
@@ -426,7 +435,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 4,
     marginBottom: 16,
-    backgroundColor: "#FFF176",
+    backgroundColor: "#BAE7FF",
   },
   badgeText: { fontSize: 12, fontWeight: "700", color: "#000" },
   progressText: { fontSize: 14, marginBottom: 8, color: "#7B7B7B" },
@@ -528,5 +537,17 @@ const styles = StyleSheet.create({
   detailsText: { fontSize: 12, color: "#EB2F96" },
   filter: {
     marginHorizontal: -16,
+  },
+  tag: {
+    backgroundColor: "#EB2F96",
+    padding: 8,
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
+  },
+  textTag: {
+    color: "#FFFFFF",
+    fontSize: 12,
+    alignSelf: "center",
+    fontWeight: "700",
   },
 });

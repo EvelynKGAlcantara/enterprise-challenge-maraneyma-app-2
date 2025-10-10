@@ -22,7 +22,7 @@ export const MatchCard = ({
         style={[
           styles.header,
           isFinished && { backgroundColor: "#FFF59D" },
-          isWaiting && { backgroundColor: "#91D5FF", color: "#ffffff" },
+          isWaiting && { backgroundColor: "#91D5FF" },
         ]}
       >
         <Text style={styles.headerText}>Jogo {id}</Text>

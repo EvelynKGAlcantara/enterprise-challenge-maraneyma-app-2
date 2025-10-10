@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function SportCard({ title, description, onPress }) {
+export default function SportCard({ title, description, onPress, shortly }) {
   return (
     <View style={styles.card}>
       <View style={{ paddingRight: 24 }}>
@@ -12,10 +12,15 @@ export default function SportCard({ title, description, onPress }) {
       <Pressable onPress={onPress} style={styles.arrow} hitSlop={10}>
         <Ionicons name="chevron-forward" size={20} color="#EB2F96" />
       </Pressable>
-
-      <Pressable onPress={onPress} style={styles.button}>
-        <Text style={styles.buttonText}>Ver detalhes</Text>
-      </Pressable>
+      {shortly ? (
+        <View style={styles.highlighted}>
+          <Text style={styles.textHighlighted}>EM BREVE</Text>
+        </View>
+      ) : (
+        <Pressable onPress={onPress} style={styles.button}>
+          <Text style={styles.buttonText}>Ver detalhes</Text>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -61,5 +66,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#EB2F96",
     fontWeight: "400",
+  },
+  highlighted: {
+    backgroundColor: "#FFFB8F",
+    padding: 8,
+    width: 90,
+  },
+  textHighlighted: {
+    fontWeight: "800",
   },
 });

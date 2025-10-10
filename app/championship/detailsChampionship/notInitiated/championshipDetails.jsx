@@ -93,7 +93,6 @@ export default function ChampionshipDetails() {
         onPress={router.back}
         style={styles.backButton}
       />
-
       <ScrollView
         contentContainerStyle={{ paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}

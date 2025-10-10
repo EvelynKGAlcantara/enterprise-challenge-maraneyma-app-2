@@ -1,4 +1,4 @@
-import { Modal, View, Text, StyleSheet, Pressable } from "react-native";
+import { Modal, View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { Button } from "../Button/index";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -13,6 +13,8 @@ export const ConfirmModal = ({
   description,
   descriptionBold,
   descriptionContinue,
+  insertComponent,
+  component,
 }) => {
   return (
     <Modal
@@ -35,7 +37,7 @@ export const ConfirmModal = ({
             <Text style={styles.messageBold}>{descriptionBold}</Text>
             {descriptionContinue}
           </Text>
-
+          {insertComponent ? <View>{component}</View> : null}
           <View style={styles.buttons}>
             <Button text={textSecondatyButton} onPress={onConfirm} />
             <Button text={textButton} onPress={navigate} />

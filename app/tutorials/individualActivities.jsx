@@ -8,31 +8,37 @@ const sports = [
     title: "Amarelinha",
     description:
       "Um jogo clássico onde os jogadores lançam uma pedra em casas desenhadas no chão e pulam em um pé só, seguindo um percurso determinado.",
+    shortly: true,
   },
   {
     title: "Corrida",
     description:
       "Uma disputa simples onde os participantes correm para ver quem chega primeiro a um ponto determinado.",
+    shortly: true,
   },
   {
     title: "Corrida de saco",
     description:
       "Uma corrida divertida onde os participantes colocam as pernas dentro de um saco e pulam até a linha de chegada.",
+    shortly: true,
   },
   {
     title: "Dança das cadeiras",
     description:
       "Um jogo musical onde os participantes dançam ao redor de cadeiras e, quando a música para, cada um deve sentar em uma cadeira disponível, com uma cadeira a menos a cada rodada.",
+    shortly: true,
   },
   {
     title: "Pega-pega",
     description:
       "Um jogo de perseguição onde um jogador é o pegador e tenta tocar nos outros jogadores, que correm para não serem pegos.",
+    shortly: true,
   },
   {
     title: "Pular corda",
     description:
       "Uma atividade que envolve pular repetidamente sobre uma corda em movimento, individualmente ou em grupo.",
+    shortly: true,
   },
 ];
 
@@ -50,7 +56,7 @@ export default function IndividualActivities() {
           key={index}
           title={sport.title}
           description={sport.description}
-          onPress={() => console.log("Detalhes de:", sport.title)}
+          shortly={sport.shortly}
         />
       ))}
     </ScrollView>

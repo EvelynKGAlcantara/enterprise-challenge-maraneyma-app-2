@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 
-export const PhotoInput = ({ onPress }) => {
+export const PhotoInput = ({ onPress, textButton }) => {
   return (
     <View style={styles.container}>
       <View style={styles.avatar}>
@@ -8,7 +8,11 @@ export const PhotoInput = ({ onPress }) => {
       </View>
 
       <Pressable onPress={onPress} style={styles.button}>
-        <Text style={styles.buttonText}> Tirar foto </Text>
+        {textButton ? (
+          <Text style={styles.buttonText}>{textButton}</Text>
+        ) : (
+          <Text style={styles.buttonText}> Tirar foto </Text>
+        )}
       </Pressable>
 
       <Text style={styles.optional}>(opcional)</Text>

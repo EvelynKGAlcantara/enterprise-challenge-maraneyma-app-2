@@ -25,16 +25,16 @@ const mockChampionships = [
 ];
 
 const mockTeams = [
-  {
-    id: 1,
-    name: "Time Sala 1",
-    description: "Primeiro Colegial (Ensino Médio)",
-  },
-  {
-    id: 2,
-    name: "Time Sala 2",
-    description: "Primeiro Colegial (Ensino Médio)",
-  },
+  // {
+  //   id: 1,
+  //   name: "Time Sala 1",
+  //   description: "Primeiro Colegial (Ensino Médio)",
+  // },
+  // {
+  //   id: 2,
+  //   name: "Time Sala 2",
+  //   description: "Primeiro Colegial (Ensino Médio)",
+  // },
 ];
 
 const renderStatus = (status) => {
@@ -199,19 +199,23 @@ export default function ChampionshipDetails() {
                 </View>
               </View>
             ) : (
-              <View style={styles.content}>
-                <Image
-                  source={require("../../../../assets/images/futebol.png")}
-                  style={styles.image}
-                />
-                <View style={styles.infoText}>
-                  <Text style={styles.bold}>Importante: </Text>
-                  <Text style={styles.text}>
-                    Monte as equipes para ativar o campeonato
-                  </Text>
+              <View style={styles.spaceNoTeam}>
+                <View style={styles.content}>
+                  <Image
+                    source={require("../../../../assets/images/futebol.png")}
+                    style={styles.image}
+                  />
+                  <View style={styles.infoText}>
+                    <Text style={styles.bold}>Importante: </Text>
+                    <Text style={styles.text}>
+                      Monte as equipes para ativar o campeonato
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.button}>
-                  <Button text="Montar equipes" onPress={handleCreateTeam} />
+                <View>
+                  <View style={styles.buttonsChamp}>
+                    <Button text="Montar equipes" onPress={handleCreateTeam} />
+                  </View>
                 </View>
               </View>
             )}
@@ -239,32 +243,36 @@ export default function ChampionshipDetails() {
                   Este campeonato precisa ter pelo menos 3 equipes
                 </Text>
 
-                <View style={{ marginTop: 16 }}>
+                <View style={styles.buttonsChamp}>
                   <Button text="Montar equipes" onPress={handleCreateTeam} />
                 </View>
               </View>
             ) : (
-              <View style={styles.content}>
-                <Image
-                  source={require("../../../../assets/images/atividades_grupo.png")}
-                  style={styles.image}
-                />
-                <Text style={styles.infoText}>
-                  Monte as equipes para ativar o campeonatoOOOOOOOO
-                </Text>
-                <Button text="Montar equipes" onPress={handleCreateTeam} />
+              <View style={styles.spaceNoTeam}>
+                <View style={styles.content}>
+                  <Image
+                    source={require("../../../../assets/images/team.png")}
+                    style={styles.imageTeam}
+                  />
+                  <Text style={styles.text}>
+                    Monte as equipes para ativar o campeonato
+                  </Text>
+                </View>
+                <View style={{ marginTop: 24 }}>
+                  <Button text="Montar equipes" onPress={handleCreateTeam} />
+                </View>
               </View>
             )}
           </View>
         )}
         {/* Conteúdo da tab de Classificação */}
         {tab === "ranking" && (
-          <View style={styles.section}>
+          <View style={styles.sectionRanking}>
             <Image
               source={require("../../../../assets/images/trophy.png")}
-              style={styles.image}
+              style={styles.imageRanking}
             />
-            <Text style={styles.infoText}>Aguardando início dos jogssos</Text>
+            <Text style={styles.text}>Aguardando início dos jogos</Text>
           </View>
         )}
       </ScrollView>
@@ -369,6 +377,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   content: {
+    marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -380,9 +389,17 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: "contain",
   },
+  imageTeam: {
+    width: 350,
+    height: 170,
+    resizeMode: "contain",
+    marginBottom: 10,
+  },
   infoText: {
+    marginTop: 20,
     textAlign: "center",
     alignItems: "center",
+    justifyContent: "center",
     marginVertical: 10,
   },
   imageTrophy: {
@@ -392,8 +409,12 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   text: {
+    marginTop: 5,
     fontSize: 18,
+    fontFamily: "SofiaSans_400Regular",
     color: "#BFBFBF",
+    textAlign: "center",
+    marginBottom: 16,
   },
   bold: {
     fontSize: 18,
@@ -426,7 +447,27 @@ const styles = StyleSheet.create({
     height: "100%",
     gap: 100,
   },
+  spaceNoTeam: {
+    flex: 1,
+    height: "100%",
+    gap: 140,
+  },
   buttonsChamp: {
     flex: 1,
+  },
+  buttons: {
+    marginBottom: -20,
+  },
+  imageRanking: {
+    height: 180,
+    width: 180,
+    marginVertical: 20,
+    borderRadius: 100,
+    opacity: 0.5,
+  },
+  sectionRanking: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
   },
 });

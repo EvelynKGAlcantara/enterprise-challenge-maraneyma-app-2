@@ -16,18 +16,19 @@ export const ParticipantCardSelectable = ({
     if (onSelectChange) onSelectChange(newState);
   };
 
-  // 🔒 Se for número, é require(). Se for string, é URL remota
-  const imageSource =
-    typeof imageURL === "number"
-      ? imageURL
-      : imageURL
-      ? { uri: imageURL }
-      : { uri: "https://via.placeholder.com/50/cccccc/808080?text=👤" };
-
   return (
     <View style={[styles.container, selected && styles.containerSelected]}>
-      <View style={[styles.avatarContainer, selected && styles.avatarSelected]}>
-        <Image source={imageSource} style={styles.avatar} resizeMode="cover" />
+      <View
+        style={[
+          styles.avatarContainer,
+          selected ? styles.avatarSelected : styles.avatarNoSelected,
+        ]}
+      >
+        <Image
+          source={require("../../assets/images/profile-circle.png")}
+          style={styles.avatar}
+          resizeMode="cover"
+        />
       </View>
 
       <View style={styles.infoContainer}>
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
     padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
@@ -85,49 +85,60 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#77E36F",
   },
+  avatarNoSelected: {
+    borderWidth: 1,
+    borderColor: "#ffffffff",
+  },
   avatar: {
     width: 60,
     height: 60,
     borderRadius: 30,
   },
+
   infoContainer: {
     flex: 1,
   },
   name: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     color: "#000",
+    fontFamily: "SofiaSans_400Regular",
   },
   gender: {
-    fontSize: 13,
+    fontSize: 12,
     color: "#999",
     marginTop: 2,
+    fontFamily: "SofiaSans_400Regular",
   },
   classInfo: {
-    fontSize: 13,
+    fontSize: 12,
     color: "#777",
     marginTop: 2,
+    fontFamily: "SofiaSans_400Regular",
   },
-  button: {
-    borderWidth: 1,
-    borderRadius: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-  },
+
   buttonSelect: {
     borderColor: "#EB2F96",
   },
   buttonRemove: {
-    borderColor: "#77E36F",
-    backgroundColor: "#E8FFE8",
+    backgroundColor: "#ffffffff",
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: "#EB2F96",
+    borderRadius: 4,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    alignSelf: "center",
   },
   buttonText: {
-    fontWeight: "500",
+    color: "#EB2F96",
+    fontWeight: "400",
   },
   textSelect: {
     color: "#EB2F96",
   },
   textRemove: {
-    color: "#1D7A25",
+    color: "#EB2F96",
   },
 });

@@ -22,76 +22,82 @@ export default function SelectMembersScreen() {
   const participants = [
     {
       id: "1",
-      name: "Nome do participante",
-      gender: "Masculino / Feminino",
+      name: "Lucas Almeida",
+      gender: "Masculino",
       classInfo: "Segundo colegial / Sala B",
       image: require("../../../../assets/images/profile-circle.png"),
     },
     {
       id: "2",
-      name: "Nome do participante",
-      gender: "Masculino / Feminino",
+      name: "Mariana Souza",
+      gender: "Feminino",
       classInfo: "Segundo colegial / Sala B",
       image: require("../../../../assets/images/profile-circle.png"),
     },
     {
       id: "3",
-      name: "Nome do participante",
-      gender: "Masculino / Feminino",
+      name: "Gabriel Fernandes",
+      gender: "Masculino",
       classInfo: "Segundo colegial / Sala B",
       image: require("../../../../assets/images/profile-circle.png"),
     },
     {
       id: "4",
-      name: "Nome do participante",
-      gender: "Masculino / Feminino",
+      name: "Ana Clara Silva",
+      gender: "Feminino",
       classInfo: "Segundo colegial / Sala B",
       image: require("../../../../assets/images/profile-circle.png"),
     },
     {
       id: "5",
-      name: "Nome do participante",
-      gender: "Masculino / Feminino",
+      name: "Rafael Oliveira",
+      gender: "Masculino",
       classInfo: "Segundo colegial / Sala B",
       image: require("../../../../assets/images/profile-circle.png"),
     },
   ];
 
   return (
-    <View style={styles.container}>
-      <HeaderBack title="Montagem de Equipes" />
+    <View style={styles.containerAll}>
+      <View style={{ paddingHorizontal: 24 }}>
+        <HeaderBack title="Montagem de Equipes" />
+      </View>
 
       <ScrollView contentContainerStyle={styles.scroll}>
-        <View style={styles.headerText}>
-          <Text style={styles.subtitle}>Selecione os membros da equipe</Text>
-          <View style={styles.tag}>
-            <Text style={styles.tagText}>Time Sala 1 / 1 ano</Text>
+        <View style={styles.container}>
+          <View style={styles.headerText}>
+            <Text style={styles.subtitle}>Selecione os membros da equipe</Text>
+            <View style={styles.tag}>
+              <Text style={styles.tagText}>Time Sala 1 / 1 ano</Text>
+            </View>
           </View>
         </View>
         <View style={styles.filterSection}>
-          <Text style={styles.filterLabel}>Exibindo:</Text>
           <Filter
             FirstItem={"Todos"}
             SecondItem={"Disponíveis"}
             ThirdItem={"Selecionados"}
-            firtItemNumer={"(13"}
-            SecondItemNumber={"11"}
+            firtItemNumer={"(13)"}
+            SecondItemNumber={"(11)"}
           />
         </View>
-        <SearchInput placeholder="Filtre os resultados" />
-        <View style={styles.list}>
-          {participants.map((p) => (
-            <ParticipantCardSelectable
-              key={p.id}
-              name={p.name}
-              gender={p.gender}
-              classInfo={p.classInfo}
-              imageURL={p.image}
-              onSelectChange={handleSelectChange}
-            />
-          ))}
+
+        <View style={styles.container}>
+          <SearchInput placeholder="Filtre os resultados" />
+          <View style={styles.list}>
+            {participants.map((p) => (
+              <ParticipantCardSelectable
+                key={p.id}
+                name={p.name}
+                gender={p.gender}
+                classInfo={p.classInfo}
+                imageURL={p.image}
+                onSelectChange={handleSelectChange}
+              />
+            ))}
+          </View>
+          <View style={{ height: 100 }} />
         </View>
-        <View style={{ height: 100 }} />
       </ScrollView>
 
       <View style={styles.footer}>
@@ -108,8 +114,11 @@ export default function SelectMembersScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 24,
+  },
+  containerAll: {
+    flex: 1,
     backgroundColor: "#FBFBFB",
-    paddingHorizontal: 20,
   },
   scroll: {
     paddingBottom: 120,
@@ -119,25 +128,26 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   subtitle: {
-    fontSize: 15,
-    fontWeight: "500",
-    color: "#1A1A1A",
+    fontSize: 18,
+    fontFamily: "SofiaSans_800ExtraBold",
+    color: "#000000",
     marginBottom: 6,
   },
   tag: {
-    backgroundColor: "#FFF8DC",
+    marginBottom: 16,
+    backgroundColor: "#FFFB8F",
     alignSelf: "flex-start",
     borderRadius: 6,
     paddingVertical: 4,
     paddingHorizontal: 8,
   },
   tagText: {
-    color: "#B59400",
+    color: "#000000",
+    fontFamily: "SofiaSans_800ExtraBold",
     fontSize: 12,
-    fontWeight: "600",
   },
   filterSection: {
-    marginBottom: 10,
+    marginBottom: 24,
   },
   filterLabel: {
     fontSize: 13,
@@ -149,19 +159,20 @@ const styles = StyleSheet.create({
   },
   footer: {
     position: "absolute",
-    bottom: 0,
+    bottom: 20,
     left: 0,
     right: 0,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingVertical: 12,
     borderTopWidth: 1,
+    width: "100%",
     borderTopColor: "#EEE",
-    alignItems: "center",
   },
   footerText: {
-    fontSize: 13,
-    color: "#555",
+    textAlign: "center",
+    fontSize: 12,
+    color: "#7B7B7B",
     marginBottom: 6,
     fontWeight: "500",
   },

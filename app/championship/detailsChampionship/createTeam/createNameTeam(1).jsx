@@ -23,13 +23,13 @@ export default function CreateTeamScreen() {
           <Text style={styles.title}>Crie um nome pra equipe</Text>
 
           <View style={styles.subtitleBlock}>
-            <Text style={styles.subtitleSmall}>
+            <Text style={styles.subtitleBold}>
               Campeonato de futebol / Feminino
             </Text>
-            <Text style={styles.subtitleSmall}>
+            <Text style={styles.subtitleBold}>
               ANO ESCOLAR:{" "}
-              <Text style={styles.subtitleBold}>
-                Segundo Colegial | Ensino Médio
+              <Text style={styles.subtitleSmall}>
+                Segundo Colegial (Ensino Médio)
               </Text>
             </Text>
           </View>
@@ -49,7 +49,7 @@ export default function CreateTeamScreen() {
             <Text style={styles.label}>
               Símbolo do time <Text style={styles.optional}>(opcional)</Text>
             </Text>
-            <PhotoInput onChangePhoto={setPhoto} />
+            <PhotoInput onChangePhoto={setPhoto} textButton={"Subir Imagem"} />
           </View>
         </View>
 
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     color: "#515151",
     fontFamily: "SofiaSans_800ExtraBold",
     marginTop: 12,
@@ -86,12 +86,14 @@ const styles = StyleSheet.create({
     fontFamily: "SofiaSans_400Regular",
   },
   subtitleBold: {
-    fontFamily: "SofiaSans_600SemiBold",
+    fontFamily: "SofiaSans_800ExtraBold",
+    color: "#7B7B7B",
   },
   form: {
-    gap: 16,
+    gap: 24,
   },
   label: {
+    marginBottom: -12,
     fontSize: 14,
     color: "#000",
     fontFamily: "SofiaSans_400Regular",

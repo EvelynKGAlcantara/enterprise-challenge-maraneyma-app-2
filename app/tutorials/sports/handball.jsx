@@ -96,7 +96,8 @@ Linha de 6 Metros: Use tampas de garrafa PET, chinelos, ou tiras de jornal/papel
       <SportDetailsContent
         sport={sport}
         type="Atividade em Grupo"
-        description="O Handebol é um esporte dinâmico, jogado com as mãos, que desenvolve a agilidade, o raciocínio tático e a coordenação óculo-manual (mão-olho). É excelente para espaços pequenos."
+        initialDescription={"O "}
+        description=" é um esporte dinâmico, jogado com as mãos, que desenvolve a agilidade, o raciocínio tático e a coordenação óculo-manual (mão-olho). É excelente para espaços pequenos."
         image={require("../../../assets/images/handball.png")}
         accordionData={mockData}
         onShare={handleShare}

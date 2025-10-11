@@ -2,19 +2,16 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { CardSelect } from "../../../components/Cards/ChampionshipCard";
+import { HeaderBack } from "../../../components/Header/HeaderBack";
 
 export default function ChampionshipTypeScreen() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <AntDesign
-        name="arrow-left"
-        size={40}
-        color="#EB2F96"
-        onPress={router.back}
-        style={styles.backButton}
-      />
+      <View style={styles.containerHeader}>
+        <HeaderBack />
+      </View>
 
       <Text style={styles.title}>Qual tipo de campeonato você quer criar?</Text>
 
@@ -39,8 +36,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fbfbfbff",
-    paddingTop: "30%",
-    paddingBottom: 40,
+  },
+  containerHeader: {
+    paddingHorizontal: 24,
   },
   title: {
     fontSize: 26,
@@ -58,6 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fbfbfb",
   },
   cards: {
+    marginTop: 20,
     width: "100%",
   },
 });

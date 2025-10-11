@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export const SportCardHome = ({ title, description, onPress }) => {
+export const SportCardHome = ({ title, description, onPress, shortly }) => {
   return (
     <View style={styles.card}>
       <View style={{ paddingRight: 24 }}>
         <Text style={styles.title}>{title}</Text>
 
-        <Text style={styles.description} numberOfLines={3} ellipsizeMode="tail">
+        <Text style={styles.description} numberOfLines={4} ellipsizeMode="tail">
           {description}
         </Text>
       </View>
@@ -16,9 +16,15 @@ export const SportCardHome = ({ title, description, onPress }) => {
         <Ionicons name="chevron-forward" size={20} color="#EB2F96" />
       </Pressable>
 
-      <Pressable onPress={onPress} style={styles.button}>
-        <Text style={styles.buttonText}>Ver detalhes</Text>
-      </Pressable>
+      {shortly ? (
+        <View style={styles.highlighted}>
+          <Text style={styles.textHighlighted}>EM BREVE</Text>
+        </View>
+      ) : (
+        <Pressable onPress={onPress} style={styles.button}>
+          <Text style={styles.buttonText}>Ver detalhes</Text>
+        </Pressable>
+      )}
     </View>
   );
 };
@@ -26,7 +32,7 @@ export const SportCardHome = ({ title, description, onPress }) => {
 const styles = StyleSheet.create({
   card: {
     width: "100%",
-    height: 180,
+    height: 190,
     backgroundColor: "#f9f9f9ff",
     paddingHorizontal: 24,
     paddingVertical: 24,
@@ -44,7 +50,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     color: "#7B7B7B",
-    marginBottom: 10,
+    marginBottom: 12,
     paddingRight: 20,
     fontFamily: "SofiaSans_400Regular",
   },
@@ -65,5 +71,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#EB2F96",
     fontWeight: "400",
+  },
+  highlighted: {
+    backgroundColor: "#FFFB8F",
+    padding: 8,
+    width: 90,
+  },
+  textHighlighted: {
+    fontWeight: "800",
   },
 });

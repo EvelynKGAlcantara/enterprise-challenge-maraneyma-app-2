@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   },
 
   tabs: {
+    marginTop: 24,
     flexDirection: "row",
     justifyContent: "center",
     borderStyle: "solid",

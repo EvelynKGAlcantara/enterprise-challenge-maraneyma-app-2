@@ -22,7 +22,7 @@ export const InputsFilter = () => {
   return (
     <View style={styles.container}>
       <View style={styles.selectArea}>
-        <Text style={styles.text}> Filtrar por ano escolar</Text>
+        <Text style={styles.text}>Filtrar por ano escolar</Text>
         <View style={styles.input}>
           <SelectInput
             value={schoolYear}
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
+    marginBottom: 20,
   },
   searchInputContainer: {},
   selectArea: {

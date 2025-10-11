@@ -16,34 +16,39 @@ import { useState, useEffect } from "react";
 
 const sports = [
   {
-    title: "Cabo de guerra",
-    description:
-      "Um esporte de força onde duas equipes puxam uma corda em direções opostas, com o objetivo de puxar a equipe adversária para o seu lado.",
-  },
-  {
-    title: "Corrida de revezamento",
-    description:
-      "Uma modalidade de corrida onde equipes se alternam correndo trechos de um percurso, passando um bastão para o próximo corredor.",
-  },
-  {
     title: "Futebol",
     description:
       "Um esporte coletivo jogado com uma bola, onde o objetivo é marcar gols chutando a bola para dentro da meta adversária.",
+    shortly: false,
+    route: "../tutorials/sports/futebol",
   },
   {
     title: "Handball",
     description:
       "Um esporte de equipe onde os jogadores lançam uma bola com as mãos para marcar gols em uma meta.",
+    shortly: false,
+    route: "../tutorials/sports/handball",
   },
   {
     title: "Peteca",
     description:
       "Um esporte de raquete onde os jogadores utilizam raquetes para golpear uma peteca sobre uma rede.",
+    shortly: false,
+    route: "../tutorials/sports/peteca",
   },
+  {
+    title: "Cabo de guerra",
+    description:
+      "Um esporte de força onde duas equipes puxam uma corda em direções opostas, com o objetivo de puxar a equipe adversária para o seu lado.",
+    shortly: false,
+    route: "../tutorials/sports/caboDeGuerra",
+  },
+
   {
     title: "Queimada (Carimbada)",
     description:
       "Um jogo onde um time tenta acertar os jogadores do time adversário com uma bola, queimando-os para eliminá-los do jogo.",
+    shortly: true,
   },
 ];
 
@@ -53,54 +58,60 @@ const mockChampionships = [
     status: "waiting",
     category: "Vôlei / Misto",
     title: "Campeonato Interclasses",
-    schoolYear: "Ano escolar: Terceiro Colegial (Ensino Médio)",
-    participatingTeams: "10 equipes participantes",
-    totalGames: "Falta cadastrar participantes",
+    schoolYear: "Terceiro Colegial (Ensino Médio)",
+    participatingTeams: "10",
+    totalGames: 0,
+    finishedGames: 0,
   },
   {
     id: 2,
     status: "inProgress",
     category: "Basquete / Masculino",
     title: "Torneio do Primeiro Ano",
-    schoolYear: "Ano escolar: Primeiro Colegial (Ensino Médio)",
-    participatingTeams: "8 equipes participantes",
-    totalGames: "Serão 15 jogos no total (5 já ocorreram)",
+    schoolYear: "Primeiro Colegial (Ensino Médio)",
+    participatingTeams: "8",
+    totalGames: 15,
+    finishedGames: 5,
   },
   {
     id: 3,
     status: "waiting",
     category: "Vôlei / Misto",
     title: "Campeonato Interclasses",
-    schoolYear: "Ano escolar: Terceiro Colegial (Ensino Médio)",
-    participatingTeams: "10 equipes participantes",
-    totalGames: "Falta cadastrar participantes",
+    schoolYear: "Terceiro Colegial (Ensino Médio)",
+    participatingTeams: "10",
+    totalGames: 0,
+    finishedGames: 0,
   },
   {
     id: 4,
     status: "finished",
     category: "Futebol / Masculino",
     title: "Copa do Ensino Médio",
-    schoolYear: "Ano escolar: Segundo Colegial (Ensino Médio)",
-    participatingTeams: "12 equipes participantes",
-    totalGames: "Finalizado em: 25/09/2025 às 16:00",
+    schoolYear: "Segundo Colegial (Ensino Médio)",
+    participatingTeams: "12",
+    totalGames: 12,
+    finishedGames: 12,
   },
   {
     id: 5,
     status: "inProgress",
     category: "Handebol / Feminino",
     title: "Desafio Interclasse",
-    schoolYear: "Ano escolar: Primeiro Colegial (Ensino Médio)",
-    participatingTeams: "6 equipes participantes",
-    totalGames: "Serão 15 jogos no total (5 já ocorreram)",
+    schoolYear: "Primeiro Colegial (Ensino Médio)",
+    participatingTeams: "6",
+    totalGames: 15,
+    finishedGames: 5,
   },
   {
     id: 6,
     status: "waiting",
     category: "Basquete / Feminino",
     title: "Campeonato de Primavera",
-    schoolYear: "Ano escolar: Terceiro Colegial (Ensino Médio)",
-    participatingTeams: "4 equipes participantes",
-    totalGames: "Falta cadastrar participantes",
+    schoolYear: "Terceiro Colegial (Ensino Médio)",
+    participatingTeams: "4",
+    totalGames: 0,
+    finishedGames: 0,
   },
 ];
 
@@ -109,9 +120,6 @@ export default function Home() {
   const [sinc, setSinc] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleDetails = () => {
-    router.push("../activityDetailScreen");
-  };
   const handleEditProfile = () => {
     router.push("../profile/myProfile");
   };
@@ -137,11 +145,11 @@ export default function Home() {
   };
 
   const handleChampionship = () => {
-    router.push("../championship/detailsChampionship/championshipListScreen");
+    router.push("../(tabs)/championship");
   };
 
   useEffect(() => {
-    if (sinc == true) {
+    if (sinc === true) {
       const timer = setTimeout(() => {
         setModalVisible(true);
       }, 5000);
@@ -198,9 +206,11 @@ export default function Home() {
           {sports.map((sport, index) => (
             <View key={index} style={styles.cardWrapper}>
               <SportCardHome
+                key={index}
                 title={sport.title}
                 description={sport.description}
-                onPress={handleDetails}
+                onPress={() => router.push(sport.route)}
+                shortly={sport.shortly}
               />
             </View>
           ))}
@@ -248,7 +258,7 @@ export default function Home() {
               contentContainerStyle={styles.tutorialList}
             >
               {mockChampionships.map((championship) => (
-                <View key={championship.id} style={styles.cardWrapper}>
+                <View key={championship.id} style={styles.cardWrapperChamp}>
                   <StatusChampionshipCardHome
                     key={championship.id}
                     status={championship.status}
@@ -257,6 +267,7 @@ export default function Home() {
                     schoolYear={championship.schoolYear}
                     participatingTeams={championship.participatingTeams}
                     totalGames={championship.totalGames}
+                    finishedGames={championship.finishedGames}
                     onPress={handleDetailChampionship}
                   />
                 </View>
@@ -403,7 +414,6 @@ const styles = StyleSheet.create({
     fontFamily: "SofiaSans_600SemiBold",
   },
 
-  // SEÇÕES
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -435,8 +445,11 @@ const styles = StyleSheet.create({
     marginRight: 12,
     width: 260,
   },
+  cardWrapperChamp: {
+    marginRight: 12,
+    width: 290,
+  },
 
-  // CAMPEONATOS
   championshipContainer: {
     alignItems: "center",
     justifyContent: "center",

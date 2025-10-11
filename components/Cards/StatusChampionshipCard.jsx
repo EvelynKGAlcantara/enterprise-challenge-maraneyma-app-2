@@ -8,6 +8,7 @@ export const StatusChampionshipCard = ({
   schoolYear,
   participatingTeams,
   totalGames,
+  gender,
   onPress,
 }) => {
   const renderStatus = () => {
@@ -40,13 +41,22 @@ export const StatusChampionshipCard = ({
       {renderStatus()}
 
       <View style={{ marginBottom: 12 }}>
-        <Text style={styles.category}>{category}</Text>
+        <Text style={styles.category}>
+          {category} / {gender}
+        </Text>
         <Text style={styles.title}>{title}</Text>
       </View>
 
       <View style={{ marginBottom: 12 }}>
-        <Text style={styles.info}>{schoolYear}</Text>
-        <Text style={styles.info}>{participatingTeams}</Text>
+        <Text style={styles.info}>Ano escolar: {schoolYear}</Text>
+        <Text style={styles.info}>
+          {participatingTeams?.length ?? 0} equipes cadastradas
+        </Text>
+        <Text style={styles.info}>
+          {status === "waiting"
+            ? "Falta cadastrar participantes"
+            : "Serão 15 jogos no total (5 já ocorreram)"}
+        </Text>
         {totalGames && <Text style={styles.info}>{totalGames}</Text>}
       </View>
 

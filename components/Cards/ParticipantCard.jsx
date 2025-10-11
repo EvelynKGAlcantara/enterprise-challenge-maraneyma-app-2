@@ -66,18 +66,21 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    fontWeight: "bold",
+
     color: "#000",
+    fontFamily: "SofiaSans_700Bold",
   },
   gender: {
-    fontSize: 13,
+    fontSize: 12,
     color: "#999",
     marginTop: 2,
+    fontFamily: "SofiaSans_400Regular",
   },
   classInfo: {
     fontSize: 13,
-    color: "#777",
+    color: "#999",
     marginTop: 2,
+    fontFamily: "SofiaSans_400Regular",
   },
   button: {
     borderWidth: 1,

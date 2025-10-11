@@ -2,9 +2,14 @@ import { View, Text, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { CardSelect } from "../../../components/Cards/ChampionshipCard";
+import { HeaderBack } from "../../../components/Header/HeaderBack";
+import { useStudents } from "../../context/Context";
 
 export default function ChampionshipIndividual() {
   const router = useRouter();
+  const {
+    handlers: { setChampioshipType },
+  } = useStudents();
 
   const options = [
     "Amarelinha",
@@ -17,13 +22,9 @@ export default function ChampionshipIndividual() {
 
   return (
     <View style={styles.container}>
-      <AntDesign
-        name="arrow-left"
-        size={40}
-        color="#EB2F96"
-        onPress={router.back}
-        style={styles.backButton}
-      />
+      <View style={styles.containerHeader}>
+        <HeaderBack />
+      </View>
       <View>
         <Text style={styles.title}>Competição individual</Text>
         <Text style={styles.subtitle}>Selecione um tipo de competição:</Text>
@@ -32,7 +33,10 @@ export default function ChampionshipIndividual() {
         <CardSelect
           key={index}
           title={item}
-          onPress={() => router.push("./championshipForm")}
+          onPress={() => {
+            setChampioshipType(item);
+            router.push("./championshipForm");
+          }}
         />
       ))}
     </View>
@@ -43,28 +47,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fbfbfbff",
-    paddingTop: "30%",
-    paddingBottom: 40,
+  },
+  containerHeader: {
+    paddingHorizontal: 24,
   },
   title: {
     fontSize: 26,
     fontFamily: "SofiaSans_800ExtraBold",
     color: "#515151",
-    marginBottom: 8,
+    marginBottom: 4,
     paddingHorizontal: 24,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#7B7B7B",
     marginBottom: 20,
     paddingHorizontal: 24,
-  },
-  backButton: {
-    width: "100%",
-    position: "absolute",
-    top: 50,
-    left: 16,
-    zIndex: 100,
-    backgroundColor: "#fbfbfb",
   },
 });

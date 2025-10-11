@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
     marginTop: 45,
     fontSize: 32,
     color: "#515151",
-
     fontFamily: "SofiaSans_800ExtraBold",
   },
   content: {

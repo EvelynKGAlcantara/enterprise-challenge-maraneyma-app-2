@@ -64,10 +64,9 @@ export default function IndividualActivities() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 16, marginBottom: 104 },
   title: {
     fontSize: 22,
-
     textAlign: "center",
     marginBottom: 12,
     color: "#EB2F96",

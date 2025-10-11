@@ -24,7 +24,6 @@ const mockChampionships = [
   },
 ];
 
-// exemplo de times cadastrados
 const mockTeams = [
   {
     id: 1,
@@ -81,7 +80,6 @@ export default function ChampionshipDetails() {
     router.push("../createTeam/createNameTeam(1)");
   };
 
-  // simula ter ou não times criados
   const hasTeams = mockTeams.length > 0;
 
   return (
@@ -148,80 +146,57 @@ export default function ChampionshipDetails() {
         {tab === "championship" && (
           <View style={styles.section}>
             {hasTeams ? (
-              <View
-                style={{
-                  backgroundColor: "#FAFAFA",
-                  borderRadius: 8,
-                  padding: 20,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: "#000",
-                    textAlign: "center",
-                    marginBottom: 12,
-                  }}
-                >
-                  Aguardando ser iniciado
-                </Text>
+              <View style={styles.space}>
+                <View style={styles.cardChampionship}>
+                  <Image
+                    source={require("../../../../assets/images/trophy-start.png")}
+                    style={styles.imageTrophy}
+                  />
+                  <Text style={styles.titleCard}>Aguardando ser iniciado</Text>
 
-                <View
-                  style={{
-                    backgroundColor: "#FFF9C4",
-                    paddingHorizontal: 10,
-                    paddingVertical: 4,
-                    borderRadius: 4,
-                    marginBottom: 12,
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "#000",
-                      fontSize: 13,
-                      fontWeight: "600",
-                    }}
-                  >
-                    {mockTeams.length} equipes cadastradas
+                  <View style={styles.tagTeams}>
+                    <Text
+                      style={{
+                        color: "#000",
+                        fontSize: 14,
+                        fontWeight: "500",
+                      }}
+                    >
+                      {mockTeams.length} equipes cadastradas
+                    </Text>
+                  </View>
+
+                  <Text style={styles.titleChampionship}>
+                    <Text>Importante:</Text>
+                  </Text>
+
+                  <Text style={styles.subtitleChampionship}>
+                    Inicie o campeonato somente após ter cadastrado todas as
+                    equipes.
                   </Text>
                 </View>
+                <View style={styles.buttonsChamp}>
+                  <Button
+                    text="Cadastrar mais equipes"
+                    onPress={handleCreateTeam}
+                  />
+                  <Button
+                    text="Dar início ao campeonato"
+                    onPress={handleStarChampionship}
+                  />
 
-                <Text
-                  style={{
-                    fontSize: 13,
-                    color: "#000000b0",
-                    textAlign: "center",
-                    marginBottom: 16,
-                  }}
-                >
-                  <Text style={{ fontWeight: "700" }}>Importante: </Text>
-                  Inicie o campeonato somente após ter cadastrado todas as
-                  equipes.
-                </Text>
-
-                <Button
-                  text="Cadastrar mais equipes"
-                  onPress={handleCreateTeam}
-                  style={{ marginBottom: 10 }}
-                />
-                <Button
-                  text="Dar início ao campeonato"
-                  onPress={handleStarChampionship}
-                />
-
-                <ConfirmModal
-                  visible={modalVisible}
-                  onConfirm={handleConfirmStarChampionship}
-                  onClose={() => setModalVisible(false)}
-                  description={"Já cadastrou"}
-                  descriptionBold={" todas as equipes que vão participar "}
-                  descriptionContinue={"deste campeonato?"}
-                  textSecondatyButton={"Já cadastrei (INICIAR)"}
-                  textButton={"Falta cadastrar equipes"}
-                  title={"Iniciar Campeonato"}
-                />
+                  <ConfirmModal
+                    visible={modalVisible}
+                    onConfirm={handleConfirmStarChampionship}
+                    onClose={() => setModalVisible(false)}
+                    description={"Já cadastrou"}
+                    descriptionBold={" todas as equipes que vão participar "}
+                    descriptionContinue={"deste campeonato?"}
+                    textSecondatyButton={"Já cadastrei (INICIAR)"}
+                    textButton={"Falta cadastrar equipes"}
+                    title={"Iniciar Campeonato"}
+                  />
+                </View>
               </View>
             ) : (
               <View style={styles.content}>
@@ -311,14 +286,14 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   category: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "600",
     marginTop: 40,
     color: "#000",
   },
   title: {
-    fontSize: 24,
-    marginTop: 4,
+    fontSize: 26,
+    marginVertical: 4,
     color: "#000",
     fontFamily: "SofiaSans_800ExtraBold",
   },
@@ -333,16 +308,36 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     fontFamily: "SofiaSans_800ExtraBold",
   },
+  titleChampionship: {
+    fontSize: 16,
+    fontFamily: "SofiaSans_800ExtraBold",
+    color: "#434343",
+    textAlign: "center",
+    marginBottom: 6,
+  },
+  subtitleChampionship: {
+    fontSize: 16,
+    fontFamily: "SofiaSans_400Regular",
+    color: "#BFBFBF",
+    textAlign: "center",
+    marginBottom: 16,
+  },
+  titleCard: {
+    fontSize: 20,
+    marginBottom: 8,
+    fontFamily: "SofiaSans_400Regular",
+  },
   badge: {
     alignSelf: "flex-start",
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 4,
-    marginBottom: 16,
+    marginTop: 4,
+    marginBottom: 24,
   },
   badgeTextDark: {
     fontSize: 12,
-    fontWeight: "700",
+    fontWeight: "500",
     color: "#000",
   },
   tabs: {
@@ -390,6 +385,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 10,
   },
+  imageTrophy: {
+    height: 100,
+    width: 100,
+    marginBottom: 10,
+    borderRadius: 100,
+  },
   text: {
     fontSize: 18,
     color: "#BFBFBF",
@@ -403,5 +404,29 @@ const styles = StyleSheet.create({
     color: "#999",
     textAlign: "center",
     marginTop: 12,
+  },
+  tagTeams: {
+    backgroundColor: "#FFF9C4",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 4,
+    marginBottom: 12,
+  },
+  cardChampionship: {
+    backgroundColor: "#FAFAFA",
+    borderRadius: 12,
+    borderColor: "#e4e4e4ff",
+    borderWidth: 1,
+    padding: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  space: {
+    flex: 1,
+    height: "100%",
+    gap: 100,
+  },
+  buttonsChamp: {
+    flex: 1,
   },
 });

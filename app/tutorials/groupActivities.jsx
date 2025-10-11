@@ -73,7 +73,7 @@ export default function GroupActivities() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 16, marginBottom: 104 },
   title: {
     fontSize: 22,
     textAlign: "center",

@@ -16,6 +16,7 @@ export const SportDetailsContent = ({
   image,
   accordionData,
   onShare,
+  initialDescription,
 }) => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -27,7 +28,11 @@ export const SportDetailsContent = ({
         <Image source={image} style={styles.image} resizeMode="contain" />
       )}
 
-      <Text style={styles.bodyText}>{description}</Text>
+      <Text style={styles.bodyText}>
+        {initialDescription}
+        <Text style={styles.bodyTextBold}>{sport}</Text>
+        {description}
+      </Text>
 
       <View style={{ marginTop: 24 }}>
         {accordionData?.map((item) => (
@@ -50,22 +55,22 @@ const styles = StyleSheet.create({
   },
 
   headerTitle: {
-    marginTop: 20,
+    marginTop: 8,
     fontSize: 32,
     color: "#515151",
-    marginBottom: 18,
+    marginBottom: 8,
     fontFamily: "SofiaSans_800ExtraBold",
   },
 
   image: {
-    width: 330,
+    width: 310,
     height: 200,
     resizeMode: "contain",
   },
 
   tag: {
     backgroundColor: "#FFFB8F",
-    width: 180,
+    width: 160,
     borderRadius: 4,
     textAlign: "center",
     padding: 5,
@@ -75,9 +80,14 @@ const styles = StyleSheet.create({
   },
 
   bodyText: {
+    marginVertical: 12,
     fontSize: 16,
     color: "#7B7B7B",
     fontFamily: "SofiaSans_400Regular",
+  },
+  bodyTextBold: {
+    color: "#000000ff",
+    fontFamily: "SofiaSans_800ExtraBold",
   },
 
   primaryButton: {
@@ -93,7 +103,7 @@ const styles = StyleSheet.create({
   },
 
   buttons: {
-    marginTop: 10,
+    marginTop: 16,
     marginBottom: 16,
   },
 });

@@ -76,7 +76,8 @@ Marcações: Use giz, cordas ou até mesmo tiras de pano para delimitar o campo.
       <SportDetailsContent
         sport={sport}
         type="Atividade em Grupo"
-        description="A Peteca é um esporte leve e divertido que desenvolve a agilidade, a atenção e a coordenação motora fina. É excelente para ser jogado em duplas e não exige grandes espaços."
+        initialDescription={"A "}
+        description=" é um esporte leve e divertido que desenvolve a agilidade, a atenção e a coordenação motora fina. É excelente para ser jogado em duplas e não exige grandes espaços."
         image={require("../../../assets/images/peteca.png")}
         accordionData={mockData}
         onShare={handleShare}

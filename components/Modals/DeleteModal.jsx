@@ -73,13 +73,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   titleBoldText: {
-    marginBottom: 12,
+    marginBottom: 16,
     fontSize: 18,
     fontFamily: "SofiaSans_800ExtraBold",
   },
   message: {
-    fontSize: 16,
-    marginBottom: 20,
+    fontSize: 18,
+    marginBottom: 30,
     fontFamily: "SofiaSans_400Regular",
   },
   confirmButton: {

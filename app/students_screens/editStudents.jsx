@@ -1,10 +1,19 @@
-import { Header } from "../../components/Header/index";
 import { Button } from "../../components/Button/index";
 import { SecondaryButton } from "../../components/Button/SecondaryButton";
 import { PhotoInput } from "../../components/Inputs/PhotoInput";
 import { SelectInput } from "../../components/Inputs/SelectInput";
-import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { HeaderBack } from "../../components/Header/HeaderBack";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { useState, useEffect } from "react";
 import { RadioButton } from "../../components/Radio/Radio";
@@ -25,8 +34,8 @@ export default function EditStudents() {
   };
 
   const genero = [
-    { label: "Feminino", value: "1" },
-    { label: "Masculino", value: "2" },
+    { label: "Feminino", value: "Feminino" },
+    { label: "Masculino", value: "Masculino" },
   ];
 
   const ano = [
@@ -65,100 +74,104 @@ export default function EditStudents() {
   }, [students]);
 
   return (
-    <View style={styles.container}>
-      <AntDesign
-        name="arrow-left"
-        size={40}
-        color="#EB2F96"
-        onPress={router.back}
-        style={styles.backButton}
-      />
-      <ScrollView>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Editar Aluno</Text>
-        </View>
-
-        <View style={styles.form}>
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Nome do aluno{" "}
-              <Text style={styles.inputDetail}>(obrigatório)</Text>
-            </Text>
-            <TextInput
-              style={styles.input}
-              value={name}
-              onChangeText={setName}
-              placeholder="Nome completo"
-            />
-          </View>
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Gênero<Text style={styles.inputDetail}> (obrigatório)</Text>
-            </Text>
-            <RadioButton
-              options={genero}
-              selected={selectedOption}
-              onSelect={setSelectedOption}
-              value={gender}
-            />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <View style={styles.container}>
+        <HeaderBack />
+        <KeyboardAwareScrollView
+          enableOnAndroid
+          extraScrollHeight={20}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ paddingBottom: 40 }}
+        >
+          <View style={styles.header}>
+            <Text style={styles.headerTitle}>Editar Aluno</Text>
           </View>
 
-          <View>
-            <Text style={styles.inputLabel}>
-              Ano Escolar<Text style={styles.inputDetail}> (obrigatório)</Text>
-            </Text>
-            <SelectInput
-              value={schoolYear}
-              options={ano}
-              onChange={setSchoolYear}
-            />
-          </View>
+          <View style={styles.form}>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>
+                Nome do aluno{" "}
+                <Text style={styles.inputDetail}>(obrigatório)</Text>
+              </Text>
+              <TextInput
+                style={styles.input}
+                value={name}
+                onChangeText={setName}
+                placeholder="Nome completo"
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>
+                Gênero<Text style={styles.inputDetail}> (obrigatório)</Text>
+              </Text>
+              <RadioButton
+                options={genero}
+                selected={gender}
+                onSelect={setGender}
+              />
+            </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Foto <Text style={styles.inputDetail}>(opcional)</Text>
-            </Text>
-            <PhotoInput onChangePhoto={setPhoto} />
+            <View>
+              <Text style={styles.inputLabel}>
+                Ano Escolar
+                <Text style={styles.inputDetail}> (obrigatório)</Text>
+              </Text>
+              <SelectInput
+                value={schoolYear}
+                options={ano}
+                onChange={setSchoolYear}
+              />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>
+                Foto <Text style={styles.inputDetail}>(opcional)</Text>
+              </Text>
+              <PhotoInput onChangePhoto={setPhoto} />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>
+                Sala / Turno <Text style={styles.inputDetail}>(opcional)</Text>
+              </Text>
+              <TextInput
+                style={styles.input}
+                value={schoolYear}
+                onChangeText={setName}
+                placeholder="Ex.: Sala B"
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>
+                E-mail do participante{" "}
+                <Text style={styles.inputDetail}>(opcional)</Text>
+              </Text>
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+                placeholder="E-mail"
+              />
+            </View>
+            <View style={styles.buttons}>
+              <SecondaryButton text={"Excluir aluno"} onPress={handleDelete} />
+              <Button text={"Salvar"} onPress={handleSucess} />
+            </View>
           </View>
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Sala / Turno <Text style={styles.inputDetail}>(opcional)</Text>
-            </Text>
-            <TextInput
-              style={styles.input}
-              value={schoolYear}
-              onChangeText={setName}
-              placeholder="Ex.: Sala B"
-            />
-          </View>
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              E-mail do participante{" "}
-              <Text style={styles.inputDetail}>(opcional)</Text>
-            </Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="E-mail"
-            />
-          </View>
-          <View style={styles.buttons}>
-            <SecondaryButton text={"Excluir aluno"} onPress={handleDelete} />
-            <Button text={"Salvar"} onPress={handleSucess} />
-          </View>
-        </View>
-        <DeleteModal
-          visible={modalVisible}
-          onClose={() => setModalVisible(false)}
-          onConfirm={confirmDelete}
-          description={"Tem certeza que deseja excluir o aluno?"}
-          textSecondatyButton={"Sim, excluir"}
-          textButton={"Não, desistir"}
-          title={"Excluir"}
-        />
-      </ScrollView>
-    </View>
+          <DeleteModal
+            visible={modalVisible}
+            onClose={() => setModalVisible(false)}
+            onConfirm={confirmDelete}
+            description={"Tem certeza que deseja excluir o aluno?"}
+            textSecondatyButton={"Sim, excluir"}
+            textButton={"Não, desistir"}
+            title={"Excluir"}
+          />
+        </KeyboardAwareScrollView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -167,14 +180,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fbfbfbff",
     paddingHorizontal: 24,
-    paddingTop: 60,
   },
   header: {
     marginBottom: 16,
     fontFamily: "SofiaSans_400Regular",
   },
   headerTitle: {
-    marginTop: 45,
     fontSize: 32,
     color: "#515151",
 
@@ -314,6 +325,7 @@ const styles = StyleSheet.create({
 
   buttons: {
     gap: 10,
+    marginBottom: 10,
   },
   primaryButton: {
     backgroundColor: "#EB2F96",

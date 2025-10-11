@@ -13,9 +13,12 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { RadioButton } from "../../../components/Radio/Radio";
+import { HeaderBack } from "../../../components/Header/HeaderBack";
+import { useStudents } from "../../context/Context";
 
 export default function ChampionshipForm() {
   const router = useRouter();
+  const { championshipType, addChampionship } = useStudents();
 
   const [championshipName, setChampionshipName] = useState("");
   const [schoolYear, setSchoolYear] = useState("");
@@ -37,29 +40,29 @@ export default function ChampionshipForm() {
   ];
 
   const genderOptions = [
-    { label: "Feminino", value: "F" },
-    { label: "Masculino", value: "M" },
-    { label: "Misto", value: "X" },
+    { label: "Feminino", value: "Feminino" },
+    { label: "Masculino", value: "Masculino" },
+    { label: "Misto", value: "Misto" },
   ];
 
   const handleNext = () => {
+    if (!championshipName || !schoolYear || !gender) {
+      return;
+    }
+
+    addChampionship({ championshipName, schoolYear, gender, championshipType });
     router.push("./championshipSuccess");
   };
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={styles.container}
     >
-      <View style={styles.container}>
-        <AntDesign
-          name="arrow-left"
-          size={40}
-          color="#EB2F96"
-          onPress={router.back}
-          style={styles.backButton}
-        />
-
+      <View style={styles.containerHeader}>
+        <HeaderBack />
+      </View>
+      <View style={styles.containerContent}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
@@ -67,7 +70,7 @@ export default function ChampionshipForm() {
           <View style={styles.innerContainer}>
             <View style={styles.header}>
               <Text style={styles.headerTitle}>Dados do campeonato</Text>
-              <Text style={styles.badge}>Campeonato de futebol</Text>
+              <Text style={styles.badge}>Campeonato de {championshipType}</Text>
             </View>
 
             <View style={styles.content}>
@@ -125,14 +128,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fbfbfbff",
+  },
+  containerContent: {
+    flex: 1,
     paddingHorizontal: 24,
-    paddingTop: 60,
   },
   innerContainer: {
     flex: 1,
   },
   header: {
-    marginTop: 52,
     marginBottom: 16,
   },
   headerTitle: {
@@ -146,7 +150,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 12,
     borderRadius: 4,
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: "SofiaSans_800ExtraBold",
     color: "#515151",
     alignSelf: "flex-start",
@@ -174,14 +178,7 @@ const styles = StyleSheet.create({
   inputDetail: {
     color: "#cbcbcbff",
   },
-  backButton: {
-    width: "100%",
-    position: "absolute",
-    top: 50,
-    left: 16,
-    zIndex: 100,
-    backgroundColor: "#fbfbfb",
-  },
+
   buttons: {
     marginTop: 20,
     paddingBottom: 40,
@@ -189,5 +186,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: "space-between",
+  },
+  containerHeader: {
+    paddingHorizontal: 24,
   },
 });

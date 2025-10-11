@@ -221,7 +221,7 @@ export default function ChampionshipFinalized() {
               {championship.participatingTeams} equipes cadastradas
             </Text>
             <View style={styles.badge}>
-              <Text style={styles.badgeText}>EM ANDAMENTO</Text>
+              <Text style={styles.badgeText}>FINALIZADO</Text>
             </View>
           </View>
         ))}

@@ -1,8 +1,17 @@
 import { Header } from "../../components/Header/index";
 import { Button } from "../../components/Button/index";
 import { PhotoInput } from "../../components/Inputs/PhotoInput";
+import { HeaderBack } from "../../components/Header/HeaderBack";
 import { SelectInput } from "../../components/Inputs/SelectInput";
-import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -61,93 +70,98 @@ export default function RegisterStudents() {
   };
 
   return (
-    <View style={styles.container}>
-      <AntDesign
-        name="arrow-left"
-        size={40}
-        color="#EB2F96"
-        onPress={router.back}
-        style={styles.backButton}
-      />
-      <ScrollView>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Cadastrar Aluno</Text>
-        </View>
-
-        <View style={styles.form}>
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Nome do aluno{" "}
-              <Text style={styles.inputDetail}>(obrigatório)</Text>
-            </Text>
-            <TextInput
-              style={styles.input}
-              value={name}
-              onChangeText={setName}
-              placeholder="Nome completo"
-            />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <View style={styles.container}>
+        <HeaderBack />
+        <KeyboardAwareScrollView
+          enableOnAndroid
+          extraScrollHeight={20}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ paddingBottom: 80 }}
+        >
+          <View style={styles.header}>
+            <Text style={styles.headerTitle}>Cadastrar Aluno</Text>
           </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Gênero<Text style={styles.inputDetail}> (obrigatório)</Text>
-            </Text>
-            <RadioButton
-              options={genero}
-              selected={gender}
-              onSelect={setGender}
-            />
-          </View>
+          <View style={styles.form}>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>
+                Nome do aluno
+                <Text style={styles.inputDetail}> (obrigatório)</Text>
+              </Text>
+              <TextInput
+                style={styles.input}
+                value={name}
+                onChangeText={setName}
+                placeholder="Nome completo"
+              />
+            </View>
 
-          <View>
-            <Text style={styles.inputLabel}>
-              Ano Escolar<Text style={styles.inputDetail}> (obrigatório)</Text>
-            </Text>
-            <SelectInput
-              value={schoolYear}
-              options={ano}
-              onChange={setSchoolYear}
-            />
-          </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>
+                Gênero<Text style={styles.inputDetail}> (obrigatório)</Text>
+              </Text>
+              <RadioButton
+                options={genero}
+                selected={gender}
+                onSelect={setGender}
+              />
+            </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Foto <Text style={styles.inputDetail}>(opcional)</Text>
-            </Text>
-            <PhotoInput onChangePhoto={setPhoto} />
-          </View>
+            <View>
+              <Text style={styles.inputLabel}>
+                Ano escolar
+                <Text style={styles.inputDetail}> (obrigatório)</Text>
+              </Text>
+              <SelectInput
+                value={schoolYear}
+                options={ano}
+                onChange={setSchoolYear}
+              />
+            </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              Sala / Turno <Text style={styles.inputDetail}>(opcional)</Text>
-            </Text>
-            <TextInput
-              style={styles.input}
-              value={classroom}
-              onChangeText={setClassroom}
-              placeholder="Ex.: Sala B"
-            />
-          </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>
+                Foto <Text style={styles.inputDetail}>(opcional)</Text>
+              </Text>
+              <PhotoInput onChangePhoto={setPhoto} />
+            </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>
-              E-mail do participante{" "}
-              <Text style={styles.inputDetail}>(opcional)</Text>
-            </Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="E-mail"
-            />
-          </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>
+                Sala / Turno <Text style={styles.inputDetail}>(opcional)</Text>
+              </Text>
+              <TextInput
+                style={styles.input}
+                value={classroom}
+                onChangeText={setClassroom}
+                placeholder="Ex.: Sala B"
+              />
+            </View>
 
-          <View style={styles.buttons}>
-            <Button text={"Salvar"} onPress={handleSave} />
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>
+                E-mail do participante{" "}
+                <Text style={styles.inputDetail}>(opcional)</Text>
+              </Text>
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+                placeholder="E-mail"
+              />
+            </View>
+
+            <View style={styles.buttons}>
+              <Button text={"Salvar"} onPress={handleSave} />
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </KeyboardAwareScrollView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -156,14 +170,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fbfbfbff",
     paddingHorizontal: 24,
-    paddingTop: 60,
   },
   header: {
     marginBottom: 16,
     fontFamily: "SofiaSans_400Regular",
   },
   headerTitle: {
-    marginTop: 45,
     fontSize: 32,
     color: "#515151",
     fontFamily: "SofiaSans_800ExtraBold",
@@ -190,14 +202,6 @@ const styles = StyleSheet.create({
   },
   buttons: {
     gap: 10,
-    marginBottom: 120,
-  },
-  backButton: {
-    width: "100%",
-    position: "absolute",
-    top: 50,
-    left: 16,
-    zIndex: 10,
-    backgroundColor: "#fbfbfb",
+    marginBottom: 40,
   },
 });

@@ -8,6 +8,7 @@ export const StatusChampionshipCardHome = ({
   schoolYear,
   participatingTeams,
   totalGames,
+  finishedGames,
   onPress,
 }) => {
   const renderStatus = () => {
@@ -51,14 +52,18 @@ export const StatusChampionshipCardHome = ({
 
       <View style={{ marginBottom: 12 }}>
         <Text style={styles.info} numberOfLines={1} ellipsizeMode="tail">
-          {schoolYear}
+          Ano escolar: {schoolYear}
         </Text>
         <Text style={styles.info} numberOfLines={1} ellipsizeMode="tail">
-          {participatingTeams}
+          {participatingTeams} equipes participantes
         </Text>
-        {totalGames && (
+        {totalGames > 0 ? (
           <Text style={styles.info} numberOfLines={1} ellipsizeMode="tail">
-            {totalGames}
+            Serão {totalGames} jogos no total ({finishedGames} já ocorreram)
+          </Text>
+        ) : (
+          <Text style={styles.info} numberOfLines={1} ellipsizeMode="tail">
+            Falta cadastrar participantes
           </Text>
         )}
       </View>
@@ -77,7 +82,7 @@ export const StatusChampionshipCardHome = ({
 const styles = StyleSheet.create({
   card: {
     width: "100%",
-    height: 270,
+    height: 250,
     backgroundColor: "#f9f9f9ff",
     paddingHorizontal: 24,
     paddingVertical: 24,
@@ -112,7 +117,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   info: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#7B7B7B",
     marginBottom: 5,
     paddingRight: 20,

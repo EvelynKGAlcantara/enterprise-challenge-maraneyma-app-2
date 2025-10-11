@@ -9,7 +9,7 @@ export default function Futebol() {
   const [sport, setSport] = useState("Futebol");
 
   const handleShare = () => {
-    router.push("../app/(tabs)/homeScreen.jsx");
+    router.push("../app/(tabs)/homeScreen");
   };
 
   const mockData = [
@@ -96,7 +96,8 @@ Coletes/Diferenciação: Se não houver coletes, peça para uma equipe usar cami
       <SportDetailsContent
         sport={sport}
         type="Atividade em Grupo"
-        description="O futebol é o esporte mais popular do Brasil e uma ferramenta incrível para desenvolver a cooperação, o raciocínio rápido e a coordenação motora. É fácil de adaptar e exige pouco material."
+        initialDescription={"O "}
+        description=" é o esporte mais popular do Brasil e uma ferramenta incrível para desenvolver a cooperação, o raciocínio rápido e a coordenação motora. É fácil de adaptar e exige pouco material."
         image={require("../../../assets/images/futebol.png")}
         accordionData={mockData}
         onShare={handleShare}

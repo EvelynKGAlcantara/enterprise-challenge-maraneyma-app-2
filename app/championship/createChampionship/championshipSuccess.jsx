@@ -7,7 +7,7 @@ export default function ChampionshipSuccess() {
   const router = useRouter();
 
   const handleAdvance = () => {
-    router.replace("../detailsChampionship/championshipListScreen");
+    router.replace("../../(tabs)/championship");
   };
 
   return (

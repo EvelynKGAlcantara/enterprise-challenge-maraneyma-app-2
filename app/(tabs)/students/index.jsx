@@ -23,7 +23,6 @@ export default function Students() {
     router.push("../../students_screens/editStudents");
   };
 
-  // Conta alunos por gênero
   const maleCount = students.filter((s) => s.gender === "Masculino").length;
   const femaleCount = students.filter((s) => s.gender === "Feminino").length;
 
@@ -32,7 +31,7 @@ export default function Students() {
       <Header title={"Alunos"} />
 
       {students.length === 0 ? (
-        // TELA VAZIA - SEM ALUNOS
+        //SEM ALUNOS
         <>
           <ScrollView contentContainerStyle={styles.emptyContainer}>
             <Image
@@ -48,7 +47,7 @@ export default function Students() {
           </View>
         </>
       ) : (
-        // TELA COM ALUNOS
+        //COM ALUNOS
         <>
           <Filter
             FirstItem={"Feminino"}
@@ -98,9 +97,10 @@ const styles = StyleSheet.create({
   },
   emptyContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
+    marginTop: 20,
   },
 
   searchBox: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   spaceFixed: {
     paddingTop: 20,
     paddingBottom: 110,
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
     borderTopWidth: 1,
     borderColor: "#D3D3D3",
   },
@@ -133,7 +133,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     color: "#BFBFBF",
-    marginTop: 20,
   },
-  image: { width: 200, resizeMode: "contain" },
+  image: { width: 190, resizeMode: "contain" },
 });

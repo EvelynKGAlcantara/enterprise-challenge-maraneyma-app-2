@@ -6,10 +6,11 @@ export function TeamCardWin({ className, subtitle, variant = "first" }) {
   const renderRightIcon = () => {
     if (variant === "first") {
       return (
-        <View style={styles.trophyContainer}>
+        <View style={styles.trophyCircle}>
           <Image
             source={require("../../assets/images/card-trophy.png")}
-            width={10}
+            style={styles.trophy}
+            resizeMode="contain"
           />
         </View>
       );
@@ -42,17 +43,26 @@ export function TeamCardWin({ className, subtitle, variant = "first" }) {
         variant === "third" && styles.cardThird,
       ]}
     >
-      {variant === "first" ? <View></View> : null}
-      <View style={styles.iconContainer}>
-        <Feather name="flag" size={24} color="#6B6B6B" />
-      </View>
+      {/* Faixa do Campeão */}
+      {variant === "first" && (
+        <View style={styles.header}>
+          <Text style={styles.headerText}>CAMPEÃO DO CAMPEONATO</Text>
+        </View>
+      )}
 
-      <View style={styles.textContainer}>
-        <Text style={styles.className}>{className}</Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
-      </View>
+      {/* Conteúdo interno */}
+      <View style={styles.content}>
+        <View style={styles.iconContainer}>
+          <Feather name="flag" size={24} color="#6B6B6B" />
+        </View>
 
-      <View style={styles.gradeContainer}>{renderRightIcon()}</View>
+        <View style={styles.textContainer}>
+          <Text style={styles.className}>{className}</Text>
+          <Text style={styles.subtitle}>{subtitle}</Text>
+        </View>
+
+        <View style={styles.gradeContainer}>{renderRightIcon()}</View>
+      </View>
     </View>
   );
 }
@@ -63,24 +73,17 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "#E8E8E8",
-    padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
     width: "100%",
     shadowColor: "#000",
     shadowOpacity: 0.04,
     shadowRadius: 4,
     elevation: 1,
     marginBottom: 10,
+    overflow: "hidden", // garante que a faixa respeite borda arredondada
   },
   cardWinner: {
     borderColor: "#EB2F96",
     borderWidth: 2,
-  },
-
-  tabCardWinner: {
-    borderColor: "#EB2F96",
-    borderTopWidth: 20,
   },
   cardSecond: {
     borderColor: "#EB2F96",
@@ -89,6 +92,24 @@ const styles = StyleSheet.create({
   cardThird: {
     borderColor: "#EB2F96",
     borderWidth: 1.5,
+  },
+
+  header: {
+    backgroundColor: "#E91E63",
+    paddingVertical: 6,
+    alignItems: "center",
+  },
+  headerText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 12,
+    textTransform: "uppercase",
+  },
+
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
   },
   iconContainer: {
     backgroundColor: "#F5F5F5",
@@ -117,29 +138,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  trophyContainer: {
-    backgroundColor: "#E91E63",
-    borderRadius: 50,
-    width: 42,
-    height: 42,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  medalContainer: {
-    backgroundColor: "#E91E63",
-    borderRadius: 50,
-    padding: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-  },
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
 
-  image: {
-    width: 40,
-    height: 40,
+  trophyCircle: {
+    borderRadius: 50,
+    width: 52,
+    height: 52,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  trophy: {
+    width: 60,
+    height: 60,
   },
 });

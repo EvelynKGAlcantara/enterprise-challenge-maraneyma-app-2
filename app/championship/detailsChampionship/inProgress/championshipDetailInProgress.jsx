@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MatchCard } from "../../../../components/Cards/GameCard";
 import { TeamCardInProgress } from "../../../../components/Cards/TeamCardInProgress";
 import { Filter } from "../../../../components/Filters/Filter";
@@ -9,6 +9,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { ParticipantCardPoints } from "../../../../components/Cards/ParticipantCardPoints";
 import { TeamCardRanking } from "../../../../components/Cards/TeamCardRanking";
 import { useStudents } from "../../../context/Context";
+import { TeamCardWin } from "../../../../components/Cards/TeamCardWin";
 
 const renderStatus = (status) => {
   switch (status) {
@@ -137,10 +138,30 @@ const mockParticipants = [
 ];
 
 export default function ChampionshipDetailsProgress() {
-  const { setSelectedMatch, matches: mockMatches } = useStudents();
+  const {
+    setSelectedMatch,
+    matches: mockMatches,
+    finishedSelectedChampionship,
+  } = useStudents();
   const [tab, setTab] = useState("championship");
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
+
+  // junta todos os jogos
+  const allMatches = [
+    ...mockMatches.faseA,
+    ...mockMatches.faseB,
+    ...mockMatches.final,
+  ];
+  const allFinished = allMatches.every((m) => m.status === "finished");
+  const [finishDate] = useState(new Date().toLocaleDateString("pt-BR"));
+
+  useEffect(() => {
+    if (allFinished) {
+      finishedSelectedChampionship();
+    }
+  }, [allFinished, finishedSelectedChampionship]);
+
   const handleTeamDetail = () => {
     router.push("./teamDetails");
   };
@@ -173,10 +194,23 @@ export default function ChampionshipDetailsProgress() {
             <Text style={styles.subtitleBold}>
               {championship.participatingTeams} <Text>equipes cadastradas</Text>
             </Text>
-            {renderStatus(championship.status)}
+
+            {allFinished ? (
+              <>
+                <Text style={styles.subtitleFinalized}>
+                  Finalizado em: {finishDate}
+                </Text>
+                <View style={[styles.badge, { backgroundColor: "#BAE7FF" }]}>
+                  <Text style={styles.badgeTextDark}>FINALIZADO</Text>
+                </View>
+              </>
+            ) : (
+              renderStatus(championship.status)
+            )}
           </View>
         ))}
 
+        {/* abas */}
         <View style={styles.tabs}>
           <Pressable
             style={[styles.tab, tab === "championship" && styles.activeTab]}
@@ -210,28 +244,31 @@ export default function ChampionshipDetailsProgress() {
           </Pressable>
         </View>
 
+        {/* aba campeonato */}
         {tab === "championship" && (
           <>
             {mockChampionships.map((championship) => (
               <View key={championship.id} style={styles.container}>
-                <Text style={styles.progressText}>
-                  Serão {championship.totalGames} jogos no total (
-                  {championship.finishedGames} já ocorreram)
-                </Text>
-                <View style={styles.progressBar}>
-                  <View
-                    style={[
-                      styles.progressFill,
-                      {
-                        width: `${
-                          (championship.finishedGames /
-                            championship.totalGames) *
-                          100
-                        }%`,
-                      },
-                    ]}
-                  />
-                </View>
+                {!allFinished && (
+                  <View style={styles.progressBar}>
+                    <Text style={styles.progressText}>
+                      Serão {championship.totalGames} jogos no total (
+                      {championship.finishedGames} já ocorreram)
+                    </Text>
+                    <View
+                      style={[
+                        styles.progressFill,
+                        {
+                          width: `${
+                            (championship.finishedGames /
+                              championship.totalGames) *
+                            100
+                          }%`,
+                        },
+                      ]}
+                    />
+                  </View>
+                )}
               </View>
             ))}
 
@@ -297,6 +334,7 @@ export default function ChampionshipDetailsProgress() {
                 ))}
               </ScrollView>
 
+              {/* Final */}
               <Text style={styles.phaseTitle}>Final</Text>
               <ScrollView
                 horizontal
@@ -325,6 +363,8 @@ export default function ChampionshipDetailsProgress() {
             </View>
           </>
         )}
+
+        {/* aba team */}
         {tab === "team" && (
           <>
             {mockTeams.map((team) => (
@@ -339,58 +379,117 @@ export default function ChampionshipDetailsProgress() {
           </>
         )}
 
+        {/* aba ranking */}
         {tab === "ranking" && (
           <>
-            {mockChampionships.map((championship) => (
-              <View key={championship.id} style={styles.container}>
-                <Text style={styles.progressText}>
-                  Serão {championship.totalGames} jogos no total (
-                  {championship.finishedGames} já ocorreram)
-                </Text>
-                <View style={styles.progressBar}>
-                  <View
-                    style={[
-                      styles.progressFill,
-                      {
-                        width: `${
-                          (championship.finishedGames /
-                            championship.totalGames) *
-                          100
-                        }%`,
-                      },
-                    ]}
-                  />
+            {allFinished ? (
+              <>
+                <View style={styles.container}>
+                  <Text style={styles.phaseTitle}>Classificação Final</Text>
+                  <View>
+                    <TeamCardWin
+                      variant="first"
+                      className={"Time Sala 5"}
+                      subtitle={"Primeiro Colegial (Ensino Médio)"}
+                    />
+                    <TeamCardWin
+                      variant="second"
+                      className={"Time Sala 4"}
+                      subtitle={"Primeiro Colegial (Ensino Médio)"}
+                    />
+                    <TeamCardWin
+                      variant="third"
+                      className={"Time Sala 2"}
+                      subtitle={"Primeiro Colegial (Ensino Médio)"}
+                    />
+                  </View>
+                  <View>
+                    {mockTeams.map((team) => (
+                      <TeamCardRanking
+                        key={team.id}
+                        className={team.name}
+                        subtitle={team.description}
+                        grade={team.grade}
+                      />
+                    ))}
+                  </View>
+                  <Text style={styles.phaseTitle}>Pontuação por jogadores</Text>
+                  <View style={styles.tagFinalized}>
+                    <Text style={styles.textTagFinalized}>
+                      ARTILHEIRO(A) DO CAMPEONATO
+                    </Text>
+                  </View>
+                  <View>
+                    {mockParticipants.map((participant) => (
+                      <ParticipantCardPoints
+                        avatar={participant.avatar}
+                        editable={false}
+                        initialPoints={participant.initialPoints}
+                        name={participant.name}
+                        key={participant.id}
+                        description={true}
+                        gender={participant.gender}
+                        schoolYear={participant.schoolYear}
+                      />
+                    ))}
+                  </View>
                 </View>
-              </View>
-            ))}
-            <View style={styles.container}>
-              <Text style={styles.phaseTitleResult}>Resultado Parcial</Text>
-              <View>
-                {mockTeams.map((team) => (
-                  <TeamCardRanking
-                    key={team.id}
-                    className={team.name}
-                    subtitle={team.description}
-                    grade={team.grade}
-                  />
+              </>
+            ) : (
+              <>
+                {mockChampionships.map((championship) => (
+                  <View key={championship.id} style={styles.container}>
+                    <Text style={styles.progressText}>
+                      Serão {championship.totalGames} jogos no total (
+                      {championship.finishedGames} já ocorreram)
+                    </Text>
+                    <View style={styles.progressBar}>
+                      <View
+                        style={[
+                          styles.progressFill,
+                          {
+                            width: `${
+                              (championship.finishedGames /
+                                championship.totalGames) *
+                              100
+                            }%`,
+                          },
+                        ]}
+                      />
+                    </View>
+                  </View>
                 ))}
-              </View>
-              <Text style={styles.phaseTitle}>Pontuação por jogadores</Text>
-              <View>
-                {mockParticipants.map((participant) => (
-                  <ParticipantCardPoints
-                    avatar={participant.avatar}
-                    editable={false}
-                    initialPoints={participant.initialPoints}
-                    name={participant.name}
-                    key={participant.id}
-                    description={true}
-                    gender={participant.gender}
-                    schoolYear={participant.schoolYear}
-                  />
-                ))}
-              </View>
-            </View>
+                <View style={styles.container}>
+                  <Text style={styles.phaseTitleResult}>Resultado Parcial</Text>
+                  <View>
+                    {mockTeams.map((team) => (
+                      <TeamCardRanking
+                        key={team.id}
+                        className={team.name}
+                        subtitle={team.description}
+                        grade={team.grade}
+                      />
+                    ))}
+                  </View>
+                  <Text style={styles.phaseTitle}>Pontuação por jogadores</Text>
+                  <View>
+                    {mockParticipants.map((participant) => (
+                      <ParticipantCardPoints
+                        avatar={participant.avatar}
+                        editable={false}
+                        pointsParticipant={false}
+                        initialPoints={participant.initialPoints}
+                        name={participant.name}
+                        key={participant.id}
+                        description={true}
+                        gender={participant.gender}
+                        schoolYear={participant.schoolYear}
+                      />
+                    ))}
+                  </View>
+                </View>
+              </>
+            )}
           </>
         )}
       </ScrollView>
@@ -402,15 +501,12 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "#fff",
-
     paddingTop: 60,
   },
-
   container: {
     paddingHorizontal: 24,
   },
   backButton: { position: "absolute", top: 50, left: 16, zIndex: 10 },
-
   category: {
     fontSize: 16,
     fontWeight: "600",
@@ -435,6 +531,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#555",
     marginTop: 4,
+  },
+  subtitleFinalized: {
+    fontSize: 12,
+    color: "#555",
   },
   subtitleBold: {
     fontSize: 12,
@@ -468,7 +568,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#EB2F96",
     borderRadius: 100,
   },
-
   tabs: {
     flexDirection: "row",
     justifyContent: "center",
@@ -511,55 +610,28 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: "#000",
   },
-
-  // Match Card
-  matchCard: {
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
+  tag: {
+    padding: 8,
     borderRadius: 8,
-    padding: 12,
-    marginBottom: 12,
-    backgroundColor: "#fff",
+    backgroundColor: "#EB2F96",
+    marginVertical: 8,
+    alignItems: "center",
   },
-  matchTitle: { fontSize: 14, fontWeight: "700", marginBottom: 8 },
-  teamsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 8,
-  },
-  team: { fontSize: 14, color: "#000", flex: 1, textAlign: "center" },
-  vs: { fontSize: 14, fontWeight: "700", color: "#000" },
-  scoreRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 8,
-  },
-  score: {
-    fontSize: 20,
+  textTag: {
+    color: "#fff",
     fontWeight: "700",
-    color: "#000",
-    flex: 1,
-    textAlign: "center",
+    fontSize: 12,
   },
-  waitingText: {
-    textAlign: "center",
-    fontSize: 14,
-    color: "#999",
-    marginTop: 6,
+  tagFinalized: {
+    backgroundColor: "#EB2F96",
+    padding: 8,
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
   },
-  winner: { fontSize: 12, fontWeight: "700", color: "#388E3C", marginTop: 4 },
-  date: { fontSize: 11, color: "#555", marginTop: 4 },
-  detailsButton: {
-    marginTop: 6,
+  textTagFinalized: {
+    color: "#FFFFFF",
+    fontSize: 12,
     alignSelf: "center",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: "#EB2F96",
-  },
-  detailsText: { fontSize: 12, color: "#EB2F96" },
-  filter: {
-    marginHorizontal: -16,
+    fontWeight: "700",
   },
 });

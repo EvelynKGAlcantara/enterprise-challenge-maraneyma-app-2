@@ -11,6 +11,7 @@ export const ParticipantCardPoints = ({
   gender,
   schoolYear,
   onPointsChange,
+  pointsParticipant,
 }) => {
   const [editablePoints] = useState(editable ?? true);
 
@@ -52,7 +53,11 @@ export const ParticipantCardPoints = ({
       ) : (
         <View style={styles.disabledContainer}>
           <Text style={styles.disabledPoints}>
-            {points?.toString()?.padStart(2, "0")}
+            {pointsParticipant ? (
+              <Text> {points?.toString()?.padStart(2, "0")}</Text>
+            ) : (
+              <Text>{initialPoints}</Text>
+            )}
           </Text>
         </View>
       )}

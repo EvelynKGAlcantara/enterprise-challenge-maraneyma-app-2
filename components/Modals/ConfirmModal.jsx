@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 18,
     marginBottom: 20,
-    textAlign: "center",
   },
   messageBold: {
     fontWeight: "800",

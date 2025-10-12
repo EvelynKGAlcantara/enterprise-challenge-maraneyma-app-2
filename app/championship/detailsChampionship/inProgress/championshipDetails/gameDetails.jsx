@@ -321,25 +321,34 @@ export default function GameDetails() {
         descriptionBold={" finalizar "}
         descriptionContinue={"esta partida?"}
         textButton={"Retornar a tela anterior"}
-        textSecondaryButton={"Sim, finalizar partida"}
+        textSecondatyButton={"Sim, finalizar partida"}
         title={"Finalizar jogo"}
         component={
           <View style={styles.card}>
             <View style={styles.header}>
-              <Text style={styles.headerText}>Jogo 12</Text>
+              <Text style={styles.headerText}>Jogo 1</Text>
             </View>
             <View style={styles.teamsRow}>
               <View style={styles.teamContainer}>
                 <Text style={styles.team}>Equipe 1</Text>
-                <Text style={styles.score}>3</Text>
+                <Text style={styles.score}>{team1Score}</Text>
+                {/* Mostra vencedor se o time 1 tiver mais pontos */}
+                {team1Score > team2Score && (
+                  <View style={styles.winnerTag}>
+                    <Text style={styles.winnerTagText}>VENCEDOR</Text>
+                  </View>
+                )}
               </View>
               <Text style={styles.x}>X</Text>
               <View style={styles.teamContainer}>
                 <Text style={styles.team}>Equipe 2</Text>
-                <Text style={styles.score}>5</Text>
-                <View style={styles.winnerTag}>
-                  <Text style={styles.winnerTagText}>VENCEDOR</Text>
-                </View>
+                <Text style={styles.score}>{team2Score}</Text>
+                {/* Mostra vencedor se o time 2 tiver mais pontos */}
+                {team2Score > team1Score && (
+                  <View style={styles.winnerTag}>
+                    <Text style={styles.winnerTagText}>VENCEDOR</Text>
+                  </View>
+                )}
               </View>
             </View>
           </View>

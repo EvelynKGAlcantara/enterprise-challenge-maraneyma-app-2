@@ -12,6 +12,8 @@ import { useRouter } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { TeamCard } from "../../../../components/Cards/TeamCard";
 import { ConfirmModal } from "../../../../components/Modals/ConfirmModal";
+import { useStudents } from "../../../context/Context";
+import { DeleteModal } from "../../../../components/Modals/DeleteModal";
 
 const mockChampionships = [
   {
@@ -24,18 +26,18 @@ const mockChampionships = [
   },
 ];
 
-const mockTeams = [
-  // {
-  //   id: 1,
-  //   name: "Time Sala 1",
-  //   description: "Primeiro Colegial (Ensino Médio)",
-  // },
-  // {
-  //   id: 2,
-  //   name: "Time Sala 2",
-  //   description: "Primeiro Colegial (Ensino Médio)",
-  // },
-];
+// const mockTeams = [
+//   {
+//     id: 1,
+//     name: "Time Sala 1",
+//     description: "Primeiro Colegial (Ensino Médio)",
+//   },
+//   {
+//     id: 2,
+//     name: "Time Sala 2",
+//     description: "Primeiro Colegial (Ensino Médio)",
+//   },
+// ];
 
 const renderStatus = (status) => {
   switch (status) {
@@ -64,11 +66,28 @@ const renderStatus = (status) => {
 
 export default function ChampionshipDetails() {
   const [tab, setTab] = useState("championship");
+  const [idTeam, setIdTeam] = useState();
+
   const router = useRouter();
+
+  const { teams, removeTeams } = useStudents();
   const handleStarChampionship = () => {
     setModalVisible(true);
   };
   const [modalVisible, setModalVisible] = useState(false);
+
+  const handleRemoveTeam = (id) => {
+    setModalVisible(true);
+    setIdTeam(id);
+  };
+
+  const handleConfirmRemoveTeam = () => {
+    router.push(
+      "../../../championship/detailsChampionship/notInitiated/deleteTeamSucess"
+    );
+    setModalVisible(false);
+    removeTeams(idTeam);
+  };
 
   const handleConfirmStarChampionship = () => {
     router.push(
@@ -80,7 +99,7 @@ export default function ChampionshipDetails() {
     router.push("../createTeam/createNameTeam(1)");
   };
 
-  const hasTeams = mockTeams.length > 0;
+  const hasTeams = teams?.length > 0;
 
   return (
     <View style={styles.safeArea}>
@@ -162,7 +181,7 @@ export default function ChampionshipDetails() {
                         fontWeight: "500",
                       }}
                     >
-                      {mockTeams.length} equipes cadastradas
+                      {teams?.length} equipes cadastradas
                     </Text>
                   </View>
 
@@ -189,6 +208,7 @@ export default function ChampionshipDetails() {
                     visible={modalVisible}
                     onConfirm={handleConfirmStarChampionship}
                     onClose={() => setModalVisible(false)}
+                    navigate={() => setModalVisible(false)}
                     description={"Já cadastrou"}
                     descriptionBold={" todas as equipes que vão participar "}
                     descriptionContinue={"deste campeonato?"}
@@ -206,7 +226,7 @@ export default function ChampionshipDetails() {
                     style={styles.image}
                   />
                   <View style={styles.infoText}>
-                    <Text style={styles.bold}>Importante: </Text>
+                    <Text style={styles.bold}>Importante:</Text>
                     <Text style={styles.text}>
                       Monte as equipes para ativar o campeonato
                     </Text>
@@ -228,24 +248,37 @@ export default function ChampionshipDetails() {
           <View style={styles.section}>
             {hasTeams ? (
               <View>
-                {mockTeams.map((team) => (
-                  <TeamCard
-                    key={team.id}
-                    name={team.name}
-                    description={team.description}
-                    onPressData={() => console.log("Ver dados")}
-                    onPressMembers={() => console.log("Ver membros")}
-                    onPressDelete={() => console.log("Excluir")}
-                  />
-                ))}
-
-                <Text style={styles.helperText}>
-                  Este campeonato precisa ter pelo menos 3 equipes
-                </Text>
-
-                <View style={styles.buttonsChamp}>
+                <View>
+                  {teams.map((team) => (
+                    <TeamCard
+                      key={team.id}
+                      name={team.name}
+                      description={team.description}
+                      onPressData={() => console.log("Ver dados")}
+                      onPressMembers={() => console.log("Ver membros")}
+                      onPressDelete={() => handleRemoveTeam(team.id)}
+                    />
+                  ))}
+                </View>
+                <View style={styles.space}>
+                  <View>
+                    <Text style={styles.helperTextTeams}>
+                      Este campeonato precisa ter pelo menos 3 equipes
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.footer}>
                   <Button text="Montar equipes" onPress={handleCreateTeam} />
                 </View>
+                <DeleteModal
+                  visible={modalVisible}
+                  onClose={handleConfirmRemoveTeam}
+                  onConfirm={() => setModalVisible(false)}
+                  title={"Excluir"}
+                  description={"Tem certeza que desenha excluir a equipe?"}
+                  textButton={"Sim, excluir"}
+                  textSecondatyButton={"Não, desistir"}
+                />
               </View>
             ) : (
               <View style={styles.spaceNoTeam}>
@@ -293,6 +326,14 @@ const styles = StyleSheet.create({
     left: 16,
     zIndex: 10,
   },
+  footer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#EEE",
+  },
+
   category: {
     fontSize: 16,
     fontWeight: "600",
@@ -426,6 +467,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 12,
   },
+  helperTextTeams: {
+    fontSize: 18,
+    color: "#BFBFBF",
+    textAlign: "center",
+    marginTop: 12,
+  },
   tagTeams: {
     backgroundColor: "#FFF9C4",
     paddingHorizontal: 10,
@@ -453,7 +500,13 @@ const styles = StyleSheet.create({
     gap: 140,
   },
   buttonsChamp: {
-    flex: 1,
+    right: 0,
+    backgroundColor: "#FFFFFF",
+
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    width: "100%",
+    borderTopColor: "#EEE",
   },
   buttons: {
     marginBottom: -20,

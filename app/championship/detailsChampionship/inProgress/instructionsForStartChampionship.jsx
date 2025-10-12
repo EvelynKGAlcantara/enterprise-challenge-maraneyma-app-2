@@ -4,6 +4,7 @@ import { Button } from "../../../../components/Button/index";
 import { useRouter } from "expo-router";
 
 import { HeaderBack } from "../../../../components/Header/HeaderBack";
+import { useStudents } from "../../../context/Context";
 
 const mockChampionships = [
   {
@@ -18,8 +19,9 @@ const mockChampionships = [
 
 export default function ChampionshipDetailsForStart() {
   const router = useRouter();
-
+  const { teams, startSelectedChampionship } = useStudents();
   const handleConfirmStarChampionship = () => {
+    startSelectedChampionship();
     router.push(
       "../../../championship/detailsChampionship/inProgress/sucessStart"
     );
@@ -38,7 +40,7 @@ export default function ChampionshipDetailsForStart() {
               {championship.schoolYear}{" "}
             </Text>
             <Text style={styles.highlighted}>
-              {championship.participatingTeams}
+              {teams.length}
               <Text> equipes participantes</Text>
             </Text>
           </View>
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFB8F",
     padding: 5,
     fontSize: 12,
-    width: 150,
+    width: 140,
     color: "#555",
     marginTop: 10,
     fontFamily: "SofiaSans_800ExtraBold",

@@ -4,13 +4,16 @@ import { PhotoInput } from "../../../../components/Inputs/PhotoInput";
 import { HeaderBack } from "../../../../components/Header/HeaderBack";
 import { useState } from "react";
 import { useRouter } from "expo-router";
+import { useStudents } from "../../../context/Context";
 
 export default function CreateTeamScreen() {
   const [teamName, setTeamName] = useState("");
   const [photo, setPhoto] = useState("");
   const router = useRouter();
+  const { setTeamName: Name } = useStudents();
 
   const handleNext = () => {
+    Name(teamName);
     router.push("./selectMembers(2)");
   };
 

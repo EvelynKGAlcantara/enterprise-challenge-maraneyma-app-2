@@ -7,7 +7,7 @@ export default function SuccessGameFinalized() {
   const router = useRouter();
 
   const handleAdvance = () => {
-    router.push("../../completed/championshioFinalized");
+    router.push("../../inProgress/championshipDetailInProgress");
   };
 
   return (

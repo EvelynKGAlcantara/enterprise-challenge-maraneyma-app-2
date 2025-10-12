@@ -6,19 +6,36 @@ import { Filter } from "../../../../components/Filters/Filter";
 import { SearchInput } from "../../../../components/Inputs/SeachInput";
 import { ParticipantCardSelectable } from "../../../../components/Cards/ParticipantCardSelectable";
 import { useRouter } from "expo-router";
+import { useStudents } from "../../../context/Context";
 
 export default function SelectMembersScreen() {
   const [selectedCount, setSelectedCount] = useState(0);
   const router = useRouter();
+  const { addTeams, setTeamName, teamName } = useStudents();
+  const [selectedParticipants, setSelectedParticipants] = useState([]);
 
   const handleNext = () => {
+    const newTeam = {
+      id: Date.now().toString(),
+      participants: selectedParticipants,
+      name: teamName,
+      description: "Primeiro Colegial",
+    };
+
+    addTeams(newTeam);
     router.push("./createTeamSucess(3)");
   };
-
-  const handleSelectChange = (isSelected) => {
-    setSelectedCount((prev) => (isSelected ? prev + 1 : prev - 1));
+  const handleSelectChange = (participant, isSelected) => {
+    setSelectedParticipants((prev) => {
+      if (isSelected) {
+        // adiciona
+        return [...prev, participant];
+      } else {
+        // remove
+        return prev.filter((p) => p.id !== participant.id);
+      }
+    });
   };
-
   const participants = [
     {
       id: "1",
@@ -57,6 +74,8 @@ export default function SelectMembersScreen() {
     },
   ];
 
+  const { students } = useStudents();
+
   return (
     <View style={styles.containerAll}>
       <View style={{ paddingHorizontal: 24 }}>
@@ -85,12 +104,12 @@ export default function SelectMembersScreen() {
         <View style={styles.container}>
           <SearchInput placeholder="Filtre os resultados" />
           <View style={styles.list}>
-            {participants.map((p) => (
+            {students.map((p) => (
               <ParticipantCardSelectable
                 key={p.id}
                 name={p.name}
                 gender={p.gender}
-                classInfo={p.classInfo}
+                classInfo={p.classroom}
                 imageURL={p.image}
                 onSelectChange={handleSelectChange}
               />
@@ -102,8 +121,9 @@ export default function SelectMembersScreen() {
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>
-          {selectedCount} aluno{selectedCount !== 1 ? "s" : ""} selecionado
-          {selectedCount !== 1 ? "s" : ""}
+          {selectedParticipants.length} aluno
+          {selectedParticipants.length !== 1 ? "s" : ""} selecionado
+          {selectedParticipants.length !== 1 ? "s" : ""}
         </Text>
         <Button text="Salvar equipe" onPress={handleNext} />
       </View>

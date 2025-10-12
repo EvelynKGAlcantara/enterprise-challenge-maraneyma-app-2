@@ -3,22 +3,23 @@ import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 
 export const ParticipantCardPoints = ({
   name,
+  points,
   initialPoints,
   editable,
   avatar,
   description,
   gender,
   schoolYear,
+  onPointsChange,
 }) => {
-  const [points, setPoints] = useState(initialPoints ?? 0);
   const [editablePoints] = useState(editable ?? true);
 
   const increment = () => {
-    if (editablePoints) setPoints(points + 1);
+    if (editablePoints) onPointsChange(points + 1);
   };
 
   const decrement = () => {
-    if (editablePoints && points > 0) setPoints(points - 1);
+    if (editablePoints && points > 0) onPointsChange(points - 1);
   };
 
   return (
@@ -32,42 +33,28 @@ export const ParticipantCardPoints = ({
         style={styles.avatar}
       />
 
-      {!editablePoints && description ? (
-        <>
-          <View style={styles.infoContainer}>
-            <Text style={styles.name}>{name}</Text>
-            <Text style={styles.descriptionText}>{gender}</Text>
-            <Text style={styles.descriptionText}>{schoolYear}</Text>
-          </View>
-          <View style={styles.disabledContainerWithDescription}>
-            <Text style={styles.disabledPointsLarge}>{points}</Text>
-          </View>
-        </>
+      <Text style={styles.name}>{name}</Text>
+
+      {editablePoints ? (
+        <View style={styles.counterContainer}>
+          <Pressable style={styles.button} onPress={increment}>
+            <Text style={styles.buttonText}>+</Text>
+          </Pressable>
+
+          <Text style={styles.points}>
+            {points?.toString()?.padStart(2, "0")}
+          </Text>
+
+          <Pressable style={styles.button} onPress={decrement}>
+            <Text style={styles.buttonText}>-</Text>
+          </Pressable>
+        </View>
       ) : (
-        <>
-          <Text style={styles.name}>{name}</Text>
-          {editablePoints ? (
-            <View style={styles.counterContainer}>
-              <Pressable style={styles.button} onPress={increment}>
-                <Text style={styles.buttonText}>+</Text>
-              </Pressable>
-
-              <Text style={styles.points}>
-                {points.toString().padStart(2, "0")}
-              </Text>
-
-              <Pressable style={styles.button} onPress={decrement}>
-                <Text style={styles.buttonText}>-</Text>
-              </Pressable>
-            </View>
-          ) : (
-            <View style={styles.disabledContainer}>
-              <Text style={styles.disabledPoints}>
-                {points.toString().padStart(2, "0")}
-              </Text>
-            </View>
-          )}
-        </>
+        <View style={styles.disabledContainer}>
+          <Text style={styles.disabledPoints}>
+            {points?.toString()?.padStart(2, "0")}
+          </Text>
+        </View>
       )}
     </View>
   );

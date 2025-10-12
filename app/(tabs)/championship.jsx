@@ -10,7 +10,7 @@ import { StatusChampionshipCard } from "../../components/Cards/StatusChampionshi
 
 export default function Championship() {
   const router = useRouter();
-  const { championships } = useStudents();
+  const { championships, setSelectChampionship } = useStudents();
   const handleRegister = () => {
     setModalVisible(true);
   };
@@ -23,7 +23,8 @@ export default function Championship() {
     router.push("../students_screens/registerStudents");
   };
 
-  const handleDetailChampionship = () => {
+  const handleDetailChampionship = (id) => {
+    setSelectChampionship(id);
     router.push(
       "../championship/detailsChampionship/notInitiated/championshipDetails"
     );
@@ -55,7 +56,7 @@ export default function Championship() {
                     participatingTeams={championship?.participatingTeams}
                     totalGames={championship?.totalGames}
                     gender={championship?.gender}
-                    onPress={handleDetailChampionship}
+                    onPress={() => handleDetailChampionship(championship?.id)}
                   />
                 ))}
               </View>

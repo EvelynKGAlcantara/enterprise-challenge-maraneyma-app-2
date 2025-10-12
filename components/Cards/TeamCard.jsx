@@ -22,17 +22,21 @@ export function TeamCard({
       </View>
 
       <View style={styles.buttonsRow}>
-        <Pressable style={styles.button} onPress={onPressData}>
-          <Text style={styles.buttonText}>Dados</Text>
-        </Pressable>
-
-        <Pressable style={styles.button} onPress={onPressMembers}>
-          <Text style={styles.buttonText}>Membros</Text>
-        </Pressable>
-
-        <Pressable style={styles.button} onPress={onPressDelete}>
-          <Text style={styles.buttonText}>Excluir</Text>
-        </Pressable>
+        <View style={styles.buttonArea}>
+          <Pressable style={styles.button} onPress={onPressData}>
+            <Text style={styles.buttonText}>Dados</Text>
+          </Pressable>
+        </View>
+        <View style={styles.buttonArea}>
+          <Pressable style={styles.button} onPress={onPressMembers}>
+            <Text style={styles.buttonText}>Membros</Text>
+          </Pressable>
+        </View>
+        <View style={styles.buttonArea}>
+          <Pressable style={styles.button} onPress={onPressDelete}>
+            <Text style={styles.buttonText}>Excluir</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -79,19 +83,26 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   buttonsRow: {
+    width: "100%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    gap: 5,
     marginTop: 6,
   },
+  buttonArea: {
+    flex: 1,
+    width: "100%",
+  },
   button: {
+    width: "100%",
     borderWidth: 1,
-    borderColor: "#FF1493",
+    borderColor: "#EB2F96",
     borderRadius: 4,
     paddingVertical: 6,
-    paddingHorizontal: 14,
+    paddingHorizontal: 12,
   },
   buttonText: {
-    color: "#FF1493",
-    fontWeight: "500",
+    color: "#EB2F96",
+    fontWeight: "400",
+    textAlign: "center",
   },
 });

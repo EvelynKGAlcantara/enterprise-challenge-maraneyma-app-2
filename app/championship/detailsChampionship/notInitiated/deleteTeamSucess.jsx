@@ -3,7 +3,7 @@ import { useRouter } from "expo-router";
 import LottieView from "lottie-react-native";
 import { Button } from "../../../../components/Button/index";
 
-export default function TeamCreatedSucessScreen() {
+export default function TeamDeleteSucessScreen() {
   const router = useRouter();
 
   const handleAdvance = () => {
@@ -22,7 +22,7 @@ export default function TeamCreatedSucessScreen() {
           />
         </View>
 
-        <Text style={styles.successTitle}>Equipe criada com Sucesso!</Text>
+        <Text style={styles.successTitle}>Equipe excluida com Sucesso!</Text>
       </View>
 
       <View style={styles.buttons}>

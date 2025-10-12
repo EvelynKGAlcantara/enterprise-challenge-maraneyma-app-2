@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#1E1E1E",
+    fontFamily: "SofiaSans_500Medium",
   },
   description: {
     fontSize: 13,

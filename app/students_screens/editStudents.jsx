@@ -29,7 +29,8 @@ export default function EditStudents() {
     setModalVisible(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = (id) => {
+    removeStudent(id);
     router.push("./deletStudentSucesScreen");
   };
 
@@ -53,11 +54,13 @@ export default function EditStudents() {
     { label: "Terceiro Colegial (Ensino Médio)", value: "12" },
   ];
   const router = useRouter();
-  const { students } = useStudents();
+  const { students, removeStudent } = useStudents();
   const [name, setName] = useState("");
+  const [id, setId] = useState("");
   const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
   const [schoolYear, setSchoolYear] = useState("");
+  const [classroom, setClassroom] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -66,10 +69,12 @@ export default function EditStudents() {
   useEffect(() => {
     if (students && students.length > 0) {
       const aluno = students[0];
+      setId(aluno.id);
       setName(aluno.name);
       setGender(aluno.gender);
       setEmail(aluno.email);
       setSchoolYear(aluno.schoolYear);
+      setClassroom(aluno.classroom);
     }
   }, [students]);
 
@@ -138,8 +143,8 @@ export default function EditStudents() {
               </Text>
               <TextInput
                 style={styles.input}
-                value={schoolYear}
-                onChangeText={setName}
+                value={classroom}
+                onChangeText={setClassroom}
                 placeholder="Ex.: Sala B"
               />
             </View>
@@ -163,7 +168,7 @@ export default function EditStudents() {
           <DeleteModal
             visible={modalVisible}
             onClose={() => setModalVisible(false)}
-            onConfirm={confirmDelete}
+            onConfirm={() => confirmDelete(id)}
             description={"Tem certeza que deseja excluir o aluno?"}
             textSecondatyButton={"Sim, excluir"}
             textButton={"Não, desistir"}

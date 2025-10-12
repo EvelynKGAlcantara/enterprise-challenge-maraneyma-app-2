@@ -17,23 +17,20 @@ export function StudentsProvider({ children }) {
         id: 1,
         team1: "Equipe 1",
         team2: "Equipe 2",
-        score1: 3,
-        score2: 5,
-        status: "finished",
-        date: "02/10/2025",
-        hour: "15:00",
-        winner: "Equipe 2",
+        score1: 0,
+        score2: 0,
+        status: "waiting",
       },
       {
         id: 2,
         team1: "Equipe 1",
         team2: "Equipe 2",
-        score1: 8,
-        score2: 2,
-        status: "finished",
-        date: "02/10/2025",
-        hour: "15:00",
-        winner: "Equipe 1",
+        score1: 0,
+        score2: 0,
+        status: "waiting",
+        // date: "02/10/2025",
+        // hour: "15:00",
+        // winner: "Equipe 1",
       },
     ],
     faseB: [
@@ -74,13 +71,29 @@ export function StudentsProvider({ children }) {
     ],
   });
 
-  const updateMatchStatus = (id, newStatus, score1, score2) => {
+  const updateMatchStatus = (
+    id,
+    newStatus,
+    score1,
+    score2,
+    date,
+    hour,
+    winner
+  ) => {
     setMatches((prevMatches) => {
       // percorre as fases (faseA, faseB, final)
       const updated = Object.keys(prevMatches).reduce((acc, fase) => {
         acc[fase] = prevMatches[fase].map((match) =>
           match.id === id
-            ? { ...match, status: newStatus, score1, score2 }
+            ? {
+                ...match,
+                status: newStatus,
+                score1,
+                score2,
+                date,
+                hour,
+                winner,
+              }
             : match
         );
         return acc;

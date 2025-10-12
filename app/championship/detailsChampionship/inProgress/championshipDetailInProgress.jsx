@@ -8,7 +8,6 @@ import { useRouter } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { ParticipantCardPoints } from "../../../../components/Cards/ParticipantCardPoints";
 import { TeamCardRanking } from "../../../../components/Cards/TeamCardRanking";
-import { ConfirmModal } from "../../../../components/Modals/ConfirmModal";
 import { useStudents } from "../../../context/Context";
 
 const renderStatus = (status) => {
@@ -45,7 +44,7 @@ const mockChampionships = [
     schoolYear: "Segundo Colegial (Ensino Médio)",
     participatingTeams: "2",
     totalGames: 15,
-    finishedGames: 5,
+    finishedGames: 0,
   },
 ];
 
@@ -146,7 +145,6 @@ export default function ChampionshipDetailsProgress() {
     router.push("./teamDetails");
   };
   const handleGameDetail = (match) => {
-    console.log(match);
     setSelectedMatch(match);
     router.push("./championshipDetails/gameDetails");
   };
@@ -266,7 +264,7 @@ export default function ChampionshipDetailsProgress() {
                       hour={match.hour}
                       winner={match.winner}
                       handleDetails={() => handleGameDetail(match)}
-                      handleStart={handleStartGame}
+                      handleStart={() => handleGameDetail(match)}
                     />
                   </View>
                 ))}

@@ -186,7 +186,33 @@ export default function GameDetails() {
     setModalVisible(true);
   };
   const handleConfirm = () => {
-    updateMatchStatus(selectedMatch?.id, "finished", team1Score, team2Score);
+    // pega a data e hora atuais
+    const now = new Date();
+    const date = now.toLocaleDateString("pt-BR"); // formato: 12/10/2025
+    const hour = now.toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    }); // formato: 14:35
+
+    // descobre o vencedor
+    let winner = "Empate";
+    if (team1Score > team2Score) {
+      winner = selectedMatch?.team1;
+    } else if (team2Score > team1Score) {
+      winner = selectedMatch?.team2;
+    }
+
+    // atualiza no contexto
+    updateMatchStatus(
+      selectedMatch?.id,
+      "finished",
+      team1Score,
+      team2Score,
+      date,
+      hour,
+      winner
+    );
+
     router.push("./sucessGameFinalized");
   };
 

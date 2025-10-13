@@ -26,19 +26,6 @@ const mockChampionships = [
   },
 ];
 
-// const mockTeams = [
-//   {
-//     id: 1,
-//     name: "Time Sala 1",
-//     description: "Primeiro Colegial (Ensino Médio)",
-//   },
-//   {
-//     id: 2,
-//     name: "Time Sala 2",
-//     description: "Primeiro Colegial (Ensino Médio)",
-//   },
-// ];
-
 const renderStatus = (status) => {
   switch (status) {
     case "inProgress":
@@ -247,29 +234,34 @@ export default function ChampionshipDetails() {
         {tab === "team" && (
           <View style={styles.section}>
             {hasTeams ? (
-              <View>
-                <View>
-                  {teams.map((team) => (
-                    <TeamCard
-                      key={team.id}
-                      name={team.name}
-                      description={team.description}
-                      onPressData={() => console.log("Ver dados")}
-                      onPressMembers={() => console.log("Ver membros")}
-                      onPressDelete={() => handleRemoveTeam(team.id)}
-                    />
-                  ))}
-                </View>
-                <View style={styles.space}>
-                  <View>
-                    <Text style={styles.helperTextTeams}>
-                      Este campeonato precisa ter pelo menos 3 equipes
-                    </Text>
+              <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, marginBottom: 40 }}>
+                  <ScrollView
+                    style={{ flex: 1 }}
+                    showsVerticalScrollIndicator={false}
+                  >
+                    {teams.map((team) => (
+                      <TeamCard
+                        key={team.id}
+                        name={team.name}
+                        description={team.description}
+                        onPressData={() => console.log("Ver dados")}
+                        onPressMembers={() => console.log("Ver membros")}
+                        onPressDelete={() => handleRemoveTeam(team.id)}
+                      />
+                    ))}
+
+                    <View style={styles.space}>
+                      <Text style={styles.helperTextTeams}>
+                        Este campeonato precisa ter pelo menos 3 equipes
+                      </Text>
+                    </View>
+                  </ScrollView>
+                  <View style={styles.fixedFooter}>
+                    <Button text="Montar equipes" onPress={handleCreateTeam} />
                   </View>
                 </View>
-                <View style={styles.footer}>
-                  <Button text="Montar equipes" onPress={handleCreateTeam} />
-                </View>
+
                 <DeleteModal
                   visible={modalVisible}
                   onClose={handleConfirmRemoveTeam}
@@ -291,7 +283,7 @@ export default function ChampionshipDetails() {
                     Monte as equipes para ativar o campeonato
                   </Text>
                 </View>
-                <View style={{ marginTop: 24 }}>
+                <View style={styles.buttonsChamp3}>
                   <Button text="Montar equipes" onPress={handleCreateTeam} />
                 </View>
               </View>
@@ -502,8 +494,25 @@ const styles = StyleSheet.create({
   buttonsChamp: {
     right: 0,
     backgroundColor: "#FFFFFF",
-
     paddingVertical: 12,
+    borderTopWidth: 1,
+    width: "100%",
+    borderTopColor: "#EEE",
+  },
+  buttonsChamp2: {
+    right: 0,
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 12,
+    marginTop: 20,
+    borderTopWidth: 1,
+    width: "100%",
+    borderTopColor: "#EEE",
+  },
+  buttonsChamp3: {
+    right: 0,
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 12,
+    marginTop: 20,
     borderTopWidth: 1,
     width: "100%",
     borderTopColor: "#EEE",
@@ -522,5 +531,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     alignItems: "center",
+  },
+  fixedFooter: {
+    paddingVertical: 16,
+    marginTop: 210,
+    borderTopWidth: 1,
+    borderTopColor: "#EEE",
+    backgroundColor: "#fff",
   },
 });

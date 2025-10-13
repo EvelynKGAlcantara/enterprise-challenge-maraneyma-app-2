@@ -10,6 +10,7 @@ export const StatusChampionshipCardHome = ({
   totalGames,
   finishedGames,
   onPress,
+  gender,
 }) => {
   const renderStatus = () => {
     switch (status) {
@@ -42,7 +43,7 @@ export const StatusChampionshipCardHome = ({
 
       <View style={{ marginBottom: 12 }}>
         <Text style={styles.category} numberOfLines={1} ellipsizeMode="tail">
-          {category}
+          {category} / {gender}
         </Text>
 
         <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
@@ -55,7 +56,7 @@ export const StatusChampionshipCardHome = ({
           Ano escolar: {schoolYear}
         </Text>
         <Text style={styles.info} numberOfLines={1} ellipsizeMode="tail">
-          {participatingTeams} equipes participantes
+          {participatingTeams?.length ?? 0} equipes participantes
         </Text>
         {totalGames > 0 ? (
           <Text style={styles.info} numberOfLines={1} ellipsizeMode="tail">

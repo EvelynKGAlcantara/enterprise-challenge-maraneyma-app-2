@@ -12,8 +12,6 @@ export const mockTeam1 = [
   {
     id: "team1-1",
     name: "Maria Silva",
-    avatar: null,
-    initialPoints: 0,
     gender: "Feminino",
     schoolYear: "Segundo colegial / Sala B",
     points: 0,
@@ -21,8 +19,6 @@ export const mockTeam1 = [
   {
     id: "team1-2",
     name: "João Santos",
-    avatar: null,
-    initialPoints: 0,
     gender: "Masculino",
     schoolYear: "Terceiro colegial / Sala A",
     points: 0,
@@ -30,8 +26,6 @@ export const mockTeam1 = [
   {
     id: "team1-3",
     name: "Ana Costa",
-    avatar: null,
-    initialPoints: 0,
     gender: "Feminino",
     schoolYear: "Primeiro colegial / Sala C",
     points: 0,
@@ -39,8 +33,6 @@ export const mockTeam1 = [
   {
     id: "team1-4",
     name: "Pedro Oliveira",
-    avatar: null,
-    initialPoints: 0,
     gender: "Masculino",
     schoolYear: "Segundo colegial / Sala A",
     points: 0,
@@ -48,8 +40,6 @@ export const mockTeam1 = [
   {
     id: "team1-5",
     name: "Carla Mendes",
-    avatar: null,
-    initialPoints: 0,
     gender: "Feminino",
     schoolYear: "Terceiro colegial / Sala B",
     points: 0,
@@ -57,8 +47,6 @@ export const mockTeam1 = [
   {
     id: "team1-6",
     name: "Lucas Ferreira",
-    avatar: null,
-    initialPoints: 0,
     gender: "Masculino",
     schoolYear: "Primeiro colegial / Sala A",
     points: 0,
@@ -66,8 +54,6 @@ export const mockTeam1 = [
   {
     id: "team1-7",
     name: "Juliana Rocha",
-    avatar: null,
-    initialPoints: 0,
     gender: "Feminino",
     schoolYear: "Segundo colegial / Sala C",
     points: 0,
@@ -75,8 +61,6 @@ export const mockTeam1 = [
   {
     id: "team1-8",
     name: "Rafael Alves",
-    avatar: null,
-    initialPoints: 0,
     gender: "Masculino",
     schoolYear: "Terceiro colegial / Sala C",
     points: 0,
@@ -87,8 +71,6 @@ export const mockTeam2 = [
   {
     id: "team2-1",
     name: "Beatriz Nogueira",
-    avatar: null,
-    initialPoints: 0,
     gender: "Feminino",
     schoolYear: "Segundo colegial / Sala B",
     points: 0,
@@ -96,8 +78,6 @@ export const mockTeam2 = [
   {
     id: "team2-2",
     name: "Gabriel Martins",
-    avatar: null,
-    initialPoints: 0,
     gender: "Masculino",
     schoolYear: "Terceiro colegial / Sala A",
     points: 0,
@@ -105,8 +85,6 @@ export const mockTeam2 = [
   {
     id: "team2-3",
     name: "Camila Pires",
-    avatar: null,
-    initialPoints: 0,
     gender: "Feminino",
     schoolYear: "Primeiro colegial / Sala C",
     points: 0,
@@ -114,8 +92,6 @@ export const mockTeam2 = [
   {
     id: "team2-4",
     name: "Felipe Barbosa",
-    avatar: null,
-    initialPoints: 0,
     gender: "Masculino",
     schoolYear: "Segundo colegial / Sala A",
     points: 0,
@@ -123,8 +99,6 @@ export const mockTeam2 = [
   {
     id: "team2-5",
     name: "Mariana Duarte",
-    avatar: null,
-    initialPoints: 0,
     gender: "Feminino",
     schoolYear: "Terceiro colegial / Sala B",
     points: 0,
@@ -132,8 +106,6 @@ export const mockTeam2 = [
   {
     id: "team2-6",
     name: "Thiago Ramos",
-    avatar: null,
-    initialPoints: 0,
     gender: "Masculino",
     schoolYear: "Primeiro colegial / Sala A",
     points: 0,
@@ -141,8 +113,6 @@ export const mockTeam2 = [
   {
     id: "team2-7",
     name: "Larissa Carvalho",
-    avatar: null,
-    initialPoints: 0,
     gender: "Feminino",
     schoolYear: "Segundo colegial / Sala C",
     points: 0,
@@ -150,8 +120,6 @@ export const mockTeam2 = [
   {
     id: "team2-8",
     name: "Mateus Lima",
-    avatar: null,
-    initialPoints: 0,
     gender: "Masculino",
     schoolYear: "Terceiro colegial / Sala C",
     points: 0,
@@ -161,10 +129,11 @@ export const mockTeam2 = [
 export default function GameDetails() {
   const [team1, setTeam1] = useState(mockTeam1);
   const [team2, setTeam2] = useState(mockTeam2);
+  const [tab, setTab] = useState("team1");
+  const [modalVisible, setModalVisible] = useState(false);
+
   const router = useRouter();
   const { selectedMatch, updateMatchStatus } = useStudents();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [tab, setTab] = useState("team1");
 
   const updatePoints = (team, setTeam, id, newPoints) => {
     setTeam((prev) =>
@@ -172,37 +141,30 @@ export default function GameDetails() {
     );
   };
 
-  // Soma total de cada equipe
   const team1Score =
     selectedMatch?.status === "finished"
       ? selectedMatch?.score1
       : team1.reduce((sum, p) => sum + p.points, 0);
+
   const team2Score =
     selectedMatch?.status === "finished"
       ? selectedMatch?.score2
       : team2.reduce((sum, p) => sum + p.points, 0);
 
-  const handleFinalizedGame = () => {
-    setModalVisible(true);
-  };
+  const handleFinalizedGame = () => setModalVisible(true);
+
   const handleConfirm = () => {
-    // pega a data e hora atuais
     const now = new Date();
-    const date = now.toLocaleDateString("pt-BR"); // formato: 12/10/2025
+    const date = now.toLocaleDateString("pt-BR");
     const hour = now.toLocaleTimeString("pt-BR", {
       hour: "2-digit",
       minute: "2-digit",
-    }); // formato: 14:35
+    });
 
-    // descobre o vencedor
     let winner = "Empate";
-    if (team1Score > team2Score) {
-      winner = selectedMatch?.team1;
-    } else if (team2Score > team1Score) {
-      winner = selectedMatch?.team2;
-    }
+    if (team1Score > team2Score) winner = selectedMatch?.team1;
+    else if (team2Score > team1Score) winner = selectedMatch?.team2;
 
-    // atualiza no contexto
     updateMatchStatus(
       selectedMatch?.id,
       "finished",
@@ -212,117 +174,139 @@ export default function GameDetails() {
       hour,
       winner
     );
-
     router.push("./sucessGameFinalized");
   };
 
   return (
-    <View style={styles.container}>
-      <HeaderBack title={"Detalhe do Jogo"} />
-      <View style={styles.container}>
-        <Text style={styles.category}>Campeonato de futebol / Feminino</Text>
-        <Text style={styles.title}>Jogos do Segundo Ano</Text>
-        <Text style={styles.subtitle}>
-          <Text style={styles.subtitleBold}>ANO ESCOLAR: </Text>
-          Segundo Colegial (Ensino Médio)
+    <View style={styles.screen}>
+      <View style={styles.content}>
+        <HeaderBack title="Detalhe do Jogo" />
+        <View style={styles.containerHeader}>
+          <Text style={styles.category}>Campeonato de futebol / Feminino</Text>
+          <Text style={styles.title}>Jogos do Segundo Ano</Text>
+          <Text style={styles.subtitle}>
+            <Text style={styles.subtitleBold}>ANO ESCOLAR: </Text>Segundo
+            Colegial (Ensino Médio)
+          </Text>
+        </View>
+
+        <View style={styles.card}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>Jogo 1</Text>
+          </View>
+
+          <View style={styles.teamsRow}>
+            <View style={styles.teamContainer}>
+              <Text style={styles.team}>Equipe 1</Text>
+              <Text style={styles.score}>{team1Score}</Text>
+
+              {selectedMatch?.status === "finished" &&
+                team1Score > team2Score && (
+                  <View style={styles.winnerTag}>
+                    <Text style={styles.winnerTagText}>VENCEDOR</Text>
+                  </View>
+                )}
+            </View>
+
+            <Text style={styles.x}>X</Text>
+
+            <View style={styles.teamContainer}>
+              <Text style={styles.team}>Equipe 2</Text>
+              <Text style={styles.score}>{team2Score}</Text>
+              {selectedMatch?.status === "finished" &&
+                team2Score > team1Score && (
+                  <View style={styles.winnerTag}>
+                    <Text style={styles.winnerTagText}>VENCEDOR</Text>
+                  </View>
+                )}
+            </View>
+          </View>
+        </View>
+
+        <Text style={styles.textBody}>
+          Indique a quantidade de pontos de cada jogador que o placar é
+          atualizado automaticamente
         </Text>
-      </View>
 
-      <View style={styles.card}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Jogo 1</Text>
+        <View style={styles.tabs}>
+          <Pressable
+            style={[styles.tab, tab === "team1" && styles.activeTab]}
+            onPress={() => setTab("team1")}
+          >
+            <Text style={tab === "team1" ? styles.activeText : styles.tabText}>
+              Time Sala 1
+            </Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.tab, tab === "team2" && styles.activeTab]}
+            onPress={() => setTab("team2")}
+          >
+            <Text style={tab === "team2" ? styles.activeText : styles.tabText}>
+              Time Sala 2
+            </Text>
+          </Pressable>
         </View>
 
-        <View style={styles.teamsRow}>
-          <View style={styles.teamContainer}>
-            <Text style={styles.team}>Equipe 1</Text>
-            <Text style={styles.score}>{team1Score}</Text>
-          </View>
+        {/* Conteúdo das tabs */}
+        <ScrollView contentContainerStyle={styles.scroll}>
+          {tab === "team1" &&
+            team1.map((participant) => (
+              <ParticipantCardPoints
+                key={participant.id}
+                editable={selectedMatch?.status !== "finished"}
+                name={participant.name}
+                points={participant.points}
+                initialPoints={participant.points}
+                gender={participant.gender}
+                schoolYear={participant.schoolYear}
+                onPointsChange={(newPoints) =>
+                  updatePoints(team1, setTeam1, participant.id, newPoints)
+                }
+              />
+            ))}
 
-          <Text style={styles.x}>X</Text>
+          {tab === "team2" &&
+            team2.map((participant) => (
+              <ParticipantCardPoints
+                key={participant.id}
+                editable={selectedMatch?.status !== "finished"}
+                name={participant.name}
+                points={participant.points}
+                initialPoints={participant.points}
+                gender={participant.gender}
+                schoolYear={participant.schoolYear}
+                onPointsChange={(newPoints) =>
+                  updatePoints(team2, setTeam2, participant.id, newPoints)
+                }
+              />
+            ))}
+        </ScrollView>
+      </View>
 
-          <View style={styles.teamContainer}>
-            <Text style={styles.team}>Equipe 2</Text>
-            <Text style={styles.score}>{team2Score}</Text>
-          </View>
+      {selectedMatch?.status === "waiting" && (
+        <View style={styles.footerButton}>
+          <Button
+            text="Finalizar Jogo"
+            onPress={handleFinalizedGame}
+            style={{ width: "100%" }}
+          />
         </View>
-      </View>
+      )}
 
-      <Text style={styles.textBody}>
-        Indique a quantidade de pontos de cada jogador que o placar é atualizado
-        automaticamente
-      </Text>
-
-      {/* Tabs */}
-      <View style={styles.tabs}>
-        <Pressable
-          style={[styles.tab, tab === "team1" && styles.activeTab]}
-          onPress={() => setTab("team1")}
-        >
-          <Text style={tab === "team1" ? styles.activeText : styles.tabText}>
-            Time Sala 1
-          </Text>
-        </Pressable>
-        <Pressable
-          style={[styles.tab, tab === "team2" && styles.activeTab]}
-          onPress={() => setTab("team2")}
-        >
-          <Text style={tab === "team2" ? styles.activeText : styles.tabText}>
-            Time Sala 2
-          </Text>
-        </Pressable>
-      </View>
-
-      {/* Conteúdo das tabs */}
-      <ScrollView contentContainerStyle={styles.scroll}>
-        {tab === "team1" &&
-          team1.map((participant) => (
-            <ParticipantCardPoints
-              key={participant.id}
-              avatar={participant.avatar}
-              editable={true}
-              initialPoints={participant.initialPoints}
-              name={participant.name}
-              points={participant.points}
-              gender={participant.gender}
-              schoolYear={participant.schoolYear}
-              onPointsChange={(newPoints) =>
-                updatePoints(team1, setTeam1, participant.id, newPoints)
-              }
-            />
-          ))}
-        {tab === "team2" &&
-          team2.map((participant) => (
-            <ParticipantCardPoints
-              key={participant.id}
-              avatar={participant.avatar}
-              editable={true}
-              initialPoints={participant.initialPoints}
-              name={participant.name}
-              gender={participant.gender}
-              schoolYear={participant.schoolYear}
-              points={participant.points}
-              onPointsChange={(newPoints) =>
-                updatePoints(team2, setTeam2, participant.id, newPoints)
-              }
-            />
-          ))}
-      </ScrollView>
-
-      <View style={styles.footerButton}>
-        {selectedMatch?.status === "waiting" && (
-          <Button text={"Finalizar Jogo"} onPress={handleFinalizedGame} />
-        )}
-      </View>
-
+      {/* Modal de confirmação */}
       <ConfirmModal
         visible={modalVisible}
-        description={"Tem certeza que deseja"}
-        descriptionBold={" finalizar "}
-        descriptionContinue={"esta partida?"}
-        textButton={"Retornar a tela anterior"}
-        textSecondatyButton={"Sim, finalizar partida"}
-        title={"Finalizar jogo"}
+        title="Finalizar jogo"
+        description="Tem certeza que deseja"
+        descriptionBold=" finalizar "
+        descriptionContinue="esta partida?"
+        textButton="Retornar a tela anterior"
+        textSecondatyButton="Sim, finalizar partida"
+        onConfirm={handleConfirm}
+        onClose={() => setModalVisible(false)}
+        navigate={() => setModalVisible(false)}
+        insertComponent
         component={
           <View style={styles.card}>
             <View style={styles.header}>
@@ -332,18 +316,18 @@ export default function GameDetails() {
               <View style={styles.teamContainer}>
                 <Text style={styles.team}>Equipe 1</Text>
                 <Text style={styles.score}>{team1Score}</Text>
-                {/* Mostra vencedor se o time 1 tiver mais pontos */}
                 {team1Score > team2Score && (
                   <View style={styles.winnerTag}>
                     <Text style={styles.winnerTagText}>VENCEDOR</Text>
                   </View>
                 )}
               </View>
+
               <Text style={styles.x}>X</Text>
+
               <View style={styles.teamContainer}>
                 <Text style={styles.team}>Equipe 2</Text>
                 <Text style={styles.score}>{team2Score}</Text>
-                {/* Mostra vencedor se o time 2 tiver mais pontos */}
                 {team2Score > team1Score && (
                   <View style={styles.winnerTag}>
                     <Text style={styles.winnerTagText}>VENCEDOR</Text>
@@ -353,20 +337,45 @@ export default function GameDetails() {
             </View>
           </View>
         }
-        onConfirm={handleConfirm}
-        onClose={() => setModalVisible(false)}
-        navigate={() => setModalVisible(false)}
-        insertComponent={true}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
     backgroundColor: "#fbfbfbff",
+  },
+  content: {
+    flex: 1,
     paddingHorizontal: 24,
+    paddingBottom: 20,
+  },
+  containerHeader: {
+    marginTop: 10,
+    marginBottom: 14,
+  },
+  category: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#000",
+  },
+  title: {
+    fontSize: 26,
+    marginVertical: 4,
+    color: "#000",
+    fontFamily: "SofiaSans_800ExtraBold",
+  },
+  subtitle: {
+    fontSize: 12,
+    color: "#555",
+    marginTop: 4,
+  },
+  subtitleBold: {
+    fontSize: 12,
+    color: "#555",
+    fontFamily: "SofiaSans_800ExtraBold",
   },
   card: {
     borderWidth: 1,
@@ -426,9 +435,9 @@ const styles = StyleSheet.create({
   },
   tabs: {
     flexDirection: "row",
-    borderStyle: "solid",
     borderColor: "#F0F0F0",
     marginBottom: 16,
+    width: "100%",
   },
   tab: {
     paddingVertical: 10,
@@ -450,56 +459,25 @@ const styles = StyleSheet.create({
     color: "#EB2F96",
     fontWeight: "500",
   },
-  footerButton: {
-    position: "absolute",
-    width: "100%",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderTopWidth: 1,
-    borderTopColor: "#EEE",
-  },
-  scroll: {
-    paddingBottom: 120,
-  },
-  category: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginTop: 40,
-    color: "#000",
-  },
-  tutorialList: {
-    paddingLeft: 4,
-    paddingRight: 16,
-  },
-  cardWrapper: {
-    marginRight: 12,
-    width: 290,
-  },
-  title: {
-    fontSize: 26,
-    marginVertical: 4,
-    color: "#000",
-    fontFamily: "SofiaSans_800ExtraBold",
-  },
-  subtitle: {
-    fontSize: 12,
-    color: "#555",
-    marginTop: 4,
-  },
-  subtitleBold: {
-    fontSize: 12,
-    color: "#555",
-    marginVertical: 4,
-    fontFamily: "SofiaSans_800ExtraBold",
-  },
   textBody: {
     marginVertical: 14,
     fontSize: 14,
     color: "#7B7B7B",
     fontFamily: "SofiaSans_400Regular",
+  },
+  scroll: {
+    // paddingBottom: 80,
+  },
+  footerButton: {
+    position: "absolute",
+    paddingHorizontal: 24,
+    bottom: 12,
+    left: 0,
+    right: 0,
+    width: "100%",
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: "#EEE",
   },
 });

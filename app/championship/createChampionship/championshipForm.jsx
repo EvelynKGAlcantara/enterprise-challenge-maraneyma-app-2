@@ -25,18 +25,54 @@ export default function ChampionshipForm() {
   const [gender, setGender] = useState(null);
 
   const schoolYears = [
-    { label: "Primeiro Ano (Ensino Fundamental)", value: "1" },
-    { label: "Segundo Ano (Ensino Fundamental)", value: "2" },
-    { label: "Terceiro Ano (Ensino Fundamental)", value: "3" },
-    { label: "Quarto Ano (Ensino Fundamental)", value: "4" },
-    { label: "Quinto Ano (Ensino Fundamental)", value: "5" },
-    { label: "Sexto Ano (Ensino Fundamental)", value: "6" },
-    { label: "Sétimo Ano (Ensino Fundamental)", value: "7" },
-    { label: "Oitavo Ano (Ensino Fundamental)", value: "8" },
-    { label: "Nono Ano (Ensino Fundamental)", value: "9" },
-    { label: "Primeiro Colegial (Ensino Médio)", value: "10" },
-    { label: "Segundo Colegial (Ensino Médio)", value: "11" },
-    { label: "Terceiro Colegial (Ensino Médio)", value: "12" },
+    {
+      label: "Primeiro Ano (Ensino Fundamental)",
+      value: "Primeiro Ano (Ensino Fundamental)",
+    },
+    {
+      label: "Segundo Ano (Ensino Fundamental)",
+      value: "Segundo Ano (Ensino Fundamental)",
+    },
+    {
+      label: "Terceiro Ano (Ensino Fundamental)",
+      value: "Terceiro Ano (Ensino Fundamental)",
+    },
+    {
+      label: "Quarto Ano (Ensino Fundamental)",
+      value: "Quarto Ano (Ensino Fundamental)",
+    },
+    {
+      label: "Quinto Ano (Ensino Fundamental)",
+      value: "Quinto Ano (Ensino Fundamental)",
+    },
+    {
+      label: "Sexto Ano (Ensino Fundamental)",
+      value: "Sexto Ano (Ensino Fundamental)",
+    },
+    {
+      label: "Sétimo Ano (Ensino Fundamental)",
+      value: "Sétimo Ano (Ensino Fundamental)",
+    },
+    {
+      label: "Oitavo Ano (Ensino Fundamental)",
+      value: "Oitavo Ano (Ensino Fundamental)",
+    },
+    {
+      label: "Nono Ano (Ensino Fundamental)",
+      value: "Nono Ano (Ensino Fundamental)",
+    },
+    {
+      label: "Primeiro Colegial (Ensino Médio)",
+      value: "Primeiro Colegial (Ensino Médio)",
+    },
+    {
+      label: "Segundo Colegial (Ensino Médio)",
+      value: "Segundo Colegial (Ensino Médio)",
+    },
+    {
+      label: "Terceiro Colegial (Ensino Médio)",
+      value: "Terceiro Colegial (Ensino Médio)",
+    },
   ];
 
   const genderOptions = [

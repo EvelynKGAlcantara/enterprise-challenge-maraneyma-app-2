@@ -99,11 +99,12 @@ export default function TeamDetails() {
             </View>
             <View style={styles.textContainer}>
               <Text style={styles.name}>Time Sala 1</Text>
-              <Text style={styles.description}>
+              <Text style={styles.descriptionBold}>
                 Campeonato de futebol / feminino
               </Text>
               <Text style={styles.description}>
-                Primeiro Colegial (Ensino Médio)
+                <Text style={styles.descriptionBold}>Ano Escolar: </Text>
+                Segundo Colegial (Ensino Médio)
               </Text>
             </View>
           </View>
@@ -155,15 +156,21 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   name: {
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: "600",
     color: "#1E1E1E",
-    fontFamily: "SofiaSans_500Medium",
+    fontFamily: "SofiaSans_800ExtraBold",
   },
   description: {
-    fontSize: 13,
+    fontSize: 12,
     color: "#9A9A9A",
     marginTop: 2,
+  },
+  descriptionBold: {
+    fontSize: 12,
+    color: "#9A9A9A",
+    marginTop: 2,
+    fontFamily: "SofiaSans_800ExtraBold",
   },
   button: {
     borderWidth: 1,

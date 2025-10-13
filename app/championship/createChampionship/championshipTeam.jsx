@@ -2,9 +2,13 @@ import { View, Text, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { CardSelect } from "../../../components/Cards/ChampionshipCard";
 import { HeaderBack } from "../../../components/Header/HeaderBack";
+import { useStudents } from "../../context/Context";
 
 export default function ChampionshipTeams() {
   const router = useRouter();
+  const {
+    handlers: { setChampioshipType },
+  } = useStudents();
 
   const options = [
     "Cabo de guerra",
@@ -27,7 +31,10 @@ export default function ChampionshipTeams() {
         <CardSelect
           key={index}
           title={item}
-          onPress={() => router.push("./championshipForm")}
+          onPress={() => {
+            setChampioshipType(item);
+            router.push("./championshipForm");
+          }}
         />
       ))}
     </View>

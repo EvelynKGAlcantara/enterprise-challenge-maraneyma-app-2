@@ -13,6 +13,7 @@ import { useRouter } from "expo-router";
 import { TertiaryButton } from "../../components/Button/TertiaryButton";
 import { DeleteModal } from "../../components/Modals/DeleteModal";
 import { useState, useEffect } from "react";
+import { useStudents } from "../context/Context";
 
 const sports = [
   {
@@ -117,6 +118,7 @@ const mockChampionships = [
 
 export default function Home() {
   const router = useRouter();
+  const { championships } = useStudents();
   const [sinc, setSinc] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -216,7 +218,7 @@ export default function Home() {
           ))}
         </ScrollView>
 
-        {sinc ? (
+        {championships?.length === 0 ? (
           <View>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Campeonatos</Text>
@@ -257,13 +259,14 @@ export default function Home() {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.tutorialList}
             >
-              {mockChampionships.map((championship) => (
+              {championships?.map((championship) => (
                 <View key={championship.id} style={styles.cardWrapperChamp}>
                   <StatusChampionshipCardHome
                     key={championship.id}
                     status={championship.status}
-                    category={championship.category}
-                    title={championship.title}
+                    category={championship.championshipType}
+                    gender={championship.gender}
+                    title={championship.championshipName}
                     schoolYear={championship.schoolYear}
                     participatingTeams={championship.participatingTeams}
                     totalGames={championship.totalGames}
@@ -309,7 +312,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 20,
-    marginBottom: 120,
+    marginBottom: 90,
   },
 
   statusBar: {

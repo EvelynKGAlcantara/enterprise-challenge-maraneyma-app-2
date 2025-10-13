@@ -41,8 +41,8 @@ export default function Championship() {
               <Filter
                 FirstItem={"Ativos"}
                 SecondItem={"Inativos"}
-                SecondItemNumber={"(5)"}
-                firtItemNumer={"(5)"}
+                SecondItemNumber={"(0)"}
+                firtItemNumer={"(1)"}
               />
 
               <View style={styles.card}>

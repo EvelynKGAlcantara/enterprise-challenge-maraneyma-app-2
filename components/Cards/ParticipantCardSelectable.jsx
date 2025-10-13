@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 
 export const ParticipantCardSelectable = ({
+  id,
   name,
   gender,
   classInfo,
@@ -13,7 +14,20 @@ export const ParticipantCardSelectable = ({
   const handlePress = () => {
     const newState = !selected;
     setSelected(newState);
-    if (onSelectChange) onSelectChange(newState);
+
+    if (onSelectChange) {
+      // 🔧 Agora enviamos o objeto completo + o estado da seleção
+      onSelectChange(
+        {
+          id,
+          name,
+          gender,
+          classInfo,
+          image: imageURL,
+        },
+        newState
+      );
+    }
   };
 
   return (
@@ -25,7 +39,11 @@ export const ParticipantCardSelectable = ({
         ]}
       >
         <Image
-          source={require("../../assets/images/profile-circle.png")}
+          source={
+            typeof imageURL === "string"
+              ? { uri: imageURL }
+              : imageURL || require("../../assets/images/profile-circle.png")
+          }
           style={styles.avatar}
           resizeMode="cover"
         />
@@ -94,7 +112,6 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 30,
   },
-
   infoContainer: {
     flex: 1,
   },
@@ -116,7 +133,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontFamily: "SofiaSans_400Regular",
   },
-
   buttonSelect: {
     borderColor: "#EB2F96",
   },

@@ -250,23 +250,32 @@ export default function ChampionshipDetailsProgress() {
             {mockChampionships.map((championship) => (
               <View key={championship.id} style={styles.container}>
                 {!allFinished && (
-                  <View style={styles.progressBar}>
+                  <View>
                     <Text style={styles.progressText}>
-                      Serão {championship.totalGames} jogos no total (
-                      {championship.finishedGames} já ocorreram)
+                      Serão {allMatches.length} jogos no total
+                      {allMatches.filter((m) => m.status === "finished")
+                        .length === 0
+                        ? " (0 já ocorreram)"
+                        : `(${
+                            allMatches.filter((m) => m.status === "finished")
+                              .length
+                          } já ocorreram)`}
                     </Text>
-                    <View
-                      style={[
-                        styles.progressFill,
-                        {
-                          width: `${
-                            (championship.finishedGames /
-                              championship.totalGames) *
-                            100
-                          }%`,
-                        },
-                      ]}
-                    />
+                    <View style={styles.progressBar}>
+                      <View
+                        style={[
+                          styles.progressFill,
+                          {
+                            width: `${
+                              (allMatches.filter((m) => m.status === "finished")
+                                .length /
+                                allMatches.length) *
+                              100
+                            }%`,
+                          },
+                        ]}
+                      />
+                    </View>
                   </View>
                 )}
               </View>
@@ -281,7 +290,11 @@ export default function ChampionshipDetailsProgress() {
 
             {/* Fase A */}
             <View style={styles.container}>
-              <Text style={styles.phaseTitle}>Fase A</Text>
+              <View style={styles.phase}>
+                <Text style={styles.phaseTitle}>Fase A</Text>
+                <Text style={styles.games}>2 jogos</Text>
+              </View>
+
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -308,7 +321,10 @@ export default function ChampionshipDetailsProgress() {
               </ScrollView>
 
               {/* Fase B */}
-              <Text style={styles.phaseTitle}>Fase B</Text>
+              <View style={styles.phase}>
+                <Text style={styles.phaseTitle}>Fase B</Text>
+                <Text style={styles.games}>2 jogos</Text>
+              </View>
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -335,7 +351,10 @@ export default function ChampionshipDetailsProgress() {
               </ScrollView>
 
               {/* Final */}
-              <Text style={styles.phaseTitle}>Final</Text>
+              <View style={styles.phase}>
+                <Text style={styles.phaseTitle}>Final</Text>
+                <Text style={styles.games}>2 jogos</Text>
+              </View>
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -440,17 +459,25 @@ export default function ChampionshipDetailsProgress() {
                 {mockChampionships.map((championship) => (
                   <View key={championship.id} style={styles.container}>
                     <Text style={styles.progressText}>
-                      Serão {championship.totalGames} jogos no total (
-                      {championship.finishedGames} já ocorreram)
+                      Serão {allMatches.length} jogos no total
+                      {allMatches.filter((m) => m.status === "finished")
+                        .length === 0
+                        ? " (0 já ocorreram)"
+                        : `(${
+                            allMatches.filter((m) => m.status === "finished")
+                              .length
+                          } já ocorreram)`}
                     </Text>
+
                     <View style={styles.progressBar}>
                       <View
                         style={[
                           styles.progressFill,
                           {
                             width: `${
-                              (championship.finishedGames /
-                                championship.totalGames) *
+                              (allMatches.filter((m) => m.status === "finished")
+                                .length /
+                                allMatches.length) *
                               100
                             }%`,
                           },
@@ -506,6 +533,12 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 24,
   },
+  phase: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   backButton: { position: "absolute", top: 50, left: 16, zIndex: 10 },
   category: {
     fontSize: 16,
@@ -526,6 +559,11 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     color: "#000",
     fontFamily: "SofiaSans_800ExtraBold",
+  },
+  games: {
+    fontSize: 16,
+    color: "#000",
+    fontFamily: "SofiaSans_400Regular",
   },
   subtitle: {
     fontSize: 12,

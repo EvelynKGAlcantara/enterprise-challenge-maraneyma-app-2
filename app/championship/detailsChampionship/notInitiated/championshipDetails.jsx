@@ -234,31 +234,31 @@ export default function ChampionshipDetails() {
         {tab === "team" && (
           <View style={styles.section}>
             {hasTeams ? (
-              <View>
-                <View>
-                  <ScrollView
-                    style={{ flex: 1 }}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{ paddingBottom: 100 }}
-                  >
-                    {teams.map((team) => (
-                      <TeamCard
-                        key={team.id}
-                        name={team.name}
-                        description={team.description}
-                        onPressData={() => console.log("Ver dados")}
-                        onPressMembers={() => console.log("Ver membros")}
-                        onPressDelete={() => handleRemoveTeam(team.id)}
-                      />
-                    ))}
+              <View style={{ flex: 1, height: "500" }}>
+                {/* <View>*/}
+                <ScrollView
+                  style={styles.scroll}
+                  showsVerticalScrollIndicator={false}
+                  nestedScrollEnabled={true}
+                >
+                  {teams.map((team) => (
+                    <TeamCard
+                      key={team.id}
+                      name={team.name}
+                      description={team.description}
+                      onPressData={() => console.log("Ver dados")}
+                      onPressMembers={() => console.log("Ver membros")}
+                      onPressDelete={() => handleRemoveTeam(team.id)}
+                    />
+                  ))}
 
-                    <View style={styles.space}>
-                      <Text style={styles.helperTextTeams}>
-                        Este campeonato precisa ter pelo menos 3 equipes
-                      </Text>
-                    </View>
-                  </ScrollView>
-                </View>
+                  <View style={styles.space}>
+                    <Text style={styles.helperTextTeams}>
+                      Este campeonato precisa ter pelo menos 3 equipes
+                    </Text>
+                  </View>
+                </ScrollView>
+                {/*</View> */}
 
                 <View style={styles.fixedFooter}>
                   <Button text="Montar equipes" onPress={handleCreateTeam} />
@@ -417,6 +417,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   section: {
+    flex: 1,
     width: "100%",
   },
   image: {
@@ -535,13 +536,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   fixedFooter: {
-    right: 0,
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 12,
-    borderTopWidth: 1,
+    // position: "absolute",
+    // bottom: 0,
     width: "100%",
-    borderTopColor: "#EEE",
-    marginTop: "auto",
-    marginBottom: 32,
+    // right: 0,
+    // backgroundColor: "#FFFFFF",
+    // paddingVertical: 12,
+    // borderTopWidth: 1,
+    // width: "100%",
+    // borderTopColor: "#EEE",
+    // marginTop: "20px",
+    // marginBottom: 0,
+  },
+  scroll: {
+    flex: 1,
   },
 });

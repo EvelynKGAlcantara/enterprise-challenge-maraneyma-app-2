@@ -61,14 +61,14 @@ export default function ChampionshipDetailsForStart() {
               ritmo da disponibilidade das equipes.
             </Text>
           </View>
-          <View style={styles.button}>
-            <Button
-              text={"Iniciar Campeonato"}
-              onPress={handleConfirmStarChampionship}
-            />
-          </View>
         </View>
       </ScrollView>
+      <View style={styles.fixedButton}>
+        <Button
+          text={"Iniciar Campeonato"}
+          onPress={handleConfirmStarChampionship}
+        />
+      </View>
     </View>
   );
 }
@@ -124,5 +124,10 @@ const styles = StyleSheet.create({
   space: {
     justifyContent: "space-between",
   },
-  button: { marginTop: 230 },
+  fixedButton: {
+    position: "absolute",
+    bottom: 30,
+    left: 24,
+    right: 24,
+  },
 });

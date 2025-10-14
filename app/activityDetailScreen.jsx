@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
-import Accordion from "../../Maraneyma/components/Accordion/index";
+import Accordion from "../components/Accordion/index";
 
 const mockData = [
   {
@@ -71,7 +71,7 @@ export default function DetailsScreen() {
         <Text style={styles.headerTitle}>{sport}</Text>
         <Text style={styles.tag}>Atividade em Grupo</Text>
         <Image
-          source={require("../../Maraneyma/assets/images/cabo-de-guerra.png")}
+          source={require("../assets/images/cabo-de-guerra.png")}
           style={styles.image}
           resizeMode="contain"
         />

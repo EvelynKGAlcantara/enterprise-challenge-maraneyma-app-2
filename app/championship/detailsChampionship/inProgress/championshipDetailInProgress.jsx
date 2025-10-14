@@ -179,7 +179,7 @@ export default function ChampionshipDetailsProgress() {
         name="arrow-left"
         size={40}
         color="#EB2F96"
-        onPress={() => router.back()}
+        onPress={() => router.push("../../../(tabs)/championship")}
         style={styles.backButton}
       />
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>

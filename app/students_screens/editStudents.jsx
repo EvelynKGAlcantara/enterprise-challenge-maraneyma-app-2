@@ -54,7 +54,7 @@ export default function EditStudents() {
     { label: "Terceiro Colegial (Ensino Médio)", value: "12" },
   ];
   const router = useRouter();
-  const { students, removeStudent } = useStudents();
+  const { students, idStudents, removeStudent } = useStudents();
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [gender, setGender] = useState("");
@@ -68,7 +68,7 @@ export default function EditStudents() {
 
   useEffect(() => {
     if (students && students.length > 0) {
-      const aluno = students[0];
+      const aluno = students[idStudents];
       setId(aluno.id);
       setName(aluno.name);
       setGender(aluno.gender);

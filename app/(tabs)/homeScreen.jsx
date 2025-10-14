@@ -125,6 +125,9 @@ export default function Home() {
   const handleEditProfile = () => {
     router.push("../profile/myProfile");
   };
+  const handleOut = () => {
+    router.push("../loginScreen");
+  };
   const handleSinc = () => {
     setSinc(false);
     setModalVisible(false);
@@ -137,7 +140,7 @@ export default function Home() {
   };
 
   const handleCreateChampionship = () => {
-    router.push("../championship/createChampionship/championshipForm");
+    router.push("../championship/createChampionship/championshipTypeScreen");
   };
   const handleCreateStudents = () => {
     router.push("../students_screens/registerStudents");
@@ -188,9 +191,14 @@ export default function Home() {
             <Text style={styles.profileHello}>Olá Carl Sagan</Text>
             <Text style={styles.profileRole}>Professor</Text>
           </View>
-          <Pressable onPress={handleEditProfile} style={styles.button}>
-            <Text style={styles.buttonText}>Meus Dados</Text>
-          </Pressable>
+          <View style={styles.buttonsData}>
+            <Pressable onPress={handleEditProfile} style={styles.button}>
+              <Text style={styles.buttonText}>Meus Dados</Text>
+            </Pressable>
+            <Pressable onPress={handleOut} style={styles.button}>
+              <Text style={styles.buttonText}>Sair</Text>
+            </Pressable>
+          </View>
         </View>
 
         <View style={styles.sectionHeader}>
@@ -380,6 +388,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#EB2F96",
     fontWeight: "400",
+  },
+  buttonsData: {
+    flexDirection: "row",
+    gap: 2,
   },
   profileCard: {
     backgroundColor: "#EB2F96",

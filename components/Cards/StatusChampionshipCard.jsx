@@ -50,13 +50,16 @@ export const StatusChampionshipCard = ({
       <View style={{ marginBottom: 12 }}>
         <Text style={styles.info}>Ano escolar: {schoolYear}</Text>
         <Text style={styles.info}>
-          {participatingTeams?.length ?? 0} equipes cadastradas
+          {participatingTeams ?? 0} equipes cadastradas
         </Text>
         <Text style={styles.info}>
           {status === "waiting"
             ? "Falta cadastrar participantes"
-            : "Serão 15 jogos no total (5 já ocorreram)"}
+            : status === "inProgress"
+            ? "Serão 6 jogos no total (5 já ocorreram)"
+            : "Finalizado em: 12/06/2025 às 00:00"}
         </Text>
+
         {totalGames && <Text style={styles.info}>{totalGames}</Text>}
       </View>
 

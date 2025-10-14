@@ -13,13 +13,14 @@ import { InputsFilter } from "../../../components/Filters/InputsFilter";
 
 export default function Students() {
   const router = useRouter();
-  const { students } = useStudents();
+  const { students, setIdStudents } = useStudents();
 
   const handleRegister = () => {
     router.push("/students_screens/registerStudents");
   };
 
-  const handleEdit = () => {
+  const handleEdit = (id) => {
+    setIdStudents(id);
     router.push("../../students_screens/editStudents");
   };
 
@@ -60,9 +61,9 @@ export default function Students() {
             <View style={styles.space}>
               <InputsFilter />
 
-              {students.map((student) => (
+              {students.map((student, index) => (
                 <ParticipantCard
-                  key={student.id}
+                  key={index}
                   name={student.name}
                   gender={student.gender}
                   classInfo={`${student.schoolYear}º Ano - ${
@@ -72,7 +73,7 @@ export default function Students() {
                     student.photoUri ||
                     Image.resolveAssetSource(student.image).uri
                   }
-                  onEdit={handleEdit}
+                  onEdit={() => handleEdit(index)}
                 />
               ))}
             </View>

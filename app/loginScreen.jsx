@@ -11,6 +11,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { HeaderBack } from "../components/Header/HeaderBack";
 
 export default function Login() {
   const router = useRouter();
@@ -28,13 +29,7 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <AntDesign
-        name="arrow-left"
-        size={40}
-        color="#EB2F96"
-        onPress={router.back}
-        style={styles.backButton}
-      />
+      <HeaderBack onPress={() => router.push("/signupScreen")} />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Acessar (login)</Text>
       </View>
@@ -112,7 +107,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fbfbfbff",
     paddingHorizontal: 24,
-    paddingTop: 60,
     paddingBottom: 40,
   },
   header: {

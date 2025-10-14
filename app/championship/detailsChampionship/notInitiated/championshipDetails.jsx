@@ -94,7 +94,7 @@ export default function ChampionshipDetails() {
         name="arrow-left"
         size={40}
         color="#EB2F96"
-        onPress={router.back}
+        onPress={() => router.push("../../../(tabs)/championship")}
         style={styles.backButton}
       />
       <ScrollView
@@ -234,11 +234,12 @@ export default function ChampionshipDetails() {
         {tab === "team" && (
           <View style={styles.section}>
             {hasTeams ? (
-              <View style={{ flex: 1 }}>
-                <View style={{ flex: 1, marginBottom: 40 }}>
+              <View>
+                <View>
                   <ScrollView
                     style={{ flex: 1 }}
                     showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ paddingBottom: 100 }}
                   >
                     {teams.map((team) => (
                       <TeamCard
@@ -257,9 +258,10 @@ export default function ChampionshipDetails() {
                       </Text>
                     </View>
                   </ScrollView>
-                  <View style={styles.fixedFooter}>
-                    <Button text="Montar equipes" onPress={handleCreateTeam} />
-                  </View>
+                </View>
+
+                <View style={styles.fixedFooter}>
+                  <Button text="Montar equipes" onPress={handleCreateTeam} />
                 </View>
 
                 <DeleteModal
@@ -533,10 +535,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   fixedFooter: {
-    paddingVertical: 16,
-    marginTop: 210,
+    right: 0,
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 12,
     borderTopWidth: 1,
+    width: "100%",
     borderTopColor: "#EEE",
-    backgroundColor: "#fff",
+    marginTop: "auto",
+    marginBottom: 32,
   },
 });

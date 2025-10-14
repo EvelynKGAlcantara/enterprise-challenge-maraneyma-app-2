@@ -35,15 +35,83 @@ export default function SelectMembersScreen() {
     router.push("./createTeamSucess(3)");
   };
 
+  const participants = [
+    {
+      id: 1,
+      name: "Maria Silva",
+      avatar: null,
+      initialPoints: 5,
+      gender: "Feminino",
+      schoolYear: "Segundo colegial / Sala B",
+    },
+    {
+      id: 2,
+      name: "João Santos",
+      avatar: null,
+      initialPoints: 8,
+      gender: "Masculino",
+      schoolYear: "Terceiro colegial / Sala A",
+    },
+    {
+      id: 3,
+      name: "Ana Costa",
+      avatar: null,
+      initialPoints: 12,
+      gender: "Feminino",
+      schoolYear: "Primeiro colegial / Sala C",
+    },
+    {
+      id: 4,
+      name: "Pedro Oliveira",
+      avatar: null,
+      initialPoints: 3,
+      gender: "Masculino",
+      schoolYear: "Segundo colegial / Sala A",
+    },
+    {
+      id: 5,
+      name: "Carla Mendes",
+      avatar: null,
+      initialPoints: 15,
+      gender: "Feminino",
+      schoolYear: "Terceiro colegial / Sala B",
+    },
+    {
+      id: 6,
+      name: "Lucas Ferreira",
+      avatar: null,
+      initialPoints: 7,
+      gender: "Masculino",
+      schoolYear: "Primeiro colegial / Sala A",
+    },
+    {
+      id: 7,
+      name: "Juliana Rocha",
+      avatar: null,
+      initialPoints: 10,
+      gender: "Feminino",
+      schoolYear: "Segundo colegial / Sala C",
+    },
+    {
+      id: 8,
+      name: "Rafael Alves",
+      avatar: null,
+      initialPoints: 6,
+      gender: "Masculino",
+      schoolYear: "Terceiro colegial / Sala C",
+    },
+  ];
+
   return (
     <View style={styles.containerAll}>
-      {/* Header */}
       <View style={{ paddingHorizontal: 24 }}>
-        <HeaderBack title="Montagem de Equipes" />
+        <HeaderBack
+          title="Montagem de Equipes"
+          onPress={() => router.push("../../../(tabs)/championship")}
+        />
       </View>
 
       <ScrollView contentContainerStyle={styles.scroll}>
-        {/* Título e tag */}
         <View style={styles.container}>
           <View style={styles.headerText}>
             <Text style={styles.subtitle}>Selecione os membros da equipe</Text>
@@ -53,7 +121,6 @@ export default function SelectMembersScreen() {
           </View>
         </View>
 
-        {/* Filtros e contagem */}
         <View style={styles.filterSection}>
           <Filter
             FirstItem="Disponíveis"
@@ -64,17 +131,16 @@ export default function SelectMembersScreen() {
           />
         </View>
 
-        {/* Lista de alunos */}
         <View style={styles.container}>
           <SearchInput placeholder="Filtre os resultados" />
           <View style={styles.list}>
-            {students.map((p) => (
+            {participants.map((p) => (
               <ParticipantCardSelectable
                 key={p.id}
                 id={p.id}
                 name={p.name}
                 gender={p.gender}
-                classInfo={p.classroom}
+                classInfo={p.schoolYear}
                 imageURL={p.image}
                 onSelectChange={handleSelectChange}
               />
@@ -85,7 +151,6 @@ export default function SelectMembersScreen() {
         </View>
       </ScrollView>
 
-      {/* Rodapé */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           {selectedParticipants.length} aluno
@@ -111,9 +176,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
   },
-  scroll: {
-    paddingBottom: 120,
-  },
+
   headerText: {
     marginTop: 8,
     marginBottom: 12,
@@ -145,7 +208,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     position: "absolute",
-    bottom: 20,
+    bottom: 0,
     left: 0,
     right: 0,
     backgroundColor: "#FFFFFF",

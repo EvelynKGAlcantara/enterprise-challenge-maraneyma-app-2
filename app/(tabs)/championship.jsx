@@ -54,7 +54,6 @@ export default function Championship() {
                     title={championship?.championshipName}
                     schoolYear={championship?.schoolYear}
                     participatingTeams={championship?.participatingTeams}
-                    totalGames={championship?.totalGames}
                     gender={championship?.gender}
                     onPress={() => handleDetailChampionship(championship?.id)}
                   />

@@ -10,7 +10,9 @@ export default function ChampionshipTypeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.containerHeader}>
-        <HeaderBack />
+        <HeaderBack
+          onPress={() => router.push("../../../app/(tabs)/championship")}
+        />
       </View>
 
       <Text style={styles.title}>Qual tipo de campeonato você quer criar?</Text>

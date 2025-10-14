@@ -41,7 +41,7 @@ export default function ChampionshipDetailsForStart() {
             </Text>
             <Text style={styles.highlighted}>
               {teams.length}
-              <Text> equipes participantes</Text>
+              <Text>equipes participantes</Text>
             </Text>
           </View>
         ))}

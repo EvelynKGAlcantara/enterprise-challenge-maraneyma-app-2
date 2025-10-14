@@ -94,7 +94,7 @@ export default function ChampionshipDetails() {
         name="arrow-left"
         size={40}
         color="#EB2F96"
-        onPress={() => router.push("../../../(tabs)/championship")}
+        onPress={router.back}
         style={styles.backButton}
       />
       <ScrollView

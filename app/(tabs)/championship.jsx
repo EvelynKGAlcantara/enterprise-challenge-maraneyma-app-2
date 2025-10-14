@@ -10,7 +10,8 @@ import { StatusChampionshipCard } from "../../components/Cards/StatusChampionshi
 
 export default function Championship() {
   const router = useRouter();
-  const { championships, setSelectChampionship } = useStudents();
+  const { championships, setSelectChampionship, setChampioshipStatus } =
+    useStudents();
   const handleRegister = () => {
     setModalVisible(true);
   };
@@ -23,8 +24,26 @@ export default function Championship() {
     router.push("../students_screens/registerStudents");
   };
 
-  const handleDetailChampionship = (id) => {
+  const handleDetailChampionship = (id, status) => {
     setSelectChampionship(id);
+
+    if (status === "inProgress") {
+      setChampioshipStatus("inProgress");
+      router.push(
+        "../championship/detailsChampionship/inProgress/championshipDetailInProgress"
+      );
+      return;
+    }
+
+    if (status === "finished") {
+      setChampioshipStatus("finished");
+      router.push(
+        "../championship/detailsChampionship/inProgress/championshipDetailInProgress"
+      );
+      return;
+    }
+
+    setChampioshipStatus(status);
     router.push(
       "../championship/detailsChampionship/notInitiated/championshipDetails"
     );
@@ -55,7 +74,12 @@ export default function Championship() {
                     schoolYear={championship?.schoolYear}
                     participatingTeams={championship?.participatingTeams}
                     gender={championship?.gender}
-                    onPress={() => handleDetailChampionship(championship?.id)}
+                    onPress={() =>
+                      handleDetailChampionship(
+                        championship?.id,
+                        championship?.status
+                      )
+                    }
                   />
                 ))}
               </View>

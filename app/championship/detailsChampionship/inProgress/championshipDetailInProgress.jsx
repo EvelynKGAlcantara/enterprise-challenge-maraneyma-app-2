@@ -11,6 +11,32 @@ import { TeamCardRanking } from "../../../../components/Cards/TeamCardRanking";
 import { useStudents } from "../../../context/Context";
 import { TeamCardWin } from "../../../../components/Cards/TeamCardWin";
 
+// mock fixo para finais finalizadas
+const mockFinalFinished = [
+  {
+    id: 5,
+    team1: "Equipe 1",
+    team2: "Equipe 2",
+    score1: 2,
+    score2: 5,
+    status: "finished",
+    date: "02/10/2025",
+    hour: "15:00",
+    winner: "Equipe 2",
+  },
+  {
+    id: 6,
+    team1: "Equipe 1",
+    team2: "Equipe 2",
+    score1: 1,
+    score2: 5,
+    status: "finished",
+    date: "02/10/2025",
+    hour: "15:00",
+    winner: "Equipe 2",
+  },
+];
+
 const renderStatus = (status) => {
   switch (status) {
     case "inProgress":
@@ -142,6 +168,7 @@ export default function ChampionshipDetailsProgress() {
     setSelectedMatch,
     matches: mockMatches,
     finishedSelectedChampionship,
+    championshipStatus,
   } = useStudents();
   const [tab, setTab] = useState("championship");
   const router = useRouter();
@@ -155,6 +182,9 @@ export default function ChampionshipDetailsProgress() {
   ];
   const allFinished = allMatches.every((m) => m.status === "finished");
   const [finishDate] = useState(new Date().toLocaleDateString("pt-BR"));
+
+  const finalMatches =
+    championshipStatus === "finished" ? mockFinalFinished : mockMatches.final;
 
   useEffect(() => {
     if (allFinished) {
@@ -195,7 +225,7 @@ export default function ChampionshipDetailsProgress() {
               {championship.participatingTeams} <Text>equipes cadastradas</Text>
             </Text>
 
-            {allFinished ? (
+            {allFinished || championshipStatus === "finished" ? (
               <>
                 <Text style={styles.subtitleFinalized}>
                   Finalizado em: {finishDate}
@@ -360,7 +390,7 @@ export default function ChampionshipDetailsProgress() {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.tutorialList}
               >
-                {mockMatches.final.map((match) => (
+                {(finalMatches || []).map((match) => (
                   <View key={match.id} style={styles.cardWrapper}>
                     <MatchCard
                       key={match.id}
@@ -401,7 +431,7 @@ export default function ChampionshipDetailsProgress() {
         {/* aba ranking */}
         {tab === "ranking" && (
           <>
-            {allFinished ? (
+            {allFinished || championshipStatus === "finished" ? (
               <>
                 <View style={styles.container}>
                   <Text style={styles.phaseTitle}>Classificação Final</Text>

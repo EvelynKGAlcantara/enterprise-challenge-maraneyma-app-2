@@ -7,6 +7,7 @@ export function StudentsProvider({ children }) {
   const [idStudents, setIdStudents] = useState();
   const [championships, setChampionships] = useState([]);
   const [championshipType, setChampioshipType] = useState();
+  const [championshipStatus, setChampioshipStatus] = useState();
   const [teams, setTeams] = useState([]);
   const [teamName, setTeamName] = useState();
   const [selectChampionship, setSelectChampionship] = useState();
@@ -405,6 +406,8 @@ export function StudentsProvider({ children }) {
         updateMatchStatus,
         idStudents,
         setIdStudents,
+        championshipStatus,
+        setChampioshipStatus,
         handlers: {
           setChampioshipType,
         },
